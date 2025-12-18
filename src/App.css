@@ -1,0 +1,277 @@
+/* ==========================================================================
+   LAYOUT & CONTAINERS
+   ========================================================================== */
+
+/* Main application wrapper */
+.dndflow {
+  flex-direction: column;
+  display: flex;
+  flex-grow: 1;
+  height: 100vh;
+  width: 100vw;
+}
+
+@media screen and (min-width: 768px) {
+  .dndflow {
+    flex-direction: row;
+  }
+}
+
+/* Sidebar area holding all tab content */
+.sidebar-container {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #eee;
+  background: #f8f9fa;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+/* Right-side canvas area */
+.reactflow-wrapper {
+  flex-grow: 1;
+  height: 100%;
+  background: #fff;
+}
+
+/* ==========================================================================
+   SIDEBAR UI (Tabs, Toolbar, Search)
+   ========================================================================== */
+
+.toolbar {
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+}
+
+.toolbar button {
+  background: #eee;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  flex: 1;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toolbar button:hover {
+  background: #e0e0e0;
+}
+
+.toolbar button.btn-active {
+  background: #000;
+  color: #fff;
+}
+
+.toolbar button.btn-clear {
+  background: #f44336 !important;
+  color: #fff;
+}
+
+.sidebar-tabs {
+  display: flex;
+  background: #eee;
+  padding: 5px;
+  gap: 5px;
+}
+
+.sidebar-tabs button {
+  flex: 1;
+  padding: 8px 5px;
+  border: none;
+  background: transparent;
+  color: #666;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.sidebar-tabs button.active {
+  background: #fff;
+  color: #000;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.search-input {
+  padding: 8px;
+  margin: 15px 10px;
+  border: 1px solid #000;
+  border-radius: 0;
+  width: calc(100% - 20px);
+}
+
+/* ==========================================================================
+   NODE ELEMENTS & TEMPLATES
+   ========================================================================== */
+
+/* Templates in the Library Tab */
+.dndnode {
+  padding: 10px;
+  border: 1px solid #000;
+  border-radius: 0;
+  margin: 0 10px 10px 10px;
+  background: white;
+  cursor: grab;
+  transition: transform 0.2s, border-width 0.1s;
+}
+
+.dndnode:hover {
+  border-width: 2px;
+}
+
+.node-desc {
+  font-size: 10px;
+  color: #888;
+  margin-top: 4px;
+  line-height: 1.2;
+}
+
+/* ==========================================================================
+   STOCKED NODE CORE (The Actual Nodes on Canvas)
+   ========================================================================== */
+
+.react-flow__node {
+  min-width: 220px !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+  border: 4px solid #000 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+/* The vertical stack container */
+.custom-node-stacked {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: visible;
+  /* CRITICAL: Allows handles to sit outside */
+}
+
+/* Each horizontal row in a node */
+.node-element {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 2px solid #000;
+  min-height: 40px;
+  background: #fff;
+}
+
+.node-element:last-child {
+  border-bottom: none;
+}
+
+/* Title element special styling */
+.element-type-title {
+  background: #000 !important;
+  color: #fff !important;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.element-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #000;
+}
+
+/* List item containers inside rows */
+.element-content {
+  width: 100%;
+  padding: 5px 0;
+}
+
+.element-list-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #555;
+  margin-bottom: 3px;
+  text-transform: uppercase;
+}
+
+.element-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 11px;
+  color: #333;
+}
+
+/* ==========================================================================
+   HANDLES & CONNECTIONS
+   ========================================================================== */
+
+.element-handle {
+  width: 10px !important;
+  height: 10px !important;
+  background-color: #000 !important;
+  border: 1px solid #fff !important;
+  border-radius: 0 !important;
+  opacity: 0.5;
+  /* Semi-transparent as requested */
+  z-index: 10;
+}
+
+.react-flow__handle-left.element-handle {
+  left: -20px !important;
+}
+
+.react-flow__handle-right.element-handle {
+  right: -20px !important;
+}
+
+/* Connection preview styling is handled via ReactFlow props in App.jsx, 
+   but you can target the path here if needed: */
+.react-flow__edge-path {
+  stroke-linecap: square;
+}
+
+/* ==========================================================================
+   COLLAPSE MODE
+   ========================================================================== */
+
+/* Hide everything except Title and Description when global collapse is on */
+.nodes-collapsed .node-element:not(.element-type-title):not(.element-label-description) {
+  display: none;
+}
+
+.nodes-collapsed .node-element.element-type-title,
+.nodes-collapsed .node-element.element-label-description {
+  display: flex !important;
+  border-bottom: none !important;
+}
+
+/* Strong separator for collapsed view */
+.nodes-collapsed .node-element.element-type-title {
+  border-bottom: 4px solid #000 !important;
+}
+
+/* Hide handles for elements that are hidden */
+.nodes-collapsed .node-element:not(.element-type-title):not(.element-label-description) .element-handle {
+  display: none !important;
+}
+
+/* ==========================================================================
+   UTILITIES
+   ========================================================================== */
+
+.data-preview {
+  padding: 15px;
+  background: #111;
+  color: #0f0;
+  font-family: monospace;
+  font-size: 10px;
+  height: 100%;
+  border-top: 1px solid #333;
+}
