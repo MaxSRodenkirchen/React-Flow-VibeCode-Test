@@ -1,4 +1,83 @@
 /* ==========================================================================
+   FONTS
+   ========================================================================== */
+@font-face {
+  font-family: 'Euclid Flex';
+  src: url('./assets/fonts/EuclidFlex-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Euclid Flex';
+  src: url('./assets/fonts/EuclidFlex-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Euclid Flex';
+  src: url('./assets/fonts/EuclidFlex-Semibold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Euclid Flex';
+  src: url('./assets/fonts/EuclidFlex-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Euclid Flex', sans-serif;
+}
+
+:root {
+  /* Node Colors */
+  --node-bg: #eaeaeabe;
+  --node-shadow: rgba(0, 0, 0, 0.12);
+  --node-shadow-hover: rgba(0, 0, 0, 0.18);
+
+  /* Text & UI Colors */
+  --text-primary1: #313131;
+
+  --text-primary: #787878;
+  --text-secondary: #999999;
+  --text-inverse: #ffffff;
+
+  --bg-sidebar: #f8f9fa;
+  --bg-sidebar-tabs: #eeeeee;
+
+  --border-light: #eeeeee;
+  --border-medium: #dddddd;
+
+  --accent-color: #000000;
+  --danger-color: #f44336;
+
+  /* Handle & Flow Colors (Static for regular items) */
+  --handle-bg: #BEBEBE;
+  --handle-border: #BEBEBE;
+
+  /* Spacing & Geometry */
+  --canvas-bg: #FFF9EA;
+  --node-width: 262px;
+  --node-radius: 20px;
+  --node-padding: 5px;
+  --row-padding-h: 5px;
+  --row-padding-v: 5px;
+  /* Increased from 2px */
+  --title-min-height: 10px;
+  --item-text-width: 198px;
+  --handle-size: 10px;
+  --opacity-low: 0.1;
+  --opacity-medium: 0.25;
+  --opacity-high: 0.5;
+  --gap-medium: 12px;
+  /* Slightly increased */
+}
+
+/* ==========================================================================
    LAYOUT & CONTAINERS
    ========================================================================== */
 
@@ -19,11 +98,11 @@
 
 /* Sidebar area holding all tab content */
 .sidebar-container {
-  /*width: 350px;*/
+  width: 350px;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #eee;
-  background: #f8f9fa;
+  border-right: 1px solid var(--border-light);
+  background: var(--bg-sidebar);
   height: 100vh;
   overflow-y: auto;
 }
@@ -32,7 +111,7 @@
 .reactflow-wrapper {
   flex-grow: 1;
   height: 100%;
-  background: #fff;
+  background: var(--canvas-bg);
 }
 
 /* ==========================================================================
@@ -43,13 +122,13 @@
   padding: 10px;
   display: flex;
   gap: 10px;
-  border-bottom: 1px solid #eee;
-  background: #fff;
+  border-bottom: 1px solid var(--border-light);
+  background: var(--text-inverse);
 }
 
 .toolbar button {
-  background: #eee;
-  border: 1px solid #ddd;
+  background: var(--bg-sidebar-tabs);
+  border: 1px solid var(--border-medium);
   font-size: 16px;
   padding: 8px;
   cursor: pointer;
@@ -66,18 +145,18 @@
 }
 
 .toolbar button.btn-active {
-  background: #000;
-  color: #fff;
+  background: var(--accent-color);
+  color: var(--text-inverse);
 }
 
 .toolbar button.btn-clear {
-  background: #f44336 !important;
-  color: #fff;
+  background: var(--danger-color) !important;
+  color: var(--text-inverse);
 }
 
 .sidebar-tabs {
   display: flex;
-  background: #eee;
+  background: var(--bg-sidebar-tabs);
   padding: 5px;
   gap: 5px;
 }
@@ -96,16 +175,16 @@
 }
 
 .sidebar-tabs button.active {
-  background: #fff;
-  color: #000;
+  background: var(--text-inverse);
+  color: var(--accent-color);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .search-input {
   padding: 8px;
   margin: 15px 10px;
-  border: 1px solid #000;
-  border-radius: 0;
+  border: 1px solid var(--accent-color);
+  border-radius: 20px;
 }
 
 /* ==========================================================================
@@ -164,102 +243,179 @@
    STOCKED NODE CORE (The Actual Nodes on Canvas)
    ========================================================================== */
 
+/* ==========================================================================
+   REACT FLOW NODE - GLOBAL OVERRIDES
+   These styles apply to every node container in React Flow.
+   ========================================================================== */
 .react-flow__node {
-  min-width: 220px !important;
+  min-width: var(--node-width) !important;
+  width: var(--node-width);
   border-radius: 16px !important;
-  background: #fff !important;
-  border: none !important;
-  padding: 0 !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12) !important;
+  /* background: transparent !important; */
+  background-color: #ffffff22;
+  /* No fill as requested */
+  /* border: none !important; */
+  padding: var(--node-padding) !important;
+  /* Controlled via variable */
+  border-radius: var(--node-radius);
+  /* Shadow for the "card" look */
+  box-shadow: 0 10px 30px var(--node-shadow) !important;
   transition: box-shadow 0.2s;
 }
 
 .react-flow__node:hover {
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18) !important;
+  box-shadow: 0 15px 40px var(--node-shadow-hover) !important;
 }
 
 /* The vertical stack container */
+/* The main wrapper inside our CustomNode.jsx component */
 .custom-node-stacked {
   display: flex;
   flex-direction: column;
   width: 100%;
   overflow: visible;
+
+  /* Border color is often overridden inline via 'phaseColor' in CustomNode.jsx */
 }
 
-/* Each horizontal row in a node */
+/* Each 'row' or section within a node */
 .node-element {
   position: relative;
   display: flex;
   align-items: center;
-  padding: 12px 18px;
-  background: #fff;
+  padding: 0 var(--row-padding-h);
+  /* Reduced side padding because handles are now inside */
+  background: transparent;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.element-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  /* gap: px; */
 }
 
 /* Title element special styling */
+/* Styling specifically for the TITLE row */
 .element-type-title {
-  color: #fff;
-  padding: 10px 15px;
+  color: var(--text-primary);
+  /* Use primary text color instead of white since bg is now light */
+  padding: var(--row-padding-v) var(--row-padding-h);
+  /* Restored horizontal padding for alignment */
   font-weight: 700;
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  font-size: 18px;
+  /* Removed uppercase for a more natural look */
+  letter-spacing: 0.5px;
   transition: background-color 0.3s ease;
+  min-height: var(--title-min-height);
+  /* Minimum height for consistency */
 }
 
+/* Text label inside a standard (non-title) row */
 .element-label {
-  font-size: 12px;
+  font-size: 18px;
   font-weight: 600;
-  color: #000;
+  color: var(--text-primary);
 }
 
+/* Override label color: ensures title is visible when row unification removes solid bg */
 .element-type-title .element-label {
-  color: #fff !important;
+  /* color: var(--text-primary) !important; */
+  color: var(--text-primary1) !important;
+
 }
 
 /* List item containers inside rows */
 .element-content {
   width: 100%;
-  padding: 5px 0;
+  padding: 2px 0;
+}
+
+.element-list-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--row-padding-v) 0;
+  /* Sync with sub-sub-element */
+}
+
+.element-list-label-row::after {
+  display: none;
+  /* Removed from here, moved to label::after */
 }
 
 .element-list-label {
-  font-size: 10px;
-  font-weight: 700;
-  color: #999;
-  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: var(--item-text-width) !important;
+  /* Force alignment with item-text */
+
+  font-size: 6px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  opacity: 0.3;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  /* padding is handled by the parent row container (.element-list-label-row) */
+}
+
+.element-list-label::after {
+  content: "";
+  flex: 1;
+  border-top: 2px dotted var(--border-medium);
+  height: 1px;
+  /* Centered perfectly by display: flex of parent */
 }
 
 .element-list {
   margin: 0;
   padding: 0;
   list-style: none;
+  width: 100%;
 }
 
 /* ==========================================================================
    HANDLES & CONNECTIONS
    ========================================================================== */
 
+/* Custom Handle Styling (The dots for connections) */
 .element-handle {
-  width: 10px !important;
-  height: 10px !important;
-  background-color: #000 !important;
-  border: 2px solid #fff !important;
+  width: var(--handle-size) !important;
+  height: var(--handle-size) !important;
+  background-color: transparent !important;
+  /* Hollow by default */
+  border: 2px solid var(--handle-border) !important;
+  /* Static custom color */
   border-radius: 50% !important;
-  opacity: 1 !important;
+  opacity: var(--opacity-low) !important;
   z-index: 100;
+  transition: background-color 0.2s, border-color 0.2s, opacity 0.2s;
+}
+
+.element-handle:hover {
+  opacity: var(--opacity-medium) !important;
+}
+
+.element-handle.connected {
+  background-color: var(--handle-bg) !important;
+  /* Static custom color */
+  border-color: var(--handle-border) !important;
+  opacity: var(--opacity-high) !important;
 }
 
 /* Global Handle Style */
 .react-flow__handle {
-  opacity: 0.2 !important;
+  opacity: var(--opacity-low) !important;
   transition: opacity 0.2s;
 }
 
 .react-flow__handle:hover {
-  opacity: 1 !important;
+  opacity: var(--opacity-medium) !important;
 }
 
 .header-handle {
@@ -267,54 +423,78 @@
 }
 
 .react-flow__handle-left.element-handle {
-  left: -6px !important;
-  /* Changed from -12px to -6px */
+  position: relative !important;
+  left: 0 !important;
+  top: auto !important;
+  transform: none !important;
 }
 
 .react-flow__handle-right.element-handle {
-  right: -6px !important;
-  /* Changed from -12px to -6px */
+  position: relative !important;
+  right: 0 !important;
+  top: auto !important;
+  transform: none !important;
 }
 
 .flow-handle {
-  width: 14px !important;
-  height: 14px !important;
-  background-color: #fff !important;
-  /* Changed from #000 to #fff */
-  border: none !important;
-  border-radius: 0 !important;
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  width: var(--handle-size) !important;
+  height: var(--handle-size) !important;
+  background-color: transparent !important;
+  border: 2px solid var(--node-color) !important;
+  /* Dynamic node color */
+  border-radius: 50% !important;
+  opacity: var(--opacity-low) !important;
 }
 
-/* Visible Flow-Handles for Title (White triangles) */
+.flow-handle:hover {
+  opacity: var(--opacity-medium) !important;
+}
+
+.flow-handle.connected {
+  opacity: var(--opacity-high) !important;
+  background-color: var(--node-color) !important;
+  /* Dynamic node color */
+  border-color: var(--node-color) !important;
+}
+
+/* Visible Flow-Handles for Title (White Circles) */
 .element-type-title .flow-handle {
-  width: 14px !important;
-  height: 14px !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  background-color: #fff !important;
-  opacity: 0.2 !important;
-  clip-path: polygon(0 0, 100% 50%, 0 100%) !important;
-  border-radius: 0 !important;
+  width: var(--handle-size) !important;
+  height: var(--handle-size) !important;
+  position: relative !important;
+  transform: none !important;
+  top: auto !important;
+  background-color: transparent !important;
+  opacity: var(--opacity-low) !important;
+  border: 2px solid var(--node-color) !important;
+  /* Dynamic node color */
+  border-radius: 50% !important;
   pointer-events: auto !important;
 }
 
-.react-flow__handle-left.flow-handle {
-  left: -6px !important;
+.element-type-title .flow-handle:hover {
+  opacity: var(--opacity-medium) !important;
 }
 
-.react-flow__handle-right.flow-handle {
-  right: -6px !important;
+.element-type-title .flow-handle.connected {
+  background-color: var(--node-color) !important;
+  border-color: var(--node-color) !important;
+  opacity: var(--opacity-high) !important;
 }
+
+.placeholder-handle {
+  width: var(--handle-size);
+  height: var(--handle-size);
+  visibility: hidden;
+}
+
+
 
 /* Hide standard handles in the title bar (logical handles only) */
 .title-standard-handle {
   opacity: 0 !important;
+  /* Keep logical handles hidden */
   pointer-events: none !important;
-}
-
-.flow-handle:hover {
-  opacity: 1 !important;
 }
 
 .element-handle {
@@ -325,15 +505,28 @@
    EDGE ANIMATIONS & LABELS
    ========================================================================== */
 
+/* Match connection line preview style: dashed, animated, but with less opacity */
+.react-flow__connection-path {
+  stroke-dasharray: 15, 15;
+  animation: flowAnimation 3s linear infinite;
+  opacity: var(--opacity-medium) !important;
+  /* Unified preview opacity */
+  stroke-width: 10 !important;
+}
+
 /* Smooth dashed animation */
 .react-flow__edge-path {
   stroke-dasharray: 15, 15;
   stroke-dashoffset: 0;
+  opacity: var(--opacity-low) !important;
+  /* Unified default edge opacity */
+  stroke-width: 10 !important;
 }
 
 /* Hover effect for all edges */
 .react-flow__edge:hover .react-flow__edge-path {
-  opacity: 1 !important;
+  opacity: var(--opacity-high) !important;
+  /* Unified hover edge opacity */
 }
 
 /* Target only animated edges */
@@ -353,16 +546,16 @@
 
 /* Edge Labels (Conditions) */
 .react-flow__edge-label {
-  background: white;
+  background: var(--text-inverse);
   padding: 4px 10px;
   border-radius: 20px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
-  color: #000;
+  color: var(--text-primary);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   pointer-events: all;
   cursor: pointer;
-  border: 1px solid #eee;
+  border: 1px solid var(--border-light);
 }
 
 .react-flow__edge-label:hover {
@@ -371,32 +564,55 @@
 
 /* Selected Edge Highlight */
 .react-flow__edge.selected .react-flow__edge-path {
-  stroke: #000 !important;
-  opacity: 1 !important;
+  stroke: var(--accent-color) !important;
+  opacity: var(--opacity-high) !important;
+  /* Unified active edge opacity */
   stroke-width: 12 !important;
 }
 
 .react-flow__edge.selected .react-flow__edge-label {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  border-color: #000;
+  border-color: var(--accent-color);
 }
 
 /* ==========================================================================
    COLLAPSE MODE
    ========================================================================== */
 
-/* Sub-sub-element styling */
 .sub-sub-element {
   position: relative;
-  padding: 6px 0;
-  font-size: 11px;
-  color: #333;
+  padding: var(--row-padding-v) 0;
+  font-size: 10px;
+  color: var(--text-primary);
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .item-text {
-  flex-grow: 1;
+  width: var(--item-text-width);
+  text-align: left;
+  white-space: normal;
+  /* Allow wrapping */
+  word-break: break-word;
+  /* Safe fallback */
+  hyphens: auto;
+  /* Automatic hyphenation based on language */
+  hyphenate-character: "-";
+  /* Explicitly set the hyphen character */
+  line-height: 1.4;
+  /* Slightly increased for better readability */
+  padding: 0;
+  /* Removed double padding, handled by row containers */
+}
+
+/* ==========================================================================
+   DEBUG MODE
+   ========================================================================== */
+.custom-node-stacked *,
+.react-flow__node * {
+  /* outline: 0.2px solid red !important; */
 }
 
 /* ==========================================================================

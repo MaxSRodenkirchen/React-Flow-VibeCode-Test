@@ -25,6 +25,9 @@ const nodeTypes = {
   default: CustomNode,
 };
 
+const edgeTypes = {
+};
+
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
@@ -44,23 +47,52 @@ const App = () => {
   const [allNodesCollapsed, setAllNodesCollapsed] = useState(false);
   const [helperLineHorizontal, setHelperLineHorizontal] = useState(null);
   const [helperLineVertical, setHelperLineVertical] = useState(null);
+  const [connectionLineColor, setConnectionLineColor] = useState('#787878');
 
   const onConnect = useCallback((params) => {
-    const isFlow = params.sourceHandle?.includes('flow') || params.targetHandle?.includes('flow');
+    const isFlowSource = params.sourceHandle?.includes('flow');
+
+    // Find source node to get its color
+    const sourceNode = nodes.find(n => n.id === params.source);
+    const nodeColor = sourceNode?.data?.phaseColor || '#787878';
+
+    // Use dynamic color only if outgoing from a flow handle
+    const edgeColor = isFlowSource ? nodeColor : '#787878';
+
+    const isFlow = isFlowSource || params.targetHandle?.includes('flow');
+
     const edgeParams = {
       ...params,
       type: 'default',
       animated: isFlow,
       style: {
-        stroke: '#000',
+        stroke: edgeColor,
         strokeWidth: 10,
-        opacity: 0.5,
         strokeDasharray: isFlow ? '15, 15' : 'none'
       },
       data: { isFlow }
     };
     setEdges((eds) => addEdge(edgeParams, eds));
-  }, [setEdges]);
+  }, [setEdges, nodes]);
+
+  const onConnectStart = useCallback((_, { nodeId, handleId }) => {
+    const isFlowStart = handleId?.includes('flow');
+
+    if (isFlowStart) {
+      const node = nodes.find((n) => n.id === nodeId);
+      if (node) {
+        setConnectionLineColor(node.data.phaseColor || '#787878');
+        return;
+      }
+    }
+
+    // Default neutral color for regular handles
+    setConnectionLineColor('#787878');
+  }, [nodes]);
+
+  const onConnectEnd = useCallback(() => {
+    setConnectionLineColor('#787878');
+  }, []);
 
   const onSave = useCallback(() => {
     if (reactFlowInstance) {
@@ -419,14 +451,21 @@ const App = () => {
             onEdgeDoubleClick={onEdgeDoubleClick}
             onNodeDrag={onNodeDrag}
             onNodeDragStop={onNodeDragStop}
+            onConnectStart={onConnectStart}
+            onConnectEnd={onConnectEnd}
             nodeTypes={nodeTypes}
+            edgeTypes={edgeTypes}
             connectionLineType="smoothstep"
+            connectionLineStyle={{
+              stroke: connectionLineColor,
+              strokeWidth: 10,
+            }}
             fitView
             snapToGrid={true}
             snapGrid={[25, 25]}
             zoomOnDoubleClick={false}
           >
-            <Background variant="lines" color="#ddd" gap={25} />
+            {/* <Background variant="lines" color="#ddd" gap={25} /> */}
             <Controls />
             <HelperLines horizontal={helperLineHorizontal} vertical={helperLineVertical} />
           </ReactFlow>
