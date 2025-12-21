@@ -19,7 +19,7 @@
 
 /* Sidebar area holding all tab content */
 .sidebar-container {
-  width: 250px;
+  /*width: 350px;*/
   display: flex;
   flex-direction: column;
   border-right: 1px solid #eee;
@@ -106,7 +106,6 @@
   margin: 15px 10px;
   border: 1px solid #000;
   border-radius: 0;
-  width: calc(100% - 20px);
 }
 
 /* ==========================================================================
@@ -114,14 +113,36 @@
    ========================================================================== */
 
 /* Templates in the Library Tab */
+.node-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.phase-badge {
+  font-size: 8px;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
 .dndnode {
-  padding: 10px;
-  border: 1px solid #000;
-  border-radius: 0;
-  margin: 0 10px 10px 10px;
-  background: white;
+  height: auto;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   cursor: grab;
-  transition: transform 0.2s, border-width 0.1s;
+  background: #fff;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 10px;
 }
 
 .dndnode:hover {
@@ -139,13 +160,22 @@
    STOCKED NODE CORE (The Actual Nodes on Canvas)
    ========================================================================== */
 
+/* ==========================================================================
+   STOCKED NODE CORE (The Actual Nodes on Canvas)
+   ========================================================================== */
+
 .react-flow__node {
   min-width: 220px !important;
-  border-radius: 0 !important;
+  border-radius: 16px !important;
   background: #fff !important;
-  border: 4px solid #000 !important;
+  border: none !important;
   padding: 0 !important;
-  box-shadow: none !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12) !important;
+  transition: box-shadow 0.2s;
+}
+
+.react-flow__node:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18) !important;
 }
 
 /* The vertical stack container */
@@ -154,7 +184,6 @@
   flex-direction: column;
   width: 100%;
   overflow: visible;
-  /* CRITICAL: Allows handles to sit outside */
 }
 
 /* Each horizontal row in a node */
@@ -162,29 +191,30 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding: 10px 15px;
-  border-bottom: 2px solid #000;
-  min-height: 40px;
+  padding: 12px 18px;
   background: #fff;
-}
-
-.node-element:last-child {
-  border-bottom: none;
 }
 
 /* Title element special styling */
 .element-type-title {
-  background: #000 !important;
-  color: #fff !important;
-  font-weight: 800;
+  color: #fff;
+  padding: 10px 15px;
+  font-weight: 700;
+  font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 1px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  transition: background-color 0.3s ease;
 }
 
 .element-label {
   font-size: 12px;
   font-weight: 600;
   color: #000;
+}
+
+.element-type-title .element-label {
+  color: #fff !important;
 }
 
 /* List item containers inside rows */
@@ -196,16 +226,16 @@
 .element-list-label {
   font-size: 10px;
   font-weight: 700;
-  color: #555;
-  margin-bottom: 3px;
+  color: #999;
+  margin-bottom: 5px;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .element-list {
   margin: 0;
-  padding-left: 18px;
-  font-size: 11px;
-  color: #333;
+  padding: 0;
+  list-style: none;
 }
 
 /* ==========================================================================
@@ -216,55 +246,202 @@
   width: 10px !important;
   height: 10px !important;
   background-color: #000 !important;
-  border: 1px solid #fff !important;
-  border-radius: 0 !important;
-  opacity: 0.5;
-  /* Semi-transparent as requested */
-  z-index: 10;
+  border: 2px solid #fff !important;
+  border-radius: 50% !important;
+  opacity: 1 !important;
+  z-index: 100;
+}
+
+/* Global Handle Style */
+.react-flow__handle {
+  opacity: 0.2 !important;
+  transition: opacity 0.2s;
+}
+
+.react-flow__handle:hover {
+  opacity: 1 !important;
+}
+
+.header-handle {
+  display: block !important;
 }
 
 .react-flow__handle-left.element-handle {
-  left: -20px !important;
+  left: -6px !important;
+  /* Changed from -12px to -6px */
 }
 
 .react-flow__handle-right.element-handle {
-  right: -20px !important;
+  right: -6px !important;
+  /* Changed from -12px to -6px */
 }
 
-/* Connection preview styling is handled via ReactFlow props in App.jsx, 
-   but you can target the path here if needed: */
+.flow-handle {
+  width: 14px !important;
+  height: 14px !important;
+  background-color: #fff !important;
+  /* Changed from #000 to #fff */
+  border: none !important;
+  border-radius: 0 !important;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+/* Visible Flow-Handles for Title (White triangles) */
+.element-type-title .flow-handle {
+  width: 14px !important;
+  height: 14px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background-color: #fff !important;
+  opacity: 0.2 !important;
+  clip-path: polygon(0 0, 100% 50%, 0 100%) !important;
+  border-radius: 0 !important;
+  pointer-events: auto !important;
+}
+
+.react-flow__handle-left.flow-handle {
+  left: -6px !important;
+}
+
+.react-flow__handle-right.flow-handle {
+  right: -6px !important;
+}
+
+/* Hide standard handles in the title bar (logical handles only) */
+.title-standard-handle {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.flow-handle:hover {
+  opacity: 1 !important;
+}
+
+.element-handle {
+  transition: left 0.2s, right 0.2s, opacity 0.2s;
+}
+
+/* ==========================================================================
+   EDGE ANIMATIONS & LABELS
+   ========================================================================== */
+
+/* Smooth dashed animation */
 .react-flow__edge-path {
-  stroke-linecap: square;
+  stroke-dasharray: 15, 15;
+  stroke-dashoffset: 0;
+}
+
+/* Hover effect for all edges */
+.react-flow__edge:hover .react-flow__edge-path {
+  opacity: 1 !important;
+}
+
+/* Target only animated edges */
+.react-flow__edge.animated .react-flow__edge-path {
+  animation: flowAnimation 3s linear infinite;
+}
+
+@keyframes flowAnimation {
+  from {
+    stroke-dashoffset: 30;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Edge Labels (Conditions) */
+.react-flow__edge-label {
+  background: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  pointer-events: all;
+  cursor: pointer;
+  border: 1px solid #eee;
+}
+
+.react-flow__edge-label:hover {
+  background: #f0f0f0;
+}
+
+/* Selected Edge Highlight */
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: #000 !important;
+  opacity: 1 !important;
+  stroke-width: 12 !important;
+}
+
+.react-flow__edge.selected .react-flow__edge-label {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-color: #000;
 }
 
 /* ==========================================================================
    COLLAPSE MODE
    ========================================================================== */
 
-/* Hide everything except Title and Description when global collapse is on */
-.nodes-collapsed .node-element:not(.element-type-title):not(.element-label-description) {
-  display: none;
+/* Sub-sub-element styling */
+.sub-sub-element {
+  position: relative;
+  padding: 6px 0;
+  font-size: 11px;
+  color: #333;
+  display: flex;
+  align-items: center;
 }
 
-.nodes-collapsed .node-element.element-type-title,
-.nodes-collapsed .node-element.element-label-description {
-  display: flex !important;
-  border-bottom: none !important;
-}
-
-/* Strong separator for collapsed view */
-.nodes-collapsed .node-element.element-type-title {
-  border-bottom: 4px solid #000 !important;
-}
-
-/* Hide handles for elements that are hidden */
-.nodes-collapsed .node-element:not(.element-type-title):not(.element-label-description) .element-handle {
-  display: none !important;
+.item-text {
+  flex-grow: 1;
 }
 
 /* ==========================================================================
    UTILITIES
    ========================================================================== */
+
+/* Collapse Stack Indicator */
+.collapse-stack-indicator {
+  position: absolute;
+  bottom: -22px;
+  /* Increased to fit text */
+  left: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.expand-text {
+  font-size: 8px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+  font-weight: 700;
+}
+
+.stack-layer {
+  height: 2px;
+  background: #ccc;
+  border-radius: 1px;
+  border: 1px solid #999;
+  width: 100%;
+}
+
+.stack-layer-1 {
+  margin: 0 4px;
+}
+
+.stack-layer-2 {
+  margin: 0 8px;
+}
 
 .data-preview {
   padding: 15px;

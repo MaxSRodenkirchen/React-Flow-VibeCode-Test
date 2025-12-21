@@ -1,31 +1,5 @@
 import React, { useState } from 'react';
-
-const nodeTypes = [
-    {
-        type: 'input',
-        label: 'Logic Controller',
-        elements: [
-            { label: 'Title', type: 'title', content: 'Logic Controller' },
-            { label: 'Description', type: 'list', items: ['Main processing unit', 'Handles all math'] },
-            { label: 'Inputs', type: 'list', items: ['Data Stream A', 'Clock Signal'] },
-            { label: 'Variables', type: 'list', items: ['Counter', 'State'] },
-            { label: 'Steps', type: 'list', items: ['Initialize', 'Execute', 'Finalize'] },
-            { label: 'Outcome', type: 'list', items: ['Result', 'Error Flag'] }
-        ]
-    },
-    {
-        type: 'default',
-        label: 'Generic Step',
-        elements: [
-            { label: 'Title', type: 'title', content: 'Generic Step' },
-            { label: 'Description', type: 'list', items: ['A simple action step'] },
-            { label: 'Inputs', type: 'list', items: ['Signal'] },
-            { label: 'Variables', type: 'list', items: [] },
-            { label: 'Steps', type: 'list', items: ['Do action'] },
-            { label: 'Outcome', type: 'list', items: ['Success'] }
-        ]
-    }
-];
+import { nodesLibrary as nodeTypes } from './nodesLibrary';
 
 
 
@@ -33,27 +7,31 @@ const nodeTypes = [
 export default function Sidebar({ customTemplates = [] }) {
     const [search, setSearch] = useState('');
 
-    const onDragStart = (event, nodeType, label, elements) => {
-        event.dataTransfer.setData('application/reactflow', nodeType);
-        event.dataTransfer.setData('application/reactflow-label', label);
-        event.dataTransfer.setData('application/reactflow-elements', JSON.stringify(elements));
+    const onDragStart = (event, node) => {
+        console.log('Drag start:', node.label, node.type);
+        event.dataTransfer.setData('application/reactflow', node.type);
+        event.dataTransfer.setData('application/reactflow-label', node.label);
+        event.dataTransfer.setData('application/reactflow-data', JSON.stringify(node.data));
         event.dataTransfer.effectAllowed = 'move';
     };
 
     const allNodes = [...nodeTypes, ...customTemplates];
 
     const getNodeDescription = (node) => {
-        const descElement = node.elements?.find(el => el.label === 'Description');
+        // Handle both old and new data structures
+        const elements = node.data?.elements || node.elements || [];
+        const descElement = elements.find(el => el.label === 'Description' || el.label === 'Desc');
         if (descElement && descElement.items && descElement.items.length > 0) {
             return descElement.items[0];
         }
-        return node.description || '';
+        return node.data?.description || node.description || '';
     };
 
     const filteredNodes = allNodes.filter(node => {
         const desc = getNodeDescription(node);
         return node.label.toLowerCase().includes(search.toLowerCase()) ||
-            desc.toLowerCase().includes(search.toLowerCase());
+            desc.toLowerCase().includes(search.toLowerCase()) ||
+            (node.data?.phase || '').toLowerCase().includes(search.toLowerCase());
     });
 
     return (
@@ -61,7 +39,7 @@ export default function Sidebar({ customTemplates = [] }) {
             <div className="description">You can drag these nodes to the pane on the right.</div>
             <input
                 type="text"
-                placeholder="Search nodes..."
+                placeholder="Search nodes or phases..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="search-input"
@@ -69,14 +47,21 @@ export default function Sidebar({ customTemplates = [] }) {
             <div className="nodes-list">
                 {filteredNodes.map((node, index) => {
                     const desc = getNodeDescription(node);
+                    const phaseColor = node.data?.phaseColor || '#eee';
+                    const phase = node.data?.phase || '';
+
                     return (
                         <div
                             key={index}
                             className={`dndnode ${node.type}`}
-                            onDragStart={(event) => onDragStart(event, node.type, node.label, node.elements)}
+                            onDragStart={(event) => onDragStart(event, node)}
                             draggable
+                            style={{ borderLeft: `5px solid ${phaseColor}` }}
                         >
-                            <strong>{node.label}</strong>
+                            <div className="node-sidebar-header">
+                                <strong>{node.label}</strong>
+                                {phase && <span className="phase-badge" style={{ color: phaseColor }}>{phase}</span>}
+                            </div>
                             {desc && <div className="node-desc">{desc}</div>}
                         </div>
                     );

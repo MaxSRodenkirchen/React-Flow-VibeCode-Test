@@ -1,0 +1,30 @@
+views:
+  - type: table
+    name: Table
+    filters:
+      and:
+        - file.folder.startsWith("20 Pattern")
+    groupBy:
+      property: file.folder
+      direction: ASC
+    order:
+      - file.basename
+    columnSize:
+      file.name: 956
+  - type: cards
+    name: View
+    filters:
+      and:
+        - file.folder.startsWith("20 Pattern")
+    groupBy:
+      property: file.folder
+      direction: ASC
+  - type: list
+    name: View 2
+    filters:
+      and:
+        - file.folder.startsWith("Pattern")
+    groupBy:
+      property: file.folder
+      direction: ASC
+    indentProperties: false

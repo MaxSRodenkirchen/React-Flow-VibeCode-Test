@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useMemo } from 'react';
+import React, { useState, useRef, useCallback, useMemo, useEffect } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -14,6 +14,7 @@ import Sidebar from './Sidebar';
 import CustomNode from './CustomNode';
 import NodeCreator from './NodeCreator';
 import NodeEditor from './NodeEditor';
+import HelperLines from './HelperLines';
 import { saveProject, loadProject, clearProject, saveTemplates, loadTemplates } from './dataService';
 import './App.css';
 
@@ -28,7 +29,7 @@ let id = 0;
 const getId = () => `dndnode_${id++}`;
 
 const defaultEdgeOptions = {
-  type: 'step',
+  type: 'default',
   style: { stroke: '#000', strokeWidth: 10, opacity: 0.5 },
 };
 
@@ -41,8 +42,25 @@ const App = () => {
   const [customTemplates, setCustomTemplates] = useState(() => loadTemplates());
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [allNodesCollapsed, setAllNodesCollapsed] = useState(false);
+  const [helperLineHorizontal, setHelperLineHorizontal] = useState(null);
+  const [helperLineVertical, setHelperLineVertical] = useState(null);
 
-  const onConnect = useCallback((params) => setEdges((eds) => addEdge({ ...params, type: 'step', style: { stroke: '#000', strokeWidth: 10, opacity: 0.5 } }, eds)), []);
+  const onConnect = useCallback((params) => {
+    const isFlow = params.sourceHandle?.includes('flow') || params.targetHandle?.includes('flow');
+    const edgeParams = {
+      ...params,
+      type: 'default',
+      animated: isFlow,
+      style: {
+        stroke: '#000',
+        strokeWidth: 10,
+        opacity: 0.5,
+        strokeDasharray: isFlow ? '15, 15' : 'none'
+      },
+      data: { isFlow }
+    };
+    setEdges((eds) => addEdge(edgeParams, eds));
+  }, [setEdges]);
 
   const onSave = useCallback(() => {
     if (reactFlowInstance) {
@@ -115,22 +133,46 @@ const App = () => {
     (event) => {
       event.preventDefault();
 
+      if (!reactFlowInstance) {
+        console.error('React Flow instance not ready for drop');
+        return;
+      }
+
       const type = event.dataTransfer.getData('application/reactflow');
       const label = event.dataTransfer.getData('application/reactflow-label');
+      const dataStr = event.dataTransfer.getData('application/reactflow-data');
       const elementsStr = event.dataTransfer.getData('application/reactflow-elements');
-      const elements = elementsStr ? JSON.parse(elementsStr) : [];
 
-      if (typeof type === 'undefined' || !type) return;
+      console.log('Drop detected:', { type, label, hasData: !!dataStr, hasElements: !!elementsStr });
+
+      if (!type) return;
 
       const position = reactFlowInstance.screenToFlowPosition({
         x: event.clientX,
         y: event.clientY,
       });
+
+      let data = { label };
+      if (dataStr) {
+        try {
+          const parsedData = JSON.parse(dataStr);
+          data = { ...data, ...parsedData };
+        } catch (e) {
+          console.error('Error parsing node data', e);
+        }
+      } else if (elementsStr) {
+        try {
+          data.elements = JSON.parse(elementsStr);
+        } catch (e) {
+          console.error('Error parsing elements data', e);
+        }
+      }
+
       const newNode = {
         id: getId(),
         type,
         position,
-        data: { label, elements },
+        data,
       };
 
       setNodes((nds) => nds.concat(newNode));
@@ -138,29 +180,178 @@ const App = () => {
     [reactFlowInstance, setNodes]
   );
 
+  const onNodeDrag = useCallback(
+    (event, node) => {
+      const SNAP_THRESHOLD = 15;
+      let horizontal = null;
+      let vertical = null;
+
+      // Extract current bounds (x, y are top-left)
+      const nX = node.position.x;
+      const nY = node.position.y;
+      const nW = node.width || 0;
+      const nH = node.height || 0;
+      const nCX = nX + nW / 2;
+      const nCY = nY + nH / 2;
+
+      const others = nodes.filter((n) => n.id !== node.id);
+
+      for (const target of others) {
+        const tX = target.position.x;
+        const tY = target.position.y;
+        const tW = target.width || 0;
+        const tH = target.height || 0;
+        const tCX = tX + tW / 2;
+        const tCY = tY + tH / 2;
+
+        // X-Axis Snapping (Vertical Lines)
+        // Left to Left
+        if (Math.abs(nX - tX) < SNAP_THRESHOLD) { node.position.x = tX; vertical = tX; }
+        // Right to Right
+        else if (Math.abs((nX + nW) - (tX + tW)) < SNAP_THRESHOLD) { node.position.x = tX + tW - nW; vertical = tX + tW; }
+        // Center to Center
+        else if (Math.abs(nCX - tCX) < SNAP_THRESHOLD) { node.position.x = tCX - nW / 2; vertical = tCX; }
+
+        // Y-Axis Snapping (Horizontal Lines)
+        // Top to Top
+        if (Math.abs(nY - tY) < SNAP_THRESHOLD) { node.position.y = tY; horizontal = tY; }
+        // Bottom to Bottom
+        else if (Math.abs((nY + nH) - (tY + tH)) < SNAP_THRESHOLD) { node.position.y = tY + tH - nH; horizontal = tY + tH; }
+        // Center to Center
+        else if (Math.abs(nCY - tCY) < SNAP_THRESHOLD) { node.position.y = tCY - nH / 2; horizontal = tCY; }
+      }
+
+      // DISTANCE SNAPPING (Equal spacing)
+      // If we are moving Node C, find distance between A and B, then check if C's distance to B matches.
+      if (others.length >= 2) {
+        for (let i = 0; i < others.length; i++) {
+          for (let j = 0; j < others.length; j++) {
+            if (i === j) continue;
+            const nodeA = others[i];
+            const nodeB = others[j];
+
+            // horizontal distance
+            const distAB = nodeB.position.x - (nodeA.position.x + (nodeA.width || 0));
+            if (distAB > 0) {
+              const targetX = nodeB.position.x + (nodeB.width || 0) + distAB;
+              if (Math.abs(node.position.x - targetX) < SNAP_THRESHOLD) {
+                node.position.x = targetX;
+                vertical = targetX;
+              }
+            }
+
+            // vertical distance
+            const distV_AB = nodeB.position.y - (nodeA.position.y + (nodeA.height || 0));
+            if (distV_AB > 0) {
+              const targetY = nodeB.position.y + (nodeB.height || 0) + distV_AB;
+              if (Math.abs(node.position.y - targetY) < SNAP_THRESHOLD) {
+                node.position.y = targetY;
+                horizontal = targetY;
+              }
+            }
+          }
+        }
+      }
+
+      setHelperLineHorizontal(horizontal);
+      setHelperLineVertical(vertical);
+    },
+    [nodes]
+  );
+
+  const onNodeDragStop = useCallback(() => {
+    setHelperLineHorizontal(null);
+    setHelperLineVertical(null);
+  }, []);
+
   const selectedNode = nodes.find(n => n.id === selectedNodeId);
 
+  const onNodeDoubleClick = useCallback((event, node) => {
+    setNodes((nds) =>
+      nds.map((n) => {
+        if (n.id === node.id) {
+          return { ...n, data: { ...n.data, collapsed: !n.data.collapsed } };
+        }
+        return n;
+      })
+    );
+  }, [setNodes]);
+
+  const onEdgeDoubleClick = useCallback((event, edge) => {
+    const newLabel = window.prompt('Enter condition/label for this edge:', edge.label || '');
+    if (newLabel !== null) {
+      setEdges((eds) =>
+        eds.map((e) => {
+          if (e.id === edge.id) {
+            return { ...e, label: newLabel, labelStyle: { fill: '#000', fontWeight: 700 } };
+          }
+          return e;
+        })
+      );
+    }
+  }, [setEdges]);
+
+  const connectedHandleIds = useMemo(() => {
+    const ids = new Set();
+    edges.forEach((edge) => {
+      if (edge.sourceHandle) ids.add(`${edge.source}-${edge.sourceHandle}`);
+      if (edge.targetHandle) ids.add(`${edge.target}-${edge.targetHandle}`);
+    });
+    return Array.from(ids);
+  }, [edges]);
+
+  const displayNodes = useMemo(() => {
+    return nodes.map((node) => ({
+      ...node,
+      data: {
+        ...node.data,
+        connectedHandleIds: connectedHandleIds.filter(id => id.startsWith(`${node.id}-`)).map(id => id.replace(`${node.id}-`, ''))
+      }
+    }));
+  }, [nodes, allNodesCollapsed, connectedHandleIds]);
+
   const displayEdges = useMemo(() => {
-    if (!allNodesCollapsed) return edges;
-
     return edges.map((edge) => {
-      const sourceNode = nodes.find((n) => n.id === edge.source);
-      const targetNode = nodes.find((n) => n.id === edge.target);
-
-      if (!sourceNode || !targetNode) return edge;
-
-      const sourceDescIndex = sourceNode.data.elements?.findIndex((el) => el.label === 'Description');
-      const targetDescIndex = targetNode.data.elements?.findIndex((el) => el.label === 'Description');
+      const isFlow = edge.data?.isFlow || edge.sourceHandle?.includes('flow') || edge.targetHandle?.includes('flow');
 
       return {
         ...edge,
-        sourceHandle: (sourceDescIndex !== undefined && sourceDescIndex !== -1) ? `source-${sourceDescIndex}` : edge.sourceHandle,
-        targetHandle: (targetDescIndex !== undefined && targetDescIndex !== -1) ? `target-${targetDescIndex}` : edge.targetHandle,
-        type: 'step',
-        style: { stroke: '#000', strokeWidth: 10, opacity: 0.5 }
+        type: 'default', // Force Bezier
+        animated: isFlow,
+        label: edge.label, // Preserve the actual label
+        style: {
+          ...edge.style,
+          strokeDasharray: isFlow ? '15, 15' : 'none'
+        }
       };
     });
-  }, [edges, nodes, allNodesCollapsed]);
+  }, [edges]);
+
+  // Sync all nodes when global toggle is clicked
+  const toggleAllCollapse = useCallback(() => {
+    // If any node is NOT collapsed, then the action should be "Collapse All" (true)
+    // If everything is already collapsed, then "Expand All" (false)
+    const anyExpanded = nodes.some(n => !n.data.collapsed);
+    const nextValue = anyExpanded;
+
+    setAllNodesCollapsed(nextValue);
+    setNodes((nds) => nds.map((n) => ({
+      ...n,
+      data: { ...n.data, collapsed: nextValue }
+    })));
+  }, [nodes, setNodes]);
+
+  // Tab key shortcut for global collapse toggle
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Tab') {
+        event.preventDefault(); // Prevent focus cycling
+        toggleAllCollapse();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [toggleAllCollapse]);
 
   // Live data structure for the Data tab
   const flowData = reactFlowInstance ? reactFlowInstance.toObject() : { nodes, edges };
@@ -174,7 +365,7 @@ const App = () => {
             <button onClick={onLoad} title="Load from LocalStorage">📂</button>
             <button onClick={onExport} title="Export as JSON file">📤</button>
             <button
-              onClick={() => setAllNodesCollapsed(!allNodesCollapsed)}
+              onClick={toggleAllCollapse}
               title={allNodesCollapsed ? "Expand all nodes" : "Collapse all nodes"}
               className={allNodesCollapsed ? "btn-active" : ""}
             >
@@ -215,28 +406,33 @@ const App = () => {
         </div>
         <div className={`reactflow-wrapper ${allNodesCollapsed ? 'nodes-collapsed' : ''}`} ref={reactFlowWrapper}>
           <ReactFlow
-            nodes={nodes}
+            nodes={displayNodes}
             edges={displayEdges}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
-            onInit={setReactFlowInstance}
             onDrop={onDrop}
             onDragOver={onDragOver}
             onNodeClick={onNodeClick}
+            onInit={setReactFlowInstance}
+            onNodeDoubleClick={onNodeDoubleClick}
+            onEdgeDoubleClick={onEdgeDoubleClick}
+            onNodeDrag={onNodeDrag}
+            onNodeDragStop={onNodeDragStop}
             nodeTypes={nodeTypes}
-            defaultEdgeOptions={defaultEdgeOptions}
-            connectionLineType="step"
-            connectionLineStyle={{ stroke: '#000', strokeWidth: 10, opacity: 0.5 }}
+            connectionLineType="smoothstep"
             fitView
+            snapToGrid={true}
+            snapGrid={[25, 25]}
+            zoomOnDoubleClick={false}
           >
+            <Background variant="lines" color="#ddd" gap={25} />
             <Controls />
-            <MiniMap />
-            <Background variant="dots" gap={12} size={1} />
+            <HelperLines horizontal={helperLineHorizontal} vertical={helperLineVertical} />
           </ReactFlow>
         </div>
-      </ReactFlowProvider>
-    </div>
+      </ReactFlowProvider >
+    </div >
   );
 };
 
