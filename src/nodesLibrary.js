@@ -5,7 +5,7 @@ export const nodesLibrary = [
         "data": {
             "label": "Meeting mit Kooperationspartern",
             "phase": "Understand",
-            "phaseColor": "#3b82f6",
+            "phaseColor": "var(--main)",
             "elements": [
                 {
                     "label": "Title",
@@ -70,7 +70,7 @@ export const nodesLibrary = [
         "data": {
             "label": "Crossmediale User Journey",
             "phase": "Create",
-            "phaseColor": "#f59e0b",
+            "phaseColor": "var(--main)",
             "elements": [
                 {
                     "label": "Title",
@@ -123,7 +123,7 @@ export const nodesLibrary = [
         "data": {
             "label": "Decision Tree in der Storygame-Konzeption mit Personabezug",
             "phase": "Create",
-            "phaseColor": "#f59e0b",
+            "phaseColor": "var(--main)",
             "elements": [
                 {
                     "label": "Title",
@@ -177,7 +177,7 @@ export const nodesLibrary = [
         "data": {
             "label": "Analoge Designs ins Digitale umsetzen und neugestalten",
             "phase": "Design",
-            "phaseColor": "#ec4899",
+            "phaseColor": "var(--main)",
             "elements": [
                 {
                     "label": "Title",
@@ -230,7 +230,7 @@ export const nodesLibrary = [
         "data": {
             "label": "Audiovisuelle Beispiele zum Bestimmen einer Designrichtung",
             "phase": "Design",
-            "phaseColor": "#ec4899",
+            "phaseColor": "var(--main)",
             "elements": [
                 {
                     "label": "Title",
@@ -293,7 +293,7 @@ export const nodesLibrary = [
         "data": {
             "label": "Click-Dummy",
             "phase": "Design",
-            "phaseColor": "#ec4899",
+            "phaseColor": "var(--main)",
             "elements": [
                 {
                     "label": "Title",
@@ -344,7 +344,7 @@ export const nodesLibrary = [
         "data": {
             "label": "Designsystem entwickeln",
             "phase": "Design",
-            "phaseColor": "#ec4899",
+            "phaseColor": "var(--main)",
             "elements": [
                 {
                     "label": "Title",
@@ -395,7 +395,7 @@ export const nodesLibrary = [
         "data": {
             "label": "Instruktionsgestaltung",
             "phase": "Design",
-            "phaseColor": "#ec4899",
+            "phaseColor": "var(--main)",
             "elements": [
                 {
                     "label": "Title",
@@ -411,7 +411,7 @@ export const nodesLibrary = [
         "data": {
             "label": "Storyentwicklung",
             "phase": "Design",
-            "phaseColor": "#ec4899",
+            "phaseColor": "var(--main)",
             "elements": [
                 {
                     "label": "Title",
@@ -468,7 +468,7 @@ export const nodesLibrary = [
         "data": {
             "label": "Visuelle Ausarbeitung",
             "phase": "Design",
-            "phaseColor": "#ec4899",
+            "phaseColor": "var(--main)",
             "elements": [
                 {
                     "label": "Title",
@@ -528,7 +528,7 @@ export const nodesLibrary = [
         "data": {
             "label": "Wizard of Oz Prototype",
             "phase": "Design",
-            "phaseColor": "#ec4899",
+            "phaseColor": "var(--main)",
             "elements": [
                 {
                     "label": "Title",
@@ -590,7 +590,7 @@ export const nodesLibrary = [
         "data": {
             "label": "Nutzertests",
             "phase": "Evaluate",
-            "phaseColor": "#10b981",
+            "phaseColor": "var(--main)",
             "elements": [
                 {
                     "label": "Title",
@@ -626,7 +626,7 @@ export const nodesLibrary = [
         "data": {
             "label": "Projektdokumentation",
             "phase": "Evaluate",
-            "phaseColor": "#10b981",
+            "phaseColor": "var(--main)",
             "elements": [
                 {
                     "label": "Title",
@@ -677,7 +677,7 @@ export const nodesLibrary = [
         "data": {
             "label": "Projektnachbearbeitung",
             "phase": "Evaluate",
-            "phaseColor": "#10b981",
+            "phaseColor": "var(--main)",
             "elements": [
                 {
                     "label": "Title",
@@ -728,7 +728,7 @@ export const nodesLibrary = [
         "data": {
             "label": "Untitled",
             "phase": "Evaluate",
-            "phaseColor": "#10b981",
+            "phaseColor": "var(--main)",
             "elements": [
                 {
                     "label": "Title",

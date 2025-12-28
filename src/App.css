@@ -31,42 +31,30 @@
 
 body {
   font-family: 'Euclid Flex', sans-serif;
+  background: var(--bg);
+
+}
+
+* {
+  /* outline: 1px solid red !important; */
 }
 
 :root {
-  /* Node Colors */
-  --node-bg: #eaeaeabe;
-  --node-shadow: rgba(0, 0, 0, 0.12);
-  --node-shadow-hover: rgba(0, 0, 0, 0.18);
+  /* Only two global colors */
+  --bg: #555E7A;
+  --shadow: hsl(225, 18%, 38%);
+  --main: #e0e0eb;
 
-  /* Text & UI Colors */
-  --text-primary1: #313131;
-
-  --text-primary: #787878;
-  --text-secondary: #999999;
-  --text-inverse: #ffffff;
-
-  --bg-sidebar: #f8f9fa;
-  --bg-sidebar-tabs: #eeeeee;
-
-  --border-light: #eeeeee;
-  --border-medium: #dddddd;
-
-  --accent-color: #000000;
-  --danger-color: #f44336;
-
-  /* Handle & Flow Colors (Static for regular items) */
-  --handle-bg: #BEBEBE;
-  --handle-border: #BEBEBE;
+  --box-shadow: 4px 4px 0px 0px var(--shadow);
+  --radius: 0px;
+  --border: 1px solid var(--shadow);
+  --gap: 4px;
 
   /* Spacing & Geometry */
-  --canvas-bg: #FFF9EA;
   --node-width: 262px;
-  --node-radius: 20px;
   --node-padding: 5px;
   --row-padding-h: 5px;
   --row-padding-v: 5px;
-  /* Increased from 2px */
   --title-min-height: 10px;
   --item-text-width: 198px;
   --handle-size: 10px;
@@ -74,7 +62,6 @@ body {
   --opacity-medium: 0.25;
   --opacity-high: 0.5;
   --gap-medium: 12px;
-  /* Slightly increased */
 }
 
 /* ==========================================================================
@@ -98,141 +85,97 @@ body {
 
 /* Sidebar area holding all tab content */
 .sidebar-container {
+  padding: 20px;
   width: 350px;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid var(--border-light);
-  background: var(--bg-sidebar);
-  height: 100vh;
+  /* border-right: 1px solid var(--main); */
+  background: var(--bg);
+  height: 100vh - 40px;
   overflow-y: auto;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE und Edge */
+  /* box-shadow: var(--box-shadow); */
+
+}
+
+.sidebar-container::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, Opera */
 }
 
 /* Right-side canvas area */
 .reactflow-wrapper {
   flex-grow: 1;
   height: 100%;
-  background: var(--canvas-bg);
+  background: var(--bg);
 }
 
 /* ==========================================================================
    SIDEBAR UI (Tabs, Toolbar, Search)
    ========================================================================== */
 
-.toolbar {
-  padding: 10px;
-  display: flex;
-  gap: 10px;
-  border-bottom: 1px solid var(--border-light);
-  background: var(--text-inverse);
-}
-
-.toolbar button {
-  background: var(--bg-sidebar-tabs);
-  border: 1px solid var(--border-medium);
-  font-size: 16px;
-  padding: 8px;
-  cursor: pointer;
-  border-radius: 4px;
-  flex: 1;
-  transition: background 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.toolbar button:hover {
-  background: #e0e0e0;
-}
-
-.toolbar button.btn-active {
-  background: var(--accent-color);
-  color: var(--text-inverse);
-}
-
-.toolbar button.btn-clear {
-  background: var(--danger-color) !important;
-  color: var(--text-inverse);
-}
-
-.sidebar-tabs {
-  display: flex;
-  background: var(--bg-sidebar-tabs);
-  padding: 5px;
-  gap: 5px;
-}
-
-.sidebar-tabs button {
-  flex: 1;
-  padding: 8px 5px;
-  border: none;
-  background: transparent;
-  color: #666;
-  font-size: 11px;
-  font-weight: 600;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: all 0.2s;
-}
-
-.sidebar-tabs button.active {
-  background: var(--text-inverse);
-  color: var(--accent-color);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
 
 .search-input {
-  padding: 8px;
-  margin: 15px 10px;
-  border: 1px solid var(--accent-color);
-  border-radius: 20px;
+  padding: 15px 20px;
+  border: var(--border);
+  border-radius: var(--radius);
+  margin: 0;
+  margin-bottom: calc(var(--gap)*4);
+  width: calc(100% - 40px);
+  background: var(--bg);
+  color: var(--main);
+  box-shadow: var(--box-shadow);
+}
+
+.search-input::placeholder {
+  color: var(--main);
+  /* Grauer Placeholder */
+  opacity: 1;
+
+  /* Firefox überschreibt manchmal die opacity */
+}
+
+.search-input:focus {
+  outline: none;
+  /* Entfernt den schwarzen Rand */
+  border: var(--border);
+  /* Behält deinen Border */
+
 }
 
 /* ==========================================================================
    NODE ELEMENTS & TEMPLATES
    ========================================================================== */
 
-/* Templates in the Library Tab */
-.node-sidebar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 4px;
-}
-
-.phase-badge {
-  font-size: 8px;
-  text-transform: uppercase;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  background: rgba(0, 0, 0, 0.05);
-  padding: 2px 5px;
-  border-radius: 3px;
-}
-
 .dndnode {
   height: auto;
-  padding: 12px 15px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  padding: 15px 20px;
+  border-radius: var(--radius);
   display: flex;
   flex-direction: column;
   justify-content: center;
   cursor: grab;
-  background: #fff;
-  transition: all 0.2s;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  margin-bottom: 10px;
+  background: var(--bg);
+  color: var(--main);
+  /* transition: all 0.2s; */
+  margin: 0;
+  margin-bottom: calc(var(--gap)*4);
+  width: calc(100% - 0px);
+  box-sizing: border-box;
+  box-shadow: var(--box-shadow);
+  border: var(--border);
+  font-weight: 300;
+
 }
 
 .dndnode:hover {
-  border-width: 2px;
-}
+  background: var(--bg);
+  color: var(--main);
+  /* border: 1px solid var(--main); */
 
-.node-desc {
-  font-size: 10px;
-  color: #888;
-  margin-top: 4px;
-  line-height: 1.2;
 }
 
 /* ==========================================================================
@@ -250,21 +193,19 @@ body {
 .react-flow__node {
   min-width: var(--node-width) !important;
   width: var(--node-width);
-  border-radius: 16px !important;
-  /* background: transparent !important; */
-  background-color: #ffffff22;
-  /* No fill as requested */
-  /* border: none !important; */
+  border-radius: var(--radius) !important;
+  background-color: var(--bg) !important;
   padding: var(--node-padding) !important;
-  /* Controlled via variable */
-  border-radius: var(--node-radius);
-  /* Shadow for the "card" look */
-  box-shadow: 0 10px 30px var(--node-shadow) !important;
-  transition: box-shadow 0.2s;
+  /* border: 4px solid var(--main) !important; */
+  box-shadow: var(--box-shadow);
+  border: var(--border);
+
+  color: var(--main);
 }
 
 .react-flow__node:hover {
-  box-shadow: 0 15px 40px var(--node-shadow-hover) !important;
+  background-color: var(--bg) !important;
+  color: var(--main) !important;
 }
 
 /* The vertical stack container */
@@ -288,6 +229,7 @@ body {
   background: transparent;
   width: 100%;
   box-sizing: border-box;
+
 }
 
 .element-title-row {
@@ -301,31 +243,25 @@ body {
 /* Title element special styling */
 /* Styling specifically for the TITLE row */
 .element-type-title {
-  color: var(--text-primary);
-  /* Use primary text color instead of white since bg is now light */
+  color: var(--main);
   padding: var(--row-padding-v) var(--row-padding-h);
-  /* Restored horizontal padding for alignment */
-  font-weight: 700;
+  font-weight: 300;
   font-size: 18px;
-  /* Removed uppercase for a more natural look */
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   transition: background-color 0.3s ease;
   min-height: var(--title-min-height);
-  /* Minimum height for consistency */
 }
 
 /* Text label inside a standard (non-title) row */
 .element-label {
   font-size: 18px;
-  font-weight: 600;
-  color: var(--text-primary);
+  font-weight: 500;
+  margin: 10px 0 10px 0;
+  color: inherit;
 }
 
-/* Override label color: ensures title is visible when row unification removes solid bg */
 .element-type-title .element-label {
-  /* color: var(--text-primary) !important; */
-  color: var(--text-primary1) !important;
-
+  color: inherit !important;
 }
 
 /* List item containers inside rows */
@@ -356,18 +292,19 @@ body {
   /* Force alignment with item-text */
 
   font-size: 6px;
-  font-weight: 500;
-  color: var(--text-secondary);
+  font-weight: 300;
+  color: var(--main);
   opacity: 0.3;
   text-transform: uppercase;
   flex-shrink: 0;
+  letter-spacing: 1px;
   /* padding is handled by the parent row container (.element-list-label-row) */
 }
 
 .element-list-label::after {
   content: "";
   flex: 1;
-  border-top: 2px dotted var(--border-medium);
+  border-top: 2px dotted var(--main);
   height: 1px;
   /* Centered perfectly by display: flex of parent */
 }
@@ -389,7 +326,7 @@ body {
   height: var(--handle-size) !important;
   background-color: transparent !important;
   /* Hollow by default */
-  border: 2px solid var(--handle-border) !important;
+  border: 2px solid var(--main) !important;
   /* Static custom color */
   border-radius: 50% !important;
   opacity: var(--opacity-low) !important;
@@ -402,9 +339,8 @@ body {
 }
 
 .element-handle.connected {
-  background-color: var(--handle-bg) !important;
-  /* Static custom color */
-  border-color: var(--handle-border) !important;
+  background-color: var(--main) !important;
+  border-color: var(--main) !important;
   opacity: var(--opacity-high) !important;
 }
 
@@ -440,21 +376,19 @@ body {
   width: var(--handle-size) !important;
   height: var(--handle-size) !important;
   background-color: transparent !important;
-  border: 2px solid var(--node-color) !important;
-  /* Dynamic node color */
+  border: 2px solid var(--bg) !important;
   border-radius: 50% !important;
-  opacity: var(--opacity-low) !important;
-}
-
-.flow-handle:hover {
   opacity: var(--opacity-medium) !important;
 }
 
+.flow-handle:hover {
+  opacity: 1 !important;
+}
+
 .flow-handle.connected {
-  opacity: var(--opacity-high) !important;
-  background-color: var(--node-color) !important;
-  /* Dynamic node color */
-  border-color: var(--node-color) !important;
+  opacity: 1 !important;
+  background-color: var(--bg) !important;
+  border-color: var(--bg) !important;
 }
 
 /* Visible Flow-Handles for Title (White Circles) */
@@ -465,21 +399,16 @@ body {
   transform: none !important;
   top: auto !important;
   background-color: transparent !important;
-  opacity: var(--opacity-low) !important;
-  border: 2px solid var(--node-color) !important;
-  /* Dynamic node color */
+  opacity: var(--opacity-medium) !important;
+  border: 2px solid var(--bg) !important;
   border-radius: 50% !important;
   pointer-events: auto !important;
 }
 
-.element-type-title .flow-handle:hover {
-  opacity: var(--opacity-medium) !important;
-}
-
 .element-type-title .flow-handle.connected {
-  background-color: var(--node-color) !important;
-  border-color: var(--node-color) !important;
-  opacity: var(--opacity-high) !important;
+  background-color: var(--bg) !important;
+  border-color: var(--bg) !important;
+  opacity: 1 !important;
 }
 
 .placeholder-handle {
@@ -505,28 +434,25 @@ body {
    EDGE ANIMATIONS & LABELS
    ========================================================================== */
 
-/* Match connection line preview style: dashed, animated, but with less opacity */
+/* Connection line preview (beim Draggen) */
 .react-flow__connection-path {
-  stroke-dasharray: 15, 15;
-  animation: flowAnimation 3s linear infinite;
-  opacity: var(--opacity-medium) !important;
-  /* Unified preview opacity */
+  stroke: var(--main);
+  opacity: var(--opacity-high) !important;
   stroke-width: 10 !important;
 }
 
-/* Smooth dashed animation */
+/* Connected edges */
 .react-flow__edge-path {
+  stroke: var(--main);
   stroke-dasharray: 15, 15;
   stroke-dashoffset: 0;
-  opacity: var(--opacity-low) !important;
-  /* Unified default edge opacity */
+  opacity: var(--opacity-high) !important;
   stroke-width: 10 !important;
 }
 
 /* Hover effect for all edges */
 .react-flow__edge:hover .react-flow__edge-path {
-  opacity: var(--opacity-high) !important;
-  /* Unified hover edge opacity */
+  opacity: 1 !important;
 }
 
 /* Target only animated edges */
@@ -546,33 +472,33 @@ body {
 
 /* Edge Labels (Conditions) */
 .react-flow__edge-label {
-  background: var(--text-inverse);
+  background: var(--main);
   padding: 4px 10px;
   border-radius: 20px;
   font-size: 10px;
-  font-weight: 700;
-  color: var(--text-primary);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-weight: 300;
+  color: var(--bg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   pointer-events: all;
   cursor: pointer;
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--main);
 }
 
 .react-flow__edge-label:hover {
-  background: #f0f0f0;
+  background: var(--main);
+  filter: brightness(0.9);
 }
 
 /* Selected Edge Highlight */
 .react-flow__edge.selected .react-flow__edge-path {
-  stroke: var(--accent-color) !important;
+  stroke: var(--main) !important;
   opacity: var(--opacity-high) !important;
-  /* Unified active edge opacity */
   stroke-width: 12 !important;
 }
 
 .react-flow__edge.selected .react-flow__edge-label {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  border-color: var(--accent-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  border-color: var(--main);
 }
 
 /* ==========================================================================
@@ -583,7 +509,7 @@ body {
   position: relative;
   padding: var(--row-padding-v) 0;
   font-size: 10px;
-  color: var(--text-primary);
+  color: var(--main);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -607,64 +533,49 @@ body {
   /* Removed double padding, handled by row containers */
 }
 
-/* ==========================================================================
-   DEBUG MODE
-   ========================================================================== */
-.custom-node-stacked *,
-.react-flow__node * {
-  /* outline: 0.2px solid red !important; */
-}
 
 /* ==========================================================================
    UTILITIES
    ========================================================================== */
 
-/* Collapse Stack Indicator */
-.collapse-stack-indicator {
+.collapse-expand-text {
   position: absolute;
-  bottom: -22px;
-  /* Increased to fit text */
-  left: 10px;
-  right: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
+  bottom: -14px;
+  left: 32px;
+  /* Aligned with internal content text */
+  font-size: 6px;
+  font-weight: 300;
+  color: var(--main);
+  opacity: 0.3;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   pointer-events: none;
-  z-index: -1;
 }
 
 .expand-text {
-  font-size: 8px;
-  color: #888;
+  font-size: 6px;
+  color: var(--main);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   margin-top: 2px;
-  font-weight: 700;
+  opacity: 0.3;
+  padding-left: 25px;
+
+  font-weight: 300;
 }
 
-.stack-layer {
-  height: 2px;
-  background: #ccc;
-  border-radius: 1px;
-  border: 1px solid #999;
-  width: 100%;
+/* ==========================================================================
+   HIDE DEFAULT REACT FLOW UI ELEMENTS
+   ========================================================================== */
+
+.react-flow__controls {
+  display: none !important;
 }
 
-.stack-layer-1 {
-  margin: 0 4px;
+.react-flow__minimap {
+  display: none !important;
 }
 
-.stack-layer-2 {
-  margin: 0 8px;
-}
-
-.data-preview {
-  padding: 15px;
-  background: #111;
-  color: #0f0;
-  font-family: monospace;
-  font-size: 10px;
-  height: 100%;
-  border-top: 1px solid #333;
+.react-flow__attribution {
+  display: none !important;
 }

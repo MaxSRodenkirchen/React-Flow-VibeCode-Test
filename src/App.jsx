@@ -12,8 +12,6 @@ import 'reactflow/dist/style.css';
 
 import Sidebar from './Sidebar';
 import CustomNode from './CustomNode';
-import NodeCreator from './NodeCreator';
-import NodeEditor from './NodeEditor';
 import HelperLines from './HelperLines';
 import { saveProject, loadProject, clearProject, saveTemplates, loadTemplates } from './dataService';
 import './App.css';
@@ -41,13 +39,13 @@ const App = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
-  const [activeTab, setActiveTab] = useState('library');
   const [customTemplates, setCustomTemplates] = useState(() => loadTemplates());
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [allNodesCollapsed, setAllNodesCollapsed] = useState(false);
   const [helperLineHorizontal, setHelperLineHorizontal] = useState(null);
   const [helperLineVertical, setHelperLineVertical] = useState(null);
   const [connectionLineColor, setConnectionLineColor] = useState('#787878');
+  const [isFlowConnection, setIsFlowConnection] = useState(false);
 
   const onConnect = useCallback((params) => {
     const isFlowSource = params.sourceHandle?.includes('flow');
@@ -56,8 +54,9 @@ const App = () => {
     const sourceNode = nodes.find(n => n.id === params.source);
     const nodeColor = sourceNode?.data?.phaseColor || '#787878';
 
-    // Use dynamic color only if outgoing from a flow handle
-    const edgeColor = isFlowSource ? nodeColor : '#787878';
+    // Use dynamic color only if outgoing from a flow handle, otherwise use --main
+    const mainColor = getComputedStyle(document.documentElement).getPropertyValue('--main').trim();
+    const edgeColor = isFlowSource ? nodeColor : mainColor;
 
     const isFlow = isFlowSource || params.targetHandle?.includes('flow');
 
@@ -77,6 +76,7 @@ const App = () => {
 
   const onConnectStart = useCallback((_, { nodeId, handleId }) => {
     const isFlowStart = handleId?.includes('flow');
+    setIsFlowConnection(isFlowStart);
 
     if (isFlowStart) {
       const node = nodes.find((n) => n.id === nodeId);
@@ -92,6 +92,7 @@ const App = () => {
 
   const onConnectEnd = useCallback(() => {
     setConnectionLineColor('#787878');
+    setIsFlowConnection(false);
   }, []);
 
   const onSave = useCallback(() => {
@@ -137,12 +138,10 @@ const App = () => {
     const newTemplates = [...customTemplates, template];
     setCustomTemplates(newTemplates);
     saveTemplates(newTemplates);
-    setActiveTab('library');
   }, [customTemplates]);
 
   const onNodeClick = useCallback((event, node) => {
     setSelectedNodeId(node.id);
-    setActiveTab('edit');
   }, []);
 
   const onUpdateNode = useCallback((nodeId, newData) => {
@@ -392,49 +391,7 @@ const App = () => {
     <div className="dndflow">
       <ReactFlowProvider>
         <div className="sidebar-container">
-          <div className="toolbar">
-            <button onClick={onSave} title="Save to LocalStorage">💾</button>
-            <button onClick={onLoad} title="Load from LocalStorage">📂</button>
-            <button onClick={onExport} title="Export as JSON file">📤</button>
-            <button
-              onClick={toggleAllCollapse}
-              title={allNodesCollapsed ? "Expand all nodes" : "Collapse all nodes"}
-              className={allNodesCollapsed ? "btn-active" : ""}
-            >
-              {allNodesCollapsed ? "↕️" : "↕️"}
-            </button>
-            <button onClick={onClear} title="Clear Canvas" className="btn-clear">🗑️</button>
-          </div>
-
-          <div className="sidebar-tabs">
-            <button
-              className={activeTab === 'library' ? 'active' : ''}
-              onClick={() => setActiveTab('library')}
-            >Library</button>
-            <button
-              className={activeTab === 'builder' ? 'active' : ''}
-              onClick={() => setActiveTab('builder')}
-            >Builder</button>
-            <button
-              className={activeTab === 'edit' ? 'active' : ''}
-              onClick={() => setActiveTab('edit')}
-            >Edit</button>
-            <button
-              className={activeTab === 'data' ? 'active' : ''}
-              onClick={() => setActiveTab('data')}
-            >Data</button>
-          </div>
-
-          <div className="tab-content">
-            {activeTab === 'library' && <Sidebar customTemplates={customTemplates} />}
-            {activeTab === 'builder' && <NodeCreator onAddTemplate={onAddTemplate} />}
-            {activeTab === 'edit' && <NodeEditor selectedNode={selectedNode} onUpdateNode={onUpdateNode} />}
-            {activeTab === 'data' && (
-              <div className="data-preview">
-                <pre>{JSON.stringify(flowData, null, 2)}</pre>
-              </div>
-            )}
-          </div>
+          <Sidebar customTemplates={customTemplates} />
         </div>
         <div className={`reactflow-wrapper ${allNodesCollapsed ? 'nodes-collapsed' : ''}`} ref={reactFlowWrapper}>
           <ReactFlow
@@ -455,10 +412,11 @@ const App = () => {
             onConnectEnd={onConnectEnd}
             nodeTypes={nodeTypes}
             edgeTypes={edgeTypes}
-            connectionLineType="smoothstep"
+            connectionLineType="default"
             connectionLineStyle={{
               stroke: connectionLineColor,
               strokeWidth: 10,
+              strokeDasharray: isFlowConnection ? '15, 15' : 'none',
             }}
             fitView
             snapToGrid={true}
