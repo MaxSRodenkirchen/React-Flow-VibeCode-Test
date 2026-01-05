@@ -4,7 +4,7 @@ import { nodesLibrary as nodeTypes } from './nodesLibrary';
 
 
 
-export default function Sidebar({ customTemplates = [] }) {
+export default function Sidebar({ customTemplates = [], onSave, onExport, onLoad, onClear }) {
     const [search, setSearch] = useState('');
 
     const onDragStart = (event, node) => {
@@ -23,6 +23,14 @@ export default function Sidebar({ customTemplates = [] }) {
 
     return (
         <aside className="sidebar">
+            {/* Toolbar Section */}
+            <div className="sidebar-toolbar">
+                <button onClick={onSave} title="Save Project">Save</button>
+                <button onClick={onExport} title="Export to JSON">Export</button>
+                <button onClick={onLoad} title="Load Project">Load</button>
+                <button onClick={onClear} className="btn-clear" title="Clear Canvas">Clear</button>
+            </div>
+
             <input
                 type="text"
                 placeholder="Search nodes..."
@@ -30,6 +38,7 @@ export default function Sidebar({ customTemplates = [] }) {
                 onChange={(e) => setSearch(e.target.value)}
                 className="search-input"
             />
+
             <div className="nodes-list">
                 {filteredNodes.map((node, index) => (
                     <div
