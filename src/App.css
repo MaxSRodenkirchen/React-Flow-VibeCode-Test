@@ -6,35 +6,39 @@
    FONTS
    ========================================================================== */
 @font-face {
-  font-family: 'mononoki';
-  src: url('./assets/fonts/mononoki_monospace/mononoki-Regular.ttf') format('truetype');
+  font-family: "mononoki";
+  src: url("./assets/fonts/mononoki_monospace/mononoki-Regular.ttf")
+    format("truetype");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'mononoki';
-  src: url('./assets/fonts/mononoki_monospace/mononoki-Bold.ttf') format('truetype');
+  font-family: "mononoki";
+  src: url("./assets/fonts/mononoki_monospace/mononoki-Bold.ttf")
+    format("truetype");
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'mononoki';
-  src: url('./assets/fonts/mononoki_monospace/mononoki-Italic.ttf') format('truetype');
+  font-family: "mononoki";
+  src: url("./assets/fonts/mononoki_monospace/mononoki-Italic.ttf")
+    format("truetype");
   font-weight: 400;
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'mononoki';
-  src: url('./assets/fonts/mononoki_monospace/mononoki-BoldItalic.ttf') format('truetype');
+  font-family: "mononoki";
+  src: url("./assets/fonts/mononoki_monospace/mononoki-BoldItalic.ttf")
+    format("truetype");
   font-weight: 700;
   font-style: italic;
 }
 
 body {
-  font-family: 'mononoki', monospace;
+  font-family: "mononoki", monospace;
   background-color: var(--bg);
   position: relative;
   overflow-x: hidden;
@@ -47,7 +51,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('./assets/textures/Paper004_1K-PNG_Displacement.png');
+  background-image: url("./assets/textures/Paper004_1K-PNG_Displacement.png");
   background-repeat: repeat;
   opacity: 0.1;
   /* Very subtle */
@@ -56,8 +60,6 @@ body::before {
   pointer-events: none;
   z-index: -1;
 }
-
-
 
 :root {
   /* New palette as provided */
@@ -134,7 +136,8 @@ body::before {
   -ms-overflow-style: none;
   /* IE und Edge */
   /* box-shadow: var(--box-shadow); */
-  transition: transform 0.3s ease, width 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.3s ease, width 0.3s ease, padding 0.3s ease,
+    opacity 0.3s ease;
   transform-origin: left;
 }
 
@@ -194,7 +197,6 @@ body::before {
    SIDEBAR UI (Tabs, Toolbar, Search)
    ========================================================================== */
 
-
 .search-input {
   padding: 10px 15px;
   /* Smaller padding */
@@ -202,7 +204,7 @@ body::before {
   /* Prepared for focus/selection */
   border-radius: var(--radius);
   margin: 0;
-  margin-bottom: calc(var(--gap)*4);
+  margin-bottom: calc(var(--gap) * 4);
   width: 100%;
   /* Use full width of container padding */
   background: rgba(241, 247, 238, var(--fill-opacity));
@@ -283,7 +285,7 @@ body::before {
   color: var(--main);
   /* transition: all 0.2s; */
   margin: 0;
-  margin-bottom: calc(var(--gap)*4);
+  margin-bottom: calc(var(--gap) * 4);
   width: 100%;
   box-sizing: border-box;
   /* box-shadow: var(--box-shadow); */
@@ -357,7 +359,6 @@ body::before {
   background: transparent;
   width: 100%;
   box-sizing: border-box;
-
 }
 
 .element-title-row {
@@ -546,8 +547,6 @@ body::before {
   visibility: hidden;
 }
 
-
-
 /* Hide standard handles in the title bar (logical handles only) */
 .title-standard-handle {
   opacity: 0 !important;
@@ -662,7 +661,6 @@ body::before {
   padding: 0;
   /* Removed double padding, handled by row containers */
 }
-
 
 /* ==========================================================================
    UTILITIES
