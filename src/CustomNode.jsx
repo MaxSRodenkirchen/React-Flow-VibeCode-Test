@@ -1,21 +1,42 @@
 import React, { memo } from 'react';
+import { useStore } from 'reactflow';
 import NodeTitle from './components/node/NodeTitle';
 import NodeListElement from './components/node/NodeListElement';
 
-/**
- * CustomNode Component
- * The main node component used in the React Flow canvas.
- * Orchestrates its sub-components and handles the collapse/expand state.
- */
+const zoomSelector = (s) => s.transform[2] || 1;
+
 const CustomNode = ({ data, isConnectable }) => {
-    const isCollapsed = !!data.collapsed;
+    const zoom = useStore(zoomSelector);
+
+    // 1. Determine Individual Override (from Double Click)
+    const localOverride = data.collapseState;
+
+    // 2. Determine Global Mode (from Toolbar/Auto)
+    const globalMode = data.globalCollapseMode !== undefined ? data.globalCollapseMode : 'auto';
+
+    // 3. Calculate Zoom-based LOD
+    let zoomLOD = 0;
+    if (zoom <= 0.5) zoomLOD = 2; // Compact / Titles
+    else if (zoom <= 0.8) zoomLOD = 1; // Balanced / Connected
+
+    // 4. Resolve Final State
+    // Priority: Local Double-Click > Global Forced Mode > Zoom-LOD
+    let collapseState = 0;
+    if (localOverride !== undefined) {
+        collapseState = localOverride;
+    } else if (globalMode !== 'auto') {
+        collapseState = globalMode;
+    } else {
+        collapseState = zoomLOD;
+    }
+
     const connectedHandleIds = data.connectedHandleIds || [];
     const phaseColor = data.phaseColor || '#000';
     const elements = data.elements || [];
 
     return (
         <div
-            className={`custom-node-stacked ${isCollapsed ? 'node-is-collapsed' : ''}`}
+            className={`custom-node-stacked collapse-state-${collapseState}`}
             style={{
                 borderColor: phaseColor,
                 '--node-color': phaseColor
@@ -25,7 +46,6 @@ const CustomNode = ({ data, isConnectable }) => {
                 const isTitle = element.type === 'title';
 
                 // --- Smart Collapse Logic ---
-                // We decide if this specific element (segment of the node) should be visible.
                 const hasConnectedHandles = connectedHandleIds.some(
                     h => h.startsWith(`target-${index}`) || h.startsWith(`source-${index}`)
                 );
@@ -34,8 +54,15 @@ const CustomNode = ({ data, isConnectable }) => {
                     connectedHandleIds.includes(`source-${index}-${itemIndex}`)
                 );
 
-                // Logic: Show if it's NOT collapsed, OR if it's the title, OR it has active connections.
-                const shouldShowElement = !isCollapsed || isTitle || hasConnectedHandles || hasConnectedSubItems;
+                // State 0: Show everything
+                // State 1: Show title OR anything with connections
+                // State 2: Show only title
+                let shouldShowElement = true;
+                if (collapseState === 1) {
+                    shouldShowElement = isTitle || hasConnectedHandles || hasConnectedSubItems;
+                } else if (collapseState === 2) {
+                    shouldShowElement = isTitle;
+                }
 
                 if (!shouldShowElement) return null;
 
@@ -57,7 +84,7 @@ const CustomNode = ({ data, isConnectable }) => {
                                 <NodeListElement
                                     element={element}
                                     index={index}
-                                    isCollapsed={isCollapsed}
+                                    isCollapsed={collapseState === 1}
                                     isConnectable={isConnectable}
                                     connectedHandleIds={connectedHandleIds}
                                 />
@@ -67,14 +94,6 @@ const CustomNode = ({ data, isConnectable }) => {
                 );
             })}
 
-            {/* Stack indicator shown when collapsed to hint at hidden content */}
-            {isCollapsed && (
-                <div className="collapse-stack-indicator">
-                    <div className="stack-layer stack-layer-1" style={{ backgroundColor: phaseColor }} />
-                    <div className="stack-layer stack-layer-2" style={{ backgroundColor: phaseColor }} />
-                    <span className="expand-text">expand for more</span>
-                </div>
-            )}
         </div>
     );
 };

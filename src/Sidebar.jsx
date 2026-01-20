@@ -4,7 +4,7 @@ import { nodesLibrary as nodeTypes } from './nodesLibrary';
 
 
 
-export default function Sidebar({ customTemplates = [], onSave, onExport, onLoad, onClear }) {
+export default function Sidebar({ customTemplates = [], onSave, onExport, onLoad, onClear, onAddNode }) {
     const [search, setSearch] = useState('');
 
     const onDragStart = (event, node) => {
@@ -45,6 +45,7 @@ export default function Sidebar({ customTemplates = [], onSave, onExport, onLoad
                         key={index}
                         className={`dndnode ${node.type}`}
                         onDragStart={(event) => onDragStart(event, node)}
+                        onMouseUp={() => onAddNode(node)}
                         draggable
                     >
                         <strong>{node.label}</strong>

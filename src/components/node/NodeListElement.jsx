@@ -10,9 +10,9 @@ const NodeListElement = ({ element, index, isCollapsed, isConnectable, connected
         <>
             {/* Label for the list section */}
             <div className="element-list-label-row">
-                <div className="element-handle placeholder-handle"></div>
+                <div className="placeholder-handle"></div>
                 <div className="item-text element-list-label">{element.label}</div>
-                <div className="element-handle placeholder-handle"></div>
+                <div className="placeholder-handle"></div>
             </div>
 
             {/* List of items */}

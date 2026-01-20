@@ -20,18 +20,24 @@ const nodeTypes = {
   default: CustomNode,
 };
 
-let id = 0;
-const getId = () => `dndnode_${id++}`;
+const getId = () => `node_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
 
 const App = () => {
   const reactFlowWrapper = useRef(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState(() => {
+    const saved = localStorage.getItem('react-flow-save-state');
+    return saved ? JSON.parse(saved).nodes : [];
+  });
+  const [edges, setEdges, onEdgesChange] = useEdgesState(() => {
+    const saved = localStorage.getItem('react-flow-save-state');
+    return saved ? JSON.parse(saved).edges : [];
+  });
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [customTemplates, setCustomTemplates] = useState(() => loadTemplates());
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [sidebarVisible, setSidebarVisible] = useState(true);
-  const [allNodesCollapsed, setAllNodesCollapsed] = useState(false);
+  // globalCollapseMode: 'auto', 0, 1, 2
+  const [globalCollapseMode, setGlobalCollapseMode] = useState('auto');
 
   // --- Logic Extraction using Custom Hooks ---
   const {
@@ -62,7 +68,13 @@ const App = () => {
 
   const onNodeDoubleClick = useCallback((event, node) => {
     setNodes((nds) =>
-      nds.map((n) => n.id === node.id ? { ...n, data: { ...n.data, collapsed: !n.data.collapsed } } : n)
+      nds.map((n) => n.id === node.id ? {
+        ...n,
+        data: {
+          ...n.data,
+          collapseState: n.data.collapseState === 2 ? 0 : (n.data.collapseState || 0) + 1
+        }
+      } : n)
     );
   }, [setNodes]);
 
@@ -105,12 +117,42 @@ const App = () => {
     setNodes((nds) => nds.concat({ id: getId(), type, position, data }));
   }, [reactFlowInstance, setNodes]);
 
+  const onAddNode = useCallback((node) => {
+    if (!reactFlowInstance || !reactFlowWrapper.current) return;
+
+    const wrapperRect = reactFlowWrapper.current.getBoundingClientRect();
+    const position = reactFlowInstance.screenToFlowPosition({
+      x: wrapperRect.left + wrapperRect.width / 2,
+      y: wrapperRect.top + wrapperRect.height / 2,
+    });
+
+    setNodes((nds) => nds.concat({
+      id: getId(),
+      type: node.type,
+      position,
+      data: { ...node.data, label: node.label }
+    }));
+  }, [reactFlowInstance, setNodes]);
+
   // --- Global State & Shortcuts ---
+  const setGlobalCollapseState = useCallback((state) => {
+    setGlobalCollapseMode(state);
+  }, []);
+
+
   const toggleAllCollapse = useCallback(() => {
-    const anyExpanded = nodes.some(n => !n.data.collapsed);
-    setAllNodesCollapsed(anyExpanded);
-    setNodes((nds) => nds.map((n) => ({ ...n, data: { ...n.data, collapsed: anyExpanded } })));
-  }, [nodes, setNodes]);
+    setGlobalCollapseMode((prev) => {
+      if (prev === 'auto') return 0;
+      return (prev + 1) % 3;
+    });
+  }, []);
+
+  useEffect(() => {
+    if (nodes.length > 0 || edges.length > 0) {
+      const state = { nodes, edges };
+      localStorage.setItem('react-flow-save-state', JSON.stringify(state));
+    }
+  }, [nodes, edges]);
 
   const toggleSidebar = useCallback(() => setSidebarVisible((v) => !v), []);
 
@@ -140,19 +182,30 @@ const App = () => {
 
   const displayNodes = useMemo(() => nodes.map((node) => ({
     ...node,
-    data: { ...node.data, connectedHandleIds: connectedHandleIdsPerNode[node.id] || [] }
-  })), [nodes, connectedHandleIdsPerNode]);
+    data: {
+      ...node.data,
+      connectedHandleIds: connectedHandleIdsPerNode[node.id] || [],
+      globalCollapseMode: globalCollapseMode
+    }
+  })), [nodes, connectedHandleIdsPerNode, globalCollapseMode]);
 
   const displayEdges = useMemo(() => edges.map((edge) => {
     const isFlow = edge.data?.isFlow || edge.sourceHandle?.includes('flow') || edge.targetHandle?.includes('flow');
-    return { ...edge, type: 'default', animated: isFlow, style: { ...edge.style, strokeDasharray: isFlow ? '15, 15' : 'none' } };
+    return { ...edge, type: 'step', animated: isFlow, style: { ...edge.style } };
   }), [edges]);
 
   return (
     <div className="dndflow">
       <ReactFlowProvider>
         <div className={`sidebar-container ${sidebarVisible ? '' : 'sidebar-hidden'}`}>
-          <Sidebar customTemplates={customTemplates} onSave={onSave} onExport={onExport} onLoad={onLoad} onClear={onClear} />
+          <Sidebar
+            customTemplates={customTemplates}
+            onSave={onSave}
+            onExport={onExport}
+            onLoad={onLoad}
+            onClear={onClear}
+            onAddNode={onAddNode}
+          />
         </div>
 
         <button
@@ -163,7 +216,12 @@ const App = () => {
           {sidebarVisible ? '‹' : '›'}
         </button>
 
-        <div className={`reactflow-wrapper ${allNodesCollapsed ? 'nodes-collapsed' : ''}`} ref={reactFlowWrapper}>
+        <div className="reactflow-wrapper" ref={reactFlowWrapper}>
+          {nodes.length === 0 && (
+            <div className="empty-state-message">
+              Start your project by adding a pattern from the library!
+            </div>
+          )}
           <ReactFlow
             nodes={displayNodes}
             edges={displayEdges}
@@ -186,14 +244,56 @@ const App = () => {
               strokeWidth: 10,
               strokeDasharray: isFlowConnection ? '15, 15' : 'none',
             }}
+            connectionLineType="step"
             fitView
+            elevateNodesOnSelect={true}
+            minZoom={0.1}
+            maxZoom={4}
             snapToGrid={true}
-            snapGrid={[25, 25]}
+            snapGrid={[100, 100]}
             zoomOnDoubleClick={false}
           >
             <Controls />
             <HelperLines horizontal={helperLineHorizontal} vertical={helperLineVertical} />
           </ReactFlow>
+        </div>
+
+        {/* Global Floating Toolbar */}
+        <div className="global-toolbar">
+          <div className="toolbar-inner">
+            <button
+              className={`toolbar-btn ${globalCollapseMode === 'auto' ? 'active' : ''}`}
+              onClick={() => setGlobalCollapseState('auto')}
+              title="Automatic Zoom-LOD"
+            >
+              <span className="btn-icon">gl</span>
+              <span className="btn-label">Auto</span>
+            </button>
+            <button
+              className={`toolbar-btn ${globalCollapseMode === 0 ? 'active' : ''}`}
+              onClick={() => setGlobalCollapseState(0)}
+              title="Force Full View"
+            >
+              <span className="btn-icon">▣</span>
+              <span className="btn-label">Full</span>
+            </button>
+            <button
+              className={`toolbar-btn ${globalCollapseMode === 1 ? 'active' : ''}`}
+              onClick={() => setGlobalCollapseState(1)}
+              title="Force Connected View"
+            >
+              <span className="btn-icon">▤</span>
+              <span className="btn-label">Conn.</span>
+            </button>
+            <button
+              className={`toolbar-btn ${globalCollapseMode === 2 ? 'active' : ''}`}
+              onClick={() => setGlobalCollapseState(2)}
+              title="Force Titles View"
+            >
+              <span className="btn-icon">▬</span>
+              <span className="btn-label">Titles</span>
+            </button>
+          </div>
         </div>
       </ReactFlowProvider >
     </div >
