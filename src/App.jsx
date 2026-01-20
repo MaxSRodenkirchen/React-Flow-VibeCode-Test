@@ -1,17 +1,16 @@
 import React, { useState, useRef, useCallback, useMemo, useEffect } from 'react';
-import ReactFlow, { ReactFlowProvider, useNodesState, useEdgesState, Controls } from 'reactflow';
+import ReactFlow, { useNodesState, useEdgesState, Controls, Background, useStore } from 'reactflow';
 import 'reactflow/dist/style.css';
 
 import Sidebar from './Sidebar';
 import CustomNode from './CustomNode';
-import HelperLines from './HelperLines';
 import { loadTemplates } from './dataService';
 import './App.css';
 
 // Hooks
-import useSnapping from './hooks/useSnapping';
 import useFlowConnections from './hooks/useFlowConnections';
 import useFileOperations from './hooks/useFileOperations';
+import useEdgeSnapping from './hooks/useEdgeSnapping';
 
 const nodeTypes = {
   custom: CustomNode,
@@ -22,8 +21,11 @@ const nodeTypes = {
 
 const getId = () => `node_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
 
+const zoomSelector = (s) => s.transform[2];
+
 const App = () => {
   const reactFlowWrapper = useRef(null);
+  const zoom = useStore(zoomSelector);
   const [nodes, setNodes, onNodesChange] = useNodesState(() => {
     const saved = localStorage.getItem('react-flow-save-state');
     return saved ? JSON.parse(saved).nodes : [];
@@ -40,12 +42,6 @@ const App = () => {
   const [globalCollapseMode, setGlobalCollapseMode] = useState('auto');
 
   // --- Logic Extraction using Custom Hooks ---
-  const {
-    helperLineHorizontal,
-    helperLineVertical,
-    onNodeDrag,
-    onNodeDragStop
-  } = useSnapping(nodes);
 
   const {
     connectionLineColor,
@@ -54,6 +50,8 @@ const App = () => {
     onConnectStart,
     onConnectEnd
   } = useFlowConnections(nodes, setEdges);
+
+  const { onNodeDrag } = useEdgeSnapping(nodes, setNodes);
 
   const {
     onSave,
@@ -66,17 +64,6 @@ const App = () => {
   // --- Node Events ---
   const onNodeClick = useCallback((event, node) => setSelectedNodeId(node.id), []);
 
-  const onNodeDoubleClick = useCallback((event, node) => {
-    setNodes((nds) =>
-      nds.map((n) => n.id === node.id ? {
-        ...n,
-        data: {
-          ...n.data,
-          collapseState: n.data.collapseState === 2 ? 0 : (n.data.collapseState || 0) + 1
-        }
-      } : n)
-    );
-  }, [setNodes]);
 
   const onEdgeDoubleClick = useCallback((event, edge) => {
     const newLabel = window.prompt('Enter condition/label for this edge:', edge.label || '');
@@ -180,123 +167,163 @@ const App = () => {
     return map;
   }, [edges]);
 
-  const displayNodes = useMemo(() => nodes.map((node) => ({
-    ...node,
-    data: {
-      ...node.data,
-      connectedHandleIds: connectedHandleIdsPerNode[node.id] || [],
-      globalCollapseMode: globalCollapseMode
-    }
-  })), [nodes, connectedHandleIdsPerNode, globalCollapseMode]);
+  const displayNodes = useMemo(() => nodes.map((node) => {
+    // Generate a stable random rotation between -0.7 and 0.7 based on node ID
+    const seed = node.id.split('_').pop() || '0';
+    const rotation = ((parseInt(seed) % 140) - 70) / 100;
+
+    return {
+      ...node,
+      style: { ...node.style, rotate: `${rotation}deg` },
+      data: {
+        ...node.data,
+        connectedHandleIds: connectedHandleIdsPerNode[node.id] || [],
+        globalCollapseMode: globalCollapseMode
+      }
+    };
+  }), [nodes, connectedHandleIdsPerNode, globalCollapseMode]);
 
   const displayEdges = useMemo(() => edges.map((edge) => {
     const isFlow = edge.data?.isFlow || edge.sourceHandle?.includes('flow') || edge.targetHandle?.includes('flow');
-    return { ...edge, type: 'step', animated: isFlow, style: { ...edge.style } };
-  }), [edges]);
+
+    // Determine effective collapse state for a node
+    const getCollapseState = (nodeId) => {
+      const node = nodes.find(n => n.id === nodeId);
+      if (!node) return 0;
+
+      const localOverride = node.data.collapseState;
+      const mode = node.data.globalCollapseMode || globalCollapseMode;
+
+      let zoomLOD = 0;
+      if (zoom <= 0.5) zoomLOD = 2;
+      else if (zoom <= 0.8) zoomLOD = 1;
+
+      if (localOverride !== undefined) return localOverride;
+      if (mode !== 'auto') return mode;
+      return zoomLOD;
+    };
+
+    const sState = getCollapseState(edge.source);
+    const tState = getCollapseState(edge.target);
+
+    // Visible if element index 0 (Title) or if node is expanded/balanced
+    const isHandleVisible = (handleId, state) => {
+      if (!handleId || state === 0) return true;
+      if (state === 2) return /^(source|target)-0(-|$)/.test(handleId);
+      return true; // State 1: Connected elements are visible
+    };
+
+    const isEdgeVisible = isFlow || (isHandleVisible(edge.sourceHandle, sState) &&
+      isHandleVisible(edge.targetHandle, tState));
+
+    return {
+      ...edge,
+      type: 'step',
+      animated: isFlow && isEdgeVisible,
+      style: {
+        ...edge.style,
+        opacity: isEdgeVisible ? (edge.style?.opacity || 0.5) : 0,
+        transition: 'opacity 0.1s ease'
+      }
+    };
+  }), [edges, nodes, zoom, globalCollapseMode]);
 
   return (
     <div className="dndflow">
-      <ReactFlowProvider>
-        <div className={`sidebar-container ${sidebarVisible ? '' : 'sidebar-hidden'}`}>
-          <Sidebar
-            customTemplates={customTemplates}
-            onSave={onSave}
-            onExport={onExport}
-            onLoad={onLoad}
-            onClear={onClear}
-            onAddNode={onAddNode}
-          />
-        </div>
+      <div className={`sidebar-container ${sidebarVisible ? '' : 'sidebar-hidden'}`}>
+        <Sidebar
+          customTemplates={customTemplates}
+          onSave={onSave}
+          onExport={onExport}
+          onLoad={onLoad}
+          onClear={onClear}
+          onAddNode={onAddNode}
+        />
+      </div>
 
-        <button
-          className={`sidebar-toggle ${sidebarVisible ? 'sidebar-visible' : 'sidebar-collapsed'}`}
-          onClick={toggleSidebar}
-          title={sidebarVisible ? "Hide Sidebar" : "Show Sidebar"}
-        >
-          {sidebarVisible ? '‹' : '›'}
-        </button>
+      <button
+        className={`sidebar-toggle ${sidebarVisible ? 'sidebar-visible' : 'sidebar-collapsed'}`}
+        onClick={toggleSidebar}
+        title={sidebarVisible ? "Hide Sidebar" : "Show Sidebar"}
+      >
+        {sidebarVisible ? '‹' : '›'}
+      </button>
 
-        <div className="reactflow-wrapper" ref={reactFlowWrapper}>
-          {nodes.length === 0 && (
-            <div className="empty-state-message">
-              Start your project by adding a pattern from the library!
-            </div>
-          )}
-          <ReactFlow
-            nodes={displayNodes}
-            edges={displayEdges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            onDrop={onDrop}
-            onDragOver={onDragOver}
-            onNodeClick={onNodeClick}
-            onInit={setReactFlowInstance}
-            onNodeDoubleClick={onNodeDoubleClick}
-            onEdgeDoubleClick={onEdgeDoubleClick}
-            onNodeDrag={onNodeDrag}
-            onNodeDragStop={onNodeDragStop}
-            onConnectStart={onConnectStart}
-            onConnectEnd={onConnectEnd}
-            nodeTypes={nodeTypes}
-            connectionLineStyle={{
-              stroke: connectionLineColor,
-              strokeWidth: 10,
-              strokeDasharray: isFlowConnection ? '15, 15' : 'none',
-            }}
-            connectionLineType="step"
-            fitView
-            elevateNodesOnSelect={true}
-            minZoom={0.1}
-            maxZoom={4}
-            snapToGrid={true}
-            snapGrid={[100, 100]}
-            zoomOnDoubleClick={false}
-          >
-            <Controls />
-            <HelperLines horizontal={helperLineHorizontal} vertical={helperLineVertical} />
-          </ReactFlow>
-        </div>
-
-        {/* Global Floating Toolbar */}
-        <div className="global-toolbar">
-          <div className="toolbar-inner">
-            <button
-              className={`toolbar-btn ${globalCollapseMode === 'auto' ? 'active' : ''}`}
-              onClick={() => setGlobalCollapseState('auto')}
-              title="Automatic Zoom-LOD"
-            >
-              <span className="btn-icon">gl</span>
-              <span className="btn-label">Auto</span>
-            </button>
-            <button
-              className={`toolbar-btn ${globalCollapseMode === 0 ? 'active' : ''}`}
-              onClick={() => setGlobalCollapseState(0)}
-              title="Force Full View"
-            >
-              <span className="btn-icon">▣</span>
-              <span className="btn-label">Full</span>
-            </button>
-            <button
-              className={`toolbar-btn ${globalCollapseMode === 1 ? 'active' : ''}`}
-              onClick={() => setGlobalCollapseState(1)}
-              title="Force Connected View"
-            >
-              <span className="btn-icon">▤</span>
-              <span className="btn-label">Conn.</span>
-            </button>
-            <button
-              className={`toolbar-btn ${globalCollapseMode === 2 ? 'active' : ''}`}
-              onClick={() => setGlobalCollapseState(2)}
-              title="Force Titles View"
-            >
-              <span className="btn-icon">▬</span>
-              <span className="btn-label">Titles</span>
-            </button>
+      <div className="reactflow-wrapper" ref={reactFlowWrapper}>
+        {nodes.length === 0 && (
+          <div className="empty-state-message">
+            Start your project by adding a pattern from the library!
           </div>
+        )}
+        <ReactFlow
+          nodes={displayNodes}
+          edges={displayEdges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          onDrop={onDrop}
+          onDragOver={onDragOver}
+          onNodeClick={onNodeClick}
+          onInit={setReactFlowInstance}
+          onEdgeDoubleClick={onEdgeDoubleClick}
+          onNodeDrag={onNodeDrag}
+          onConnectStart={onConnectStart}
+          onConnectEnd={onConnectEnd}
+          nodeTypes={nodeTypes}
+          connectionLineStyle={{
+            stroke: connectionLineColor,
+            strokeWidth: 10,
+            strokeDasharray: isFlowConnection ? '15, 15' : 'none',
+          }}
+          connectionLineType="step"
+          fitView
+          elevateNodesOnSelect={true}
+          minZoom={0.1}
+          maxZoom={4}
+          snapToGrid={true}
+          snapGrid={[100, 100]}
+          zoomOnDoubleClick={false}
+        >
+          <Controls />
+          <Background variant="dots" gap={100} size={3} color="#000" style={{ opacity: 0.4 }} />
+        </ReactFlow>
+      </div>
+
+      {/* Global Floating Toolbar */}
+      <div className="global-toolbar">
+        <div className="toolbar-inner">
+          <button
+            className={`toolbar-btn ${globalCollapseMode === 0 ? 'active' : ''}`}
+            onClick={() => setGlobalCollapseState(0)}
+          >
+            <span className="btn-icon">Full</span>
+            <span className="btn-label">Expanded</span>
+          </button>
+          <button
+            className={`toolbar-btn ${globalCollapseMode === 1 ? 'active' : ''}`}
+            onClick={() => setGlobalCollapseState(1)}
+          >
+            <span className="btn-icon">Balanced</span>
+            <span className="btn-label">Connected</span>
+          </button>
+          <button
+            className={`toolbar-btn ${globalCollapseMode === 2 ? 'active' : ''}`}
+            onClick={() => setGlobalCollapseState(2)}
+          >
+            <span className="btn-icon">Min</span>
+            <span className="btn-label">Titles</span>
+          </button>
+          <div style={{ width: '1px', background: 'rgba(0,0,0,0.1)', margin: '4px 2px' }} />
+          <button
+            className={`toolbar-btn ${globalCollapseMode === 'auto' ? 'active' : ''}`}
+            onClick={() => setGlobalCollapseState('auto')}
+          >
+            <span className="btn-icon">AI</span>
+            <span className="btn-label">Auto Zoom</span>
+          </button>
         </div>
-      </ReactFlowProvider >
-    </div >
+      </div>
+    </div>
   );
 };
 

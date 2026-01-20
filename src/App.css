@@ -197,35 +197,65 @@ body {
   min-width: var(--node-min-width) !important;
   max-width: var(--node-max-width) !important;
   width: auto !important;
-  /* This makes it adaptive */
-  padding: var(--node-padding) !important;
-  border-radius: var(--radius) !important;
-  background-color: #f9fbf8 !important;
-  /* Minimal brighter than canvas background */
-  border: 2px solid transparent !important;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  z-index: 1;
+}
+
+.custom-node-stacked {
+  padding: var(--node-padding);
+  border-radius: var(--radius);
+  background-color: #f9fbf8;
+  border: 2px solid transparent;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
   color: #000;
   font-family: "Funnel Display", sans-serif;
   box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.25);
+  /* Default hard shadow */
 }
 
 .react-flow__node.selected {
-  border-color: var(--selection-color) !important;
   z-index: 9999 !important;
-  /* Bring to front when selected */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.react-flow__node.selected .custom-node-stacked {
+  border-color: var(--selection-color);
+  background-color: #f0f2ef;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.15);
+  /* Selected stronger hard shadow */
 }
 
 /* Each 'row' inside the node */
 .node-element {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-rows: 1fr;
   width: 100%;
   box-sizing: border-box;
+  overflow: hidden;
+  transition: grid-template-rows 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.2s ease,
+    padding 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0.2s;
+  visibility: visible;
+}
+
+.node-element.element-hidden {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .element-content {
   width: 100%;
+  min-height: 0;
+  /* Critical for grid unroll animation */
 }
 
 .element-type-title {

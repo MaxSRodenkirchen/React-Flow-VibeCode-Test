@@ -5,7 +5,7 @@ import NodeListElement from './components/node/NodeListElement';
 
 const zoomSelector = (s) => s.transform[2] || 1;
 
-const CustomNode = ({ data, isConnectable }) => {
+const CustomNode = ({ data, isConnectable, selected }) => {
     const zoom = useStore(zoomSelector);
 
     // 1. Determine Individual Override (from Double Click)
@@ -20,7 +20,6 @@ const CustomNode = ({ data, isConnectable }) => {
     else if (zoom <= 0.8) zoomLOD = 1; // Balanced / Connected
 
     // 4. Resolve Final State
-    // Priority: Local Double-Click > Global Forced Mode > Zoom-LOD
     let collapseState = 0;
     if (localOverride !== undefined) {
         collapseState = localOverride;
@@ -36,7 +35,7 @@ const CustomNode = ({ data, isConnectable }) => {
 
     return (
         <div
-            className={`custom-node-stacked collapse-state-${collapseState}`}
+            className={`custom-node-stacked collapse-state-${collapseState} ${selected ? 'node-selected' : ''}`}
             style={{
                 borderColor: phaseColor,
                 '--node-color': phaseColor
@@ -54,9 +53,6 @@ const CustomNode = ({ data, isConnectable }) => {
                     connectedHandleIds.includes(`source-${index}-${itemIndex}`)
                 );
 
-                // State 0: Show everything
-                // State 1: Show title OR anything with connections
-                // State 2: Show only title
                 let shouldShowElement = true;
                 if (collapseState === 1) {
                     shouldShowElement = isTitle || hasConnectedHandles || hasConnectedSubItems;
@@ -64,12 +60,10 @@ const CustomNode = ({ data, isConnectable }) => {
                     shouldShowElement = isTitle;
                 }
 
-                if (!shouldShowElement) return null;
-
                 return (
                     <div
                         key={index}
-                        className={`node-element element-type-${element.type || 'default'} element-label-${(element.label || '').toLowerCase()}`}
+                        className={`node-element element-type-${element.type || 'default'} element-label-${(element.label || '').toLowerCase()} ${!shouldShowElement ? 'element-hidden' : ''}`}
                     >
                         <div className="element-content">
                             {isTitle ? (
@@ -93,7 +87,6 @@ const CustomNode = ({ data, isConnectable }) => {
                     </div>
                 );
             })}
-
         </div>
     );
 };
