@@ -17,7 +17,7 @@
 - Anforderungen
 
 ---
-*steps*
+*Core Logic*
 - Entwürfe nehmen
 - Revisionen beachten
 - [[Designsystem entwickeln]]

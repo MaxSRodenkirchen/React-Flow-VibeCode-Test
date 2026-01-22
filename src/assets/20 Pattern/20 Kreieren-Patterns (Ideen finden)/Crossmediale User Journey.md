@@ -15,7 +15,7 @@ Ein Pattern um zu analysieren wo Probleme liegen
 *var*
 
 ---
-*steps*
+*Core Logic*
 
 1. [[Komplette Journey.canvas|Komplette Journey]] darstellen 
 2. Fokus auf Übergange von Medium zu Medium 

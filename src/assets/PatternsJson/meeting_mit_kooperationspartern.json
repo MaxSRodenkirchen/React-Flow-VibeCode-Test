@@ -1,0 +1,62 @@
+{
+    "type": "custom",
+    "label": "Meeting mit Kooperationspartern",
+    "data": {
+        "label": "Meeting mit Kooperationspartern",
+        "tags": [],
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "Meeting mit Kooperationspartern"
+            },
+            {
+                "label": "Description",
+                "type": "list",
+                "items": [
+                    "Was ist vorzubereiten?"
+                ]
+            },
+            {
+                "label": "Inputs",
+                "type": "list",
+                "items": [
+                    "Projektfortschritte und Inhalte",
+                    "Probleme, Aufgaben, Fragen",
+                    "Material: Laptop, Prototyp,..."
+                ]
+            },
+            {
+                "label": "Variables",
+                "type": "list",
+                "items": [
+                    "Wer ist anwesend?",
+                    "Wo wird sich getroffen?",
+                    "Wie viel zeit hat man?"
+                ]
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "Was ist der aktuelle Stand?",
+                    "Wo hackt es? Was sind aktuelle Fragestellungen?",
+                    "Erste Lösungsvorschläge",
+                    "[[Prozesse dokumentieren]]",
+                    "Arbeitspläne aktualisieren",
+                    "Benötigte Mitarbeit von Partnern formulieren",
+                    "Alles zusammenstellen und parat haben"
+                ]
+            },
+            {
+                "label": "Outputs",
+                "type": "list",
+                "items": [
+                    "Vorbereitet ins Meeting gehen",
+                    "Schlauer rauskommen",
+                    "Struktur geben, Fragen formulieren"
+                ]
+            }
+        ]
+    }
+}

@@ -3,7 +3,7 @@
 
 ---
 *description*
-- Was ist vorzubereiten?
+- Waaaas ist vorzubereiten?
 - Welche Fragen / Probleme hat man?
 - Was braucht man von den Partnern?
 
@@ -19,7 +19,7 @@
 - Wie viel zeit hat man?
 
 ---
-*steps*
+*Core Logic*
 - Was ist der aktuelle Stand?
 - Wo hackt es? Was sind aktuelle Fragestellungen?
 - Erste Lösungsvorschläge

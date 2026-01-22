@@ -1,0 +1,259 @@
+.define-container {
+    width: 100%;
+    height: 100%;
+    padding: 0 40px 30px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.editor-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    /* Fill space next to sidebar */
+}
+
+/* Row 1: Meta (Full width) */
+.meta-container-row {
+    background-color: #f9fbf8;
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius);
+    padding: 5px;
+    position: relative;
+    z-index: 100;
+    /* Ensure suggestions float over content below */
+}
+
+.meta-container-row .column-inner {
+    overflow: visible !important;
+    position: relative;
+    /* Prevent clipping of suggestions */
+}
+
+.meta-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 10px;
+    align-items: start;
+    /* Ensure top alignment */
+}
+
+/* Row 2: Content (4 columns) */
+.content-container-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    flex: 1;
+    min-height: 0;
+}
+
+.editor-column {
+    background-color: #f9fbf8;
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+}
+
+.column-inner {
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* Typography & Inputs */
+.editor-title-input {
+    width: 100%;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.1;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    color: inherit;
+    padding: 0;
+    margin: 0;
+    resize: none;
+    overflow: hidden;
+}
+
+.editor-description-textarea {
+    width: 100%;
+    min-height: 80px;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 12px;
+    /* Match tag input font size */
+    line-height: 1.4;
+    resize: none;
+    padding: 8px 0;
+    /* Match tag input padding */
+}
+
+.editor-inline-input {
+    width: 100%;
+    padding: 8px 0;
+    border: none;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+    background: transparent;
+    font-family: inherit;
+    font-size: 12px;
+}
+
+.editor-node-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.tag-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.tag-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #f9fbf8;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+    border: 2px solid var(--main);
+    z-index: 9999;
+    max-height: 150px;
+    overflow-y: auto;
+    margin-top: 2px;
+}
+
+.suggestion-item {
+    padding: 8px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.suggestion-item:hover {
+    background: var(--lime-cream);
+}
+
+/* List Items */
+.editor-list-item {
+    position: relative;
+    padding: 10px 60px 10px 0 !important;
+}
+
+.item-actions {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 2px;
+    opacity: 0;
+}
+
+.editor-list-item:hover .item-actions {
+    opacity: 1;
+}
+
+.action-btn {
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--main);
+    background: var(--ash-grey);
+    cursor: pointer;
+    font-size: 10px;
+}
+
+/* Footer */
+.define-footer {
+    width: 100%;
+    padding-top: 10px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    width: 100%;
+}
+
+.primary-btn,
+.secondary-btn,
+.delete-btn {
+    width: 100%;
+    padding: 15px 0;
+    border: none;
+    font-weight: 800;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: inherit;
+    transition: all 0.1s;
+}
+
+.primary-btn {
+    background: var(--main);
+    color: var(--bg);
+}
+
+.secondary-btn {
+    background: var(--ash-grey);
+    color: var(--main);
+    border: 2px solid var(--main);
+}
+
+.delete-btn {
+    background: #ff555511;
+    color: #ff5555;
+    border: 2px solid #ff5555;
+}
+
+.delete-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    border-color: var(--ash-grey);
+    color: var(--ash-grey);
+}
+
+.primary-btn:hover:not(:disabled),
+.secondary-btn:hover:not(:disabled),
+.delete-btn:hover:not(:disabled) {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.25);
+}
+
+.delete-btn:hover:not(:disabled) {
+    background: #ff5555;
+    color: white;
+}
+
+
+.tag-element {
+    background: var(--ash-grey);
+    padding: 4px 10px;
+    border: 1px solid var(--main);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.tag-element button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}

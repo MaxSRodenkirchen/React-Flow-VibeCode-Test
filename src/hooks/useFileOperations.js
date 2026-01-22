@@ -1,17 +1,21 @@
 import { useCallback } from 'react';
-import { saveProject, loadProject, clearProject, saveTemplates } from '../dataService';
+import { saveProjectToServer, loadProjectFromServer } from '../dataService';
 
 /**
  * useFileOperations Hook
- * Manages saving, loading, exporting, and clearing project data.
+ * Manages saving, loading, exporting, and clearing project data via local server.
  */
-const useFileOperations = (reactFlowInstance, setNodes, setEdges, setSelectedNodeId, customTemplates, setCustomTemplates) => {
+const useFileOperations = (reactFlowInstance, setNodes, setEdges, setSelectedNodeId) => {
 
-    const onSave = useCallback(() => {
+    const onSave = useCallback(async () => {
         if (reactFlowInstance) {
             const flow = reactFlowInstance.toObject();
-            saveProject(flow);
-            alert('Project saved to LocalStorage!');
+            const success = await saveProjectToServer(flow);
+            if (success) {
+                alert('Project saved to project_state.json!');
+            } else {
+                alert('Error: Could not save to disk.');
+            }
         }
     }, [reactFlowInstance]);
 
@@ -28,35 +32,30 @@ const useFileOperations = (reactFlowInstance, setNodes, setEdges, setSelectedNod
         }
     }, [reactFlowInstance]);
 
-    const onLoad = useCallback(() => {
-        const flow = loadProject();
+    const onLoad = useCallback(async () => {
+        const flow = await loadProjectFromServer();
         if (flow) {
             setNodes(flow.nodes || []);
             setEdges(flow.edges || []);
+        } else {
+            alert('No project file found on server.');
         }
     }, [setNodes, setEdges]);
 
-    const onClear = useCallback(() => {
-        if (window.confirm('Do you really want to clear the entire canvas?')) {
+    const onClear = useCallback(async () => {
+        if (window.confirm('Do you really want to clear the entire canvas and reset the save file?')) {
             setNodes([]);
             setEdges([]);
-            clearProject();
+            await saveProjectToServer({ nodes: [], edges: [] });
             setSelectedNodeId(null);
         }
     }, [setNodes, setEdges, setSelectedNodeId]);
-
-    const onAddTemplate = useCallback((template) => {
-        const newTemplates = [...customTemplates, template];
-        setCustomTemplates(newTemplates);
-        saveTemplates(newTemplates);
-    }, [customTemplates, setCustomTemplates]);
 
     return {
         onSave,
         onExport,
         onLoad,
-        onClear,
-        onAddTemplate,
+        onClear
     };
 };
 

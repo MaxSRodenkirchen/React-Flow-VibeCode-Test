@@ -19,7 +19,7 @@
 - Dauer / Länge
 
 ---
-*steps*
+*Core Logic*
 - 
 
 ---

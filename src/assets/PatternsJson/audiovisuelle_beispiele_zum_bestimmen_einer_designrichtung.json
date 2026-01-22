@@ -1,0 +1,61 @@
+{
+    "type": "custom",
+    "label": "Audiovisuelle Beispiele zum Bestimmen einer Designrichtung",
+    "data": {
+        "label": "Audiovisuelle Beispiele zum Bestimmen einer Designrichtung",
+        "tags": [
+            "Ein Tag"
+        ],
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "Audiovisuelle Beispiele zum Bestimmen einer Designrichtung"
+            },
+            {
+                "label": "Description",
+                "type": "list",
+                "items": [
+                    "Dem Team / den Partnern / dem Kunden vor der Ausarbeitung mit Skizzen und Entwürfen die Möglichkeit geben die Richtung der audiovisuellen Gestaltung mitzuentscheiden"
+                ]
+            },
+            {
+                "label": "Inputs",
+                "type": "list",
+                "items": [
+                    "Konzeptionsphase",
+                    "Für wen gestalten wir was?",
+                    "Was sind Aufgaben und Probleme?",
+                    "Was ist unser Ziel?"
+                ]
+            },
+            {
+                "label": "Variables",
+                "type": "list",
+                "items": [
+                    "Mit welchem Medium wird gearbeitet?",
+                    "Gibt es Vorgaben? Farben, Logos, CI-Elemente"
+                ]
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "Aufbauend auf Vorarbeit im Designprozess",
+                    "Skizzen und Entwürfe stehen für verschiedene Lösungswege",
+                    "Möglichst breitgefächert aufbauen",
+                    "Erklärungen zu Designansätzen parat haben",
+                    "Vorschläge äußern können"
+                ]
+            },
+            {
+                "label": "Outputs",
+                "type": "list",
+                "items": [
+                    "Skizzen und Entwürfe die in verschiedene Richtungen gehen",
+                    "Eine Designrichtung vorschlagen und absegnen lassen können"
+                ]
+            }
+        ]
+    }
+}

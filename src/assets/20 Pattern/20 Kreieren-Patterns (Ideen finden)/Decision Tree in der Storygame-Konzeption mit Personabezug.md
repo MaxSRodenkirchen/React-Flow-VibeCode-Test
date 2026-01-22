@@ -10,7 +10,7 @@
 - Personas
 
 ---
-*steps*
+*Core Logic*
 1. Knotenpunkte
 2. Entscheidungen / Aufgaben
 3. User Journey durch den Tree

@@ -30,16 +30,11 @@ const CustomNode = ({ data, isConnectable, selected }) => {
     }
 
     const connectedHandleIds = data.connectedHandleIds || [];
-    const phaseColor = data.phaseColor || '#000';
     const elements = data.elements || [];
 
     return (
         <div
             className={`custom-node-stacked collapse-state-${collapseState} ${selected ? 'node-selected' : ''}`}
-            style={{
-                borderColor: phaseColor,
-                '--node-color': phaseColor
-            }}
         >
             {elements.map((element, index) => {
                 const isTitle = element.type === 'title';

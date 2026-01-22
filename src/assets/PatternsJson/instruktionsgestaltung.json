@@ -1,0 +1,14 @@
+{
+    "type": "custom",
+    "label": "Instruktionsgestaltung",
+    "data": {
+        "label": "Instruktionsgestaltung",
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "Instruktionsgestaltung"
+            }
+        ]
+    }
+}

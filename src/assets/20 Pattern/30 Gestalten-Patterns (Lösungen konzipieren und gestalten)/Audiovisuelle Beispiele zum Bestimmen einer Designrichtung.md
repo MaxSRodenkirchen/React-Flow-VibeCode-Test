@@ -21,7 +21,7 @@
 - Gibt es Vorgaben? Farben, Logos, CI-Elemente
 
 ---
-*steps*
+*Core Logic*
 - Aufbauend auf Vorarbeit im Designprozess
 - Skizzen und Entwürfe stehen für verschiedene Lösungswege
 - Möglichst breitgefächert aufbauen

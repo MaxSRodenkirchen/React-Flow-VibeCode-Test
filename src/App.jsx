@@ -4,12 +4,15 @@ import 'reactflow/dist/style.css';
 
 import Sidebar from './Sidebar';
 import CustomNode from './CustomNode';
-import { loadTemplates } from './dataService';
+import { loadTemplatesFromServer, loadProjectFromServer, saveProjectToServer } from './dataService';
 import './App.css';
+
+// Components
+import PatternCreator from './components/PatternCreator';
+import Navigation from './components/Navigation';
 
 // Hooks
 import useFlowConnections from './hooks/useFlowConnections';
-import useFileOperations from './hooks/useFileOperations';
 import useEdgeSnapping from './hooks/useEdgeSnapping';
 
 const nodeTypes = {
@@ -26,20 +29,17 @@ const zoomSelector = (s) => s.transform[2];
 const App = () => {
   const reactFlowWrapper = useRef(null);
   const zoom = useStore(zoomSelector);
-  const [nodes, setNodes, onNodesChange] = useNodesState(() => {
-    const saved = localStorage.getItem('react-flow-save-state');
-    return saved ? JSON.parse(saved).nodes : [];
-  });
-  const [edges, setEdges, onEdgesChange] = useEdgesState(() => {
-    const saved = localStorage.getItem('react-flow-save-state');
-    return saved ? JSON.parse(saved).edges : [];
-  });
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
-  const [customTemplates, setCustomTemplates] = useState(() => loadTemplates());
+  const [customTemplates, setCustomTemplates] = useState([]);
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [sidebarVisible, setSidebarVisible] = useState(true);
   // globalCollapseMode: 'auto', 0, 1, 2
   const [globalCollapseMode, setGlobalCollapseMode] = useState('auto');
+  const [currentView, setCurrentView] = useState('explore');
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
 
   // --- Logic Extraction using Custom Hooks ---
 
@@ -53,13 +53,6 @@ const App = () => {
 
   const { onNodeDrag } = useEdgeSnapping(nodes, setNodes);
 
-  const {
-    onSave,
-    onExport,
-    onLoad,
-    onClear,
-    onAddTemplate
-  } = useFileOperations(reactFlowInstance, setNodes, setEdges, setSelectedNodeId, customTemplates, setCustomTemplates);
 
   // --- Node Events ---
   const onNodeClick = useCallback((event, node) => setSelectedNodeId(node.id), []);
@@ -105,6 +98,13 @@ const App = () => {
   }, [reactFlowInstance, setNodes]);
 
   const onAddNode = useCallback((node) => {
+    // If we are in 'define' view, clicking a node means we want to edit it
+    if (currentView === 'define') {
+      console.log('App: Editing template:', node);
+      setSelectedTemplate(node);
+      return;
+    }
+
     if (!reactFlowInstance || !reactFlowWrapper.current) return;
 
     const wrapperRect = reactFlowWrapper.current.getBoundingClientRect();
@@ -119,7 +119,7 @@ const App = () => {
       position,
       data: { ...node.data, label: node.label }
     }));
-  }, [reactFlowInstance, setNodes]);
+  }, [reactFlowInstance, setNodes, currentView]);
 
   // --- Global State & Shortcuts ---
   const setGlobalCollapseState = useCallback((state) => {
@@ -134,12 +134,43 @@ const App = () => {
     });
   }, []);
 
+  const refreshTemplates = useCallback(async () => {
+    const templates = await loadTemplatesFromServer();
+    console.log('App: Refreshing templates:', templates);
+    setCustomTemplates(templates);
+  }, []);
+
+  // Initial Load from Server
   useEffect(() => {
-    if (nodes.length > 0 || edges.length > 0) {
-      const state = { nodes, edges };
-      localStorage.setItem('react-flow-save-state', JSON.stringify(state));
+    const initLoad = async () => {
+      console.log('App: Start initial load from server...');
+
+      // Load Project
+      const flow = await loadProjectFromServer();
+      console.log('App: Received flow from server:', flow);
+      if (flow) {
+        setNodes(flow.nodes || []);
+        setEdges(flow.edges || []);
+      }
+
+      // Load Templates
+      await refreshTemplates();
+
+      setIsInitialized(true);
+    };
+    initLoad();
+  }, [setNodes, setEdges, refreshTemplates]);
+
+  // Auto-Save to Server
+  useEffect(() => {
+    if (isInitialized) {
+      const timer = setTimeout(() => {
+        console.log('Autosave: Saving to server...', { nodes: nodes.length, edges: edges.length });
+        saveProjectToServer({ nodes, edges });
+      }, 1000); // 1s Debounce
+      return () => clearTimeout(timer);
     }
-  }, [nodes, edges]);
+  }, [nodes, edges, isInitialized]);
 
   const toggleSidebar = useCallback(() => setSidebarVisible((v) => !v), []);
 
@@ -228,15 +259,23 @@ const App = () => {
     };
   }), [edges, nodes, zoom, globalCollapseMode]);
 
+  const allTags = useMemo(() => {
+    const tags = new Set();
+    customTemplates.forEach(template => {
+      if (template.data?.tags) {
+        template.data.tags.forEach(tag => tags.add(tag));
+      }
+    });
+    return Array.from(tags).sort();
+  }, [customTemplates]);
+
   return (
     <div className="dndflow">
+      <Navigation activeView={currentView} onViewChange={setCurrentView} />
+
       <div className={`sidebar-container ${sidebarVisible ? '' : 'sidebar-hidden'}`}>
         <Sidebar
-          customTemplates={customTemplates}
-          onSave={onSave}
-          onExport={onExport}
-          onLoad={onLoad}
-          onClear={onClear}
+          templates={customTemplates}
           onAddNode={onAddNode}
         />
       </div>
@@ -249,80 +288,103 @@ const App = () => {
         {sidebarVisible ? '‹' : '›'}
       </button>
 
-      <div className="reactflow-wrapper" ref={reactFlowWrapper}>
-        {nodes.length === 0 && (
-          <div className="empty-state-message">
-            Start your project by adding a pattern from the library!
+      {currentView === 'explore' && (
+        <>
+          <div className="reactflow-wrapper" ref={reactFlowWrapper}>
+            {nodes.length === 0 && (
+              <div className="empty-state-message">
+                Start your project by adding a pattern from the library!
+              </div>
+            )}
+            <ReactFlow
+              nodes={displayNodes}
+              edges={displayEdges}
+              onNodesChange={onNodesChange}
+              onEdgesChange={onEdgesChange}
+              onConnect={onConnect}
+              onDrop={onDrop}
+              onDragOver={onDragOver}
+              onNodeClick={onNodeClick}
+              onInit={setReactFlowInstance}
+              onEdgeDoubleClick={onEdgeDoubleClick}
+              onNodeDrag={onNodeDrag}
+              onConnectStart={onConnectStart}
+              onConnectEnd={onConnectEnd}
+              nodeTypes={nodeTypes}
+              connectionLineStyle={{
+                stroke: connectionLineColor,
+                strokeWidth: 10,
+                strokeDasharray: isFlowConnection ? '15, 15' : 'none',
+              }}
+              connectionLineType="step"
+              fitView
+              elevateNodesOnSelect={true}
+              minZoom={0.1}
+              maxZoom={4}
+              snapToGrid={true}
+              snapGrid={[100, 100]}
+              zoomOnDoubleClick={false}
+            >
+              <Controls />
+              <Background variant="dots" gap={100} size={3} color="#000" style={{ opacity: 0.4 }} />
+            </ReactFlow>
           </div>
-        )}
-        <ReactFlow
-          nodes={displayNodes}
-          edges={displayEdges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-          onDrop={onDrop}
-          onDragOver={onDragOver}
-          onNodeClick={onNodeClick}
-          onInit={setReactFlowInstance}
-          onEdgeDoubleClick={onEdgeDoubleClick}
-          onNodeDrag={onNodeDrag}
-          onConnectStart={onConnectStart}
-          onConnectEnd={onConnectEnd}
-          nodeTypes={nodeTypes}
-          connectionLineStyle={{
-            stroke: connectionLineColor,
-            strokeWidth: 10,
-            strokeDasharray: isFlowConnection ? '15, 15' : 'none',
-          }}
-          connectionLineType="step"
-          fitView
-          elevateNodesOnSelect={true}
-          minZoom={0.1}
-          maxZoom={4}
-          snapToGrid={true}
-          snapGrid={[100, 100]}
-          zoomOnDoubleClick={false}
-        >
-          <Controls />
-          <Background variant="dots" gap={100} size={3} color="#000" style={{ opacity: 0.4 }} />
-        </ReactFlow>
-      </div>
 
-      {/* Global Floating Toolbar */}
-      <div className="global-toolbar">
-        <div className="toolbar-inner">
-          <button
-            className={`toolbar-btn ${globalCollapseMode === 0 ? 'active' : ''}`}
-            onClick={() => setGlobalCollapseState(0)}
-          >
-            <span className="btn-icon">Full</span>
-            <span className="btn-label">Expanded</span>
-          </button>
-          <button
-            className={`toolbar-btn ${globalCollapseMode === 1 ? 'active' : ''}`}
-            onClick={() => setGlobalCollapseState(1)}
-          >
-            <span className="btn-icon">Balanced</span>
-            <span className="btn-label">Connected</span>
-          </button>
-          <button
-            className={`toolbar-btn ${globalCollapseMode === 2 ? 'active' : ''}`}
-            onClick={() => setGlobalCollapseState(2)}
-          >
-            <span className="btn-icon">Min</span>
-            <span className="btn-label">Titles</span>
-          </button>
-          <div style={{ width: '1px', background: 'rgba(0,0,0,0.1)', margin: '4px 2px' }} />
-          <button
-            className={`toolbar-btn ${globalCollapseMode === 'auto' ? 'active' : ''}`}
-            onClick={() => setGlobalCollapseState('auto')}
-          >
-            <span className="btn-icon">AI</span>
-            <span className="btn-label">Auto Zoom</span>
-          </button>
+          {/* Global Floating Toolbar */}
+          <div className="global-toolbar">
+            <div className="toolbar-inner">
+              <button
+                className={`toolbar-btn ${globalCollapseMode === 0 ? 'active' : ''}`}
+                onClick={() => setGlobalCollapseState(0)}
+              >
+                <span className="btn-icon">Full</span>
+                <span className="btn-label">Expanded</span>
+              </button>
+              <button
+                className={`toolbar-btn ${globalCollapseMode === 1 ? 'active' : ''}`}
+                onClick={() => setGlobalCollapseState(1)}
+              >
+                <span className="btn-icon">Balanced</span>
+                <span className="btn-label">Connected</span>
+              </button>
+              <button
+                className={`toolbar-btn ${globalCollapseMode === 2 ? 'active' : ''}`}
+                onClick={() => setGlobalCollapseState(2)}
+              >
+                <span className="btn-icon">Min</span>
+                <span className="btn-label">Titles</span>
+              </button>
+              <div style={{ width: '1px', background: 'rgba(0,0,0,0.1)', margin: '4px 2px' }} />
+              <button
+                className={`toolbar-btn ${globalCollapseMode === 'auto' ? 'active' : ''}`}
+                onClick={() => setGlobalCollapseState('auto')}
+              >
+                <span className="btn-icon">AI</span>
+                <span className="btn-label">Auto Zoom</span>
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+
+      {currentView === 'define' && (
+        <div className="view-container define-view">
+          <PatternCreator
+            initialPattern={selectedTemplate}
+            onSaveSuccess={refreshTemplates}
+            globalTags={allTags}
+          />
         </div>
-      </div>
+      )}
+
+      {currentView === 'materialize' && (
+        <div className="view-container materialize-view">
+          <div className="empty-state-message" style={{ opacity: 0.5, position: 'static', transform: 'none', padding: '100px' }}>
+            Materialize View<br />
+            <span style={{ fontSize: '20px' }}>Evaluation tools coming soon...</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

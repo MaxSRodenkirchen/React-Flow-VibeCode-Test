@@ -1,35 +1,52 @@
-const STORAGE_KEY = 'react-flow-project';
-const TEMPLATES_KEY = 'custom-node-templates';
+// Use current hostname (e.g. localhost or 127.0.0.1) but fixed port 3001
+const HOST = window.location.hostname || '127.0.0.1';
+const SERVER_URL = `http://${HOST}:3001/api`;
 
-export const saveProject = (flow) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(flow));
+/**
+ * Save the entire flow to the server (project_state.json)
+ */
+export const saveProjectToServer = async (flow) => {
+  try {
+    const response = await fetch(`${SERVER_URL}/save-project`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(flow)
+    });
+    if (!response.ok) {
+      console.error('Server returned error:', response.status);
+    }
+    return response.ok;
+  } catch (e) {
+    console.error('Failed to save project to server:', e);
+    // alert('Network Error: Could not reach the backend server.');
+    return false;
+  }
 };
 
-export const loadProject = () => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : null;
+/**
+ * Load the entire flow from the server
+ */
+export const loadProjectFromServer = async () => {
+  try {
+    const response = await fetch(`${SERVER_URL}/load-project`);
+    if (!response.ok) return null;
+    return await response.json();
+  } catch (e) {
+    console.error('Failed to load project from server:', e);
+    return null;
+  }
 };
 
-export const clearProject = () => {
-    localStorage.removeItem(STORAGE_KEY);
+/**
+ * Load all pattern templates from the server
+ */
+export const loadTemplatesFromServer = async () => {
+  try {
+    const response = await fetch(`${SERVER_URL}/load-templates`);
+    if (!response.ok) return [];
+    return await response.json();
+  } catch (e) {
+    console.error('Failed to load templates from server:', e);
+    return [];
+  }
 };
-
-export const saveTemplates = (templates) => {
-    localStorage.setItem(TEMPLATES_KEY, JSON.stringify(templates));
-};
-
-export const loadTemplates = () => {
-    const saved = localStorage.getItem(TEMPLATES_KEY);
-    return saved ? JSON.parse(saved) : [];
-};
-
-/* 
-  FUTURE SUPABASE INTEGRATION EXAMPLE:
-  
-  export const saveProjectToDB = async (userId, flow) => {
-    const { data, error } = await supabase
-      .from('projects')
-      .upsert({ user_id: userId, data: flow });
-    return { data, error };
-  };
-*/

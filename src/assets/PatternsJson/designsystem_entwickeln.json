@@ -1,0 +1,49 @@
+{
+    "type": "custom",
+    "label": "Designsystem entwickeln",
+    "data": {
+        "label": "Designsystem entwickeln",
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "Designsystem entwickeln"
+            },
+            {
+                "label": "Description",
+                "type": "list",
+                "items": [
+                    "-"
+                ]
+            },
+            {
+                "label": "Inputs",
+                "type": "list",
+                "items": [
+                    "-"
+                ]
+            },
+            {
+                "label": "Variables",
+                "type": "list",
+                "items": [
+                    "-"
+                ]
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "-"
+                ]
+            },
+            {
+                "label": "Outcomes",
+                "type": "list",
+                "items": [
+                    "-"
+                ]
+            }
+        ]
+    }
+}

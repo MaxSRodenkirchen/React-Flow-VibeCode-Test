@@ -32,7 +32,7 @@ body {
   --fill-opacity: 0.5;
 
   /* Spacing & Geometry */
-  --sidebar-width: 390px;
+  --sidebar-width: 442px;
   --node-min-width: 50px;
   --node-max-width: 600px;
   --node-padding: 10px 14px;
@@ -63,11 +63,8 @@ body {
 .sidebar-container {
   padding: 0;
   width: var(--sidebar-width);
-  height: calc(100vh - 60px);
-  /* Fill screen minus margins */
-  margin: 30px 0 30px 30px;
-
-  /* Matching toolbar's bottom offset */
+  height: calc(100vh - 130px);
+  margin: 100px 0 30px 30px;
   display: flex;
   flex-direction: column;
   transition: transform 0.3s ease, margin 0.3s ease, opacity 0.3s ease;
@@ -76,18 +73,16 @@ body {
 
 .sidebar {
   pointer-events: auto;
-  background-color: rgba(241, 247, 238, 0.85);
-  /* Same as toolbar */
+  background-color: var(--bg);
   backdrop-filter: blur(8px);
   padding: 20px;
   border-radius: var(--radius);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: none;
   display: flex;
   flex-direction: column;
   height: 100%;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  /* Hide sidebar's own scrollbars */
 }
 
 .nodes-list {
@@ -121,13 +116,13 @@ body {
 .sidebar-toggle {
   position: fixed;
   left: calc(var(--sidebar-width) + 30px);
-  top: 50%;
+  top: calc(50% + 35px);
   transform: translateY(-50%);
   z-index: 1002;
   background: var(--ash-grey);
-  color: #000;
+  color: var(--main);
   border: none;
-  border-radius: 0 8px 8px 0;
+  border-radius: 0;
   width: 24px;
   height: 60px;
   cursor: pointer;
@@ -136,6 +131,12 @@ body {
   justify-content: center;
   font-size: 20px;
   transition: all 0.3s ease;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-toggle:hover {
+  background: var(--main);
+  color: var(--bg);
 }
 
 .sidebar-toggle.sidebar-collapsed {
@@ -152,24 +153,6 @@ body {
   margin-bottom: 20px;
   width: 100%;
   font-family: inherit;
-}
-
-.sidebar-toolbar {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.sidebar-toolbar button {
-  flex: 1;
-  padding: 8px;
-  border-radius: var(--radius);
-  border: none;
-  cursor: pointer;
-  background: var(--ash-grey);
-  color: #000;
-  font-family: inherit;
-  font-size: 12px;
 }
 
 .dndnode {
@@ -538,6 +521,7 @@ body {
   letter-spacing: 0.5px;
 }
 
+
 /* ==========================================================================
    UI HIDING
    ========================================================================== */
@@ -566,4 +550,20 @@ body {
   z-index: 0;
   user-select: none;
   font-family: inherit;
+}
+
+.view-container {
+  flex: 1;
+  height: 100vh;
+  padding-top: 100px;
+  /* Space for the top navigation */
+  background-color: var(--bg);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.define-view {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }

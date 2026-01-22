@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-import { nodesLibrary as nodeTypes } from './nodesLibrary';
 
-
-
-
-export default function Sidebar({ customTemplates = [], onSave, onExport, onLoad, onClear, onAddNode }) {
+export default function Sidebar({ templates = [], onAddNode }) {
     const [search, setSearch] = useState('');
 
     const onDragStart = (event, node) => {
@@ -14,23 +10,15 @@ export default function Sidebar({ customTemplates = [], onSave, onExport, onLoad
         event.dataTransfer.effectAllowed = 'move';
     };
 
-    const allNodes = [...nodeTypes, ...customTemplates];
+    const allNodes = templates;
 
     const filteredNodes = allNodes.filter(node =>
         node.label.toLowerCase().includes(search.toLowerCase()) ||
-        (node.data?.phase || '').toLowerCase().includes(search.toLowerCase())
+        (node.data?.tags || []).some(tag => tag.toLowerCase().includes(search.toLowerCase()))
     );
 
     return (
         <aside className="sidebar">
-            {/* Toolbar Section */}
-            <div className="sidebar-toolbar">
-                <button onClick={onSave} title="Save Project">Save</button>
-                <button onClick={onExport} title="Export to JSON">Export</button>
-                <button onClick={onLoad} title="Load Project">Load</button>
-                <button onClick={onClear} className="btn-clear" title="Clear Canvas">Clear</button>
-            </div>
-
             <input
                 type="text"
                 placeholder="Search nodes..."
@@ -55,4 +43,3 @@ export default function Sidebar({ customTemplates = [], onSave, onExport, onLoad
         </aside>
     );
 }
-

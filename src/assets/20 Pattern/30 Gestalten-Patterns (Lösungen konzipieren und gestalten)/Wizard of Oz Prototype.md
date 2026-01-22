@@ -21,7 +21,7 @@ https://designthinking-methods.de/4Prototypen/wizardofOzPT.html
 - Eigenschaften der Testenden
 
 ---
-*steps*
+*Core Logic*
 - Prototypen entwickeln
 - Was sind gewünschte Funktionalitäten?
 - Wie kann man diese fingieren?

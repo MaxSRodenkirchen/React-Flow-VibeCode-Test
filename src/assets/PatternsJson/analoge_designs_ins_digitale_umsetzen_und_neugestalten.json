@@ -1,0 +1,56 @@
+{
+    "type": "custom",
+    "label": "Analoge Designs ins Digitale umsetzen und neugestalten",
+    "data": {
+        "label": "Analoge Designs ins Digitale umsetzen und neugestalten",
+        "tags": [
+            "Design",
+            "Digital",
+            "Transformation"
+        ],
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "Analoge Designs ins Digitale umsetzen und neugestalten"
+            },
+            {
+                "label": "Description",
+                "type": "list",
+                "items": [
+                    "Bestehendes Design aus analogen Medien digitalisieren und ggf. neugestalten"
+                ]
+            },
+            {
+                "label": "Inputs",
+                "type": "list",
+                "items": [
+                    "Analoge Designs"
+                ]
+            },
+            {
+                "label": "Variables",
+                "type": "list",
+                "items": [
+                    "Medien, Formate"
+                ]
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "Betrachten was im Digitalen nicht mehr funktioniert und ändern",
+                    "Möglichkeiten des Digitalen betrachten und ggf. Design dahingehend updaten (z.B. audiovisuelle Animationen)",
+                    "Leitfrage: Wie kriegt man das was im Analogen funktioniert auch im Digitalen funktional?"
+                ]
+            },
+            {
+                "label": "Outcomes",
+                "type": "list",
+                "items": [
+                    "Digitales Design nach analoger Vorlage"
+                ]
+            }
+        ]
+    }
+}

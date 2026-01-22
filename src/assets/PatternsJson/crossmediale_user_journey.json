@@ -1,0 +1,51 @@
+{
+    "type": "custom",
+    "label": "Crossmediale User Journey",
+    "data": {
+        "label": "Crossmediale User Journey",
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "Crossmediale User Journey"
+            },
+            {
+                "label": "Desc",
+                "type": "list",
+                "items": [
+                    "Ein Pattern um zu analysieren wo Probleme liegen"
+                ]
+            },
+            {
+                "label": "In",
+                "type": "list",
+                "items": [
+                    "Szenario",
+                    "[[Personas]]"
+                ]
+            },
+            {
+                "label": "Var",
+                "type": "list",
+                "items": []
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "[[Komplette Journey.canvas|Komplette Journey]] darstellen",
+                    "Fokus auf Übergange von Medium zu Medium",
+                    "Welches Feedback brauche ich von der Person? Auf welche Eigenschaften wird der Fokus gelegt?",
+                    "Bedienbarkeit / Technisches Verständnis"
+                ]
+            },
+            {
+                "label": "Out",
+                "type": "list",
+                "items": [
+                    "Nutzerspezifische Fragen und Herausforderungen / Barrieren im Verständnis und in der Interaktion erkennen und definieren."
+                ]
+            }
+        ]
+    }
+}
