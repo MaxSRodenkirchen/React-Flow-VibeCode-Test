@@ -555,7 +555,7 @@ body {
 .view-container {
   flex: 1;
   height: 100vh;
-  padding-top: 100px;
+  padding-top: 0;
   /* Space for the top navigation */
   background-color: var(--bg);
   overflow-y: auto;

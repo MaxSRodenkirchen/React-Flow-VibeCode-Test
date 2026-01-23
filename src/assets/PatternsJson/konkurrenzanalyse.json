@@ -1,0 +1,61 @@
+{
+    "type": "custom",
+    "label": "Konkurrenzanalyse",
+    "data": {
+        "label": "Konkurrenzanalyse",
+        "tags": [
+            "Verstehen",
+            "Kreieren"
+        ],
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "Konkurrenzanalyse"
+            },
+            {
+                "label": "Description",
+                "type": "list",
+                "items": [
+                    "Herausfinden, was es bereits gibt, woran man sich orientieren kann und was man vielleicht vermeiden sollte."
+                ]
+            },
+            {
+                "label": "Inputs",
+                "type": "list",
+                "items": [
+                    "Aufgabenstellung / Projektziel",
+                    "Gewünschte, zu erzielende Erkenntnisse"
+                ]
+            },
+            {
+                "label": "Variables",
+                "type": "list",
+                "items": [
+                    "Zielgruppe",
+                    "Relevante Punkte in der Recherche",
+                    "Visuelle Form der Darstellung"
+                ]
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "Recherche zu bisherigen ähnlichen Projekten betreiben",
+                    "Mit Personen sprechen die im Thema sind",
+                    "Ggf. filtern nach relvanten Punkten wenn zu viel aufkommt",
+                    "Was kennt die Zielgruppe?",
+                    "Passende Form der Darstellung wählen, je nach Form der Erkenntnisse"
+                ]
+            },
+            {
+                "label": "Outputs",
+                "type": "list",
+                "items": [
+                    "Rechercheergebnisse und Erkenntnisse",
+                    "Visuelle Darstellung der Recherche"
+                ]
+            }
+        ]
+    }
+}

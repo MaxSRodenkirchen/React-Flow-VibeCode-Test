@@ -1,73 +1,666 @@
 {
     "nodes": [
         {
-            "id": "node_1769121486850_187",
+            "id": "node_1769165730453_35",
             "type": "custom",
             "position": {
-                "x": 800,
-                "y": 500
+                "x": -1100,
+                "y": 300
             },
             "data": {
-                "label": "Meeting mit Kooperationspartern",
-                "tags": [],
+                "label": "Themenfindung (Solo)",
+                "tags": [
+                    "Verstehen"
+                ],
                 "elements": [
                     {
                         "label": "Title",
                         "type": "title",
-                        "content": "Meeting mit Kooperationspartern"
+                        "content": "Themenfindung (Solo)"
                     },
                     {
                         "label": "Description",
                         "type": "list",
                         "items": [
-                            "Was ist vorzubereiten?"
+                            "Wie findet man ein passendes, relevantes und interessantes Thema für eine Solo-Projektarbeit? Es gibt eine Menge spannender Themen, aus denen man das richtige herausfiltern muss. "
                         ]
                     },
                     {
                         "label": "Inputs",
                         "type": "list",
                         "items": [
-                            "Projektfortschritte und Inhalte",
-                            "Probleme, Aufgaben, Fragen",
-                            "Material: Laptop, Prototyp,..."
+                            "Eigene Interessensfelder",
+                            "Ziel der Projektarbeit"
                         ]
                     },
                     {
                         "label": "Variables",
                         "type": "list",
                         "items": [
-                            "Wer ist anwesend?",
-                            "Wo wird sich getroffen?",
-                            "Wie viel zeit hat man?"
+                            "Eigene Wünsche",
+                            "Vorgaben durch Dritte"
                         ]
                     },
                     {
                         "label": "Core Logic",
                         "type": "list",
                         "items": [
-                            "Was ist der aktuelle Stand?",
-                            "Wo hackt es? Was sind aktuelle Fragestellungen?",
-                            "Erste Lösungsvorschläge",
-                            "[[Prozesse dokumentieren]]",
-                            "Arbeitspläne aktualisieren",
-                            "Benötigte Mitarbeit von Partnern formulieren",
-                            "Alles zusammenstellen und parat haben"
+                            "Einen großen Themenpool erstellen",
+                            "Pool immer weiter filtern und eingrenzen",
+                            "Wenn es spezielle Vorgaben oder eigene Wünsche gibt, diese mitbeachten",
+                            "Eine enge Auswahl erstellen (3-5 Themen) und begründen warum diese passen",
+                            "Ein persönliches Lieblingsthema heraustellen",
+                            "Offen bleiben für Feedback von Dritten und möglichen Themenwechsel"
                         ]
                     },
                     {
                         "label": "Outputs",
                         "type": "list",
                         "items": [
-                            "Vorbereitet ins Meeting gehen",
-                            "Schlauer rauskommen",
-                            "Struktur geben, Fragen formulieren"
+                            "Eine Liste von Themen in der engeren Auswahl",
+                            "Das Lieblingsthema",
+                            "Begründungen warum welches Thema gut ist"
                         ]
                     }
                 ]
             },
             "width": 600,
-            "height": 708
+            "height": 628,
+            "selected": false,
+            "positionAbsolute": {
+                "x": -1100,
+                "y": 300
+            },
+            "dragging": false
+        },
+        {
+            "id": "node_1769166881218_254",
+            "type": "custom",
+            "position": {
+                "x": 500,
+                "y": 300
+            },
+            "data": {
+                "label": "Zeit- und Arbeitsplangestaltung",
+                "tags": [
+                    "Organisieren",
+                    "Kreieren"
+                ],
+                "elements": [
+                    {
+                        "label": "Title",
+                        "type": "title",
+                        "content": "Zeit- und Arbeitsplangestaltung"
+                    },
+                    {
+                        "label": "Description",
+                        "type": "list",
+                        "items": [
+                            "Sich und anderen einen Überblick über das Projekt verschaffen, um Dauer und Intensität einzuschätzen und Struktur zu geben."
+                        ]
+                    },
+                    {
+                        "label": "Inputs",
+                        "type": "list",
+                        "items": [
+                            "Projektaufgabe und Ziele",
+                            "Zeitplannutzer*innen"
+                        ]
+                    },
+                    {
+                        "label": "Variables",
+                        "type": "list",
+                        "items": [
+                            "Art der Darstellung",
+                            "Detailgrad der Darstellung"
+                        ]
+                    },
+                    {
+                        "label": "Core Logic",
+                        "type": "list",
+                        "items": [
+                            "1. Definieren was alles im Projekt ansteht",
+                            "2. Dauer des Projekts",
+                            "3. Verteilen der Bestandteile über Zeit",
+                            "Die visuelle Gestaltung richtet sich nach den Anforderungen der Nutzenden",
+                            "Manche Personen brauchen eine detaillierte Ansicht, während andere einen schnellen Überblick benötigen"
+                        ]
+                    },
+                    {
+                        "label": "Outputs",
+                        "type": "list",
+                        "items": [
+                            "Eine Übersichtliche Ansicht des gesamten Projektablaufs"
+                        ]
+                    }
+                ]
+            },
+            "width": 600,
+            "height": 599,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 500,
+                "y": 300
+            },
+            "dragging": false
+        },
+        {
+            "id": "node_1769166899569_791",
+            "type": "custom",
+            "position": {
+                "x": -300,
+                "y": 500
+            },
+            "data": {
+                "label": "Aufgaben- und Problemdefinierung",
+                "tags": [
+                    "Verstehen"
+                ],
+                "elements": [
+                    {
+                        "label": "Title",
+                        "type": "title",
+                        "content": "Aufgaben- und Problemdefinierung"
+                    },
+                    {
+                        "label": "Description",
+                        "type": "list",
+                        "items": [
+                            "Das Pattern bezieht sich auf die Frage, was die eigentliche Aufgabe ist / wo im Themenfeld ein Bedarf für eine Projektarbeit liegt?"
+                        ]
+                    },
+                    {
+                        "label": "Inputs",
+                        "type": "list",
+                        "items": [
+                            "Themenfeld",
+                            "Recherche",
+                            "Eigene Erwartungen an die Projektarbeit"
+                        ]
+                    },
+                    {
+                        "label": "Variables",
+                        "type": "list",
+                        "items": [
+                            "Expert*innen im Feld",
+                            "Personen die sich auskennen"
+                        ]
+                    },
+                    {
+                        "label": "Core Logic",
+                        "type": "list",
+                        "items": [
+                            "Zum gewählten Themenfeld Recherche betreiben",
+                            "Am besten mit Personen sprechen die direkten Bezug haben",
+                            "Durch Fragen und Recherche auf mögliche Needs kommen",
+                            "Eine Auswahl an Problemstellungen",
+                            "Abgleichen mit eigenen Erwartungen"
+                        ]
+                    },
+                    {
+                        "label": "Outputs",
+                        "type": "list",
+                        "items": [
+                            "Eine Auswahl an Problemstellungen",
+                            "Begründet warum was gut umzusetzen und sinnvoll ist",
+                            "Das Lieblingsproblem herausstellen"
+                        ]
+                    }
+                ]
+            },
+            "width": 600,
+            "height": 653,
+            "selected": true,
+            "positionAbsolute": {
+                "x": -300,
+                "y": 500
+            },
+            "dragging": false
+        },
+        {
+            "id": "node_1769167892899_251",
+            "type": "custom",
+            "position": {
+                "x": 800,
+                "y": -1200
+            },
+            "data": {
+                "label": "Problemanalyse",
+                "tags": [
+                    "Evaluieren",
+                    "Verstehen"
+                ],
+                "elements": [
+                    {
+                        "label": "Title",
+                        "type": "title",
+                        "content": "Problemanalyse"
+                    },
+                    {
+                        "label": "Description",
+                        "type": "list",
+                        "items": [
+                            "Ein Pattern, das immer wieder genutzt werden sollte, um zu überprüfen, ob die eingehende Problemstellung noch relevant ist. Durch weiter Erkenntnisse und Recherchen im Projektverlauf können sich die Erwartungen und Anforderungen ändern. "
+                        ]
+                    },
+                    {
+                        "label": "Inputs",
+                        "type": "list",
+                        "items": [
+                            "Das Problem, die Aufgabe, das Ziel des Projektes",
+                            "Recherche und Umfrageerkenntnisse",
+                            "Aktueller (zeitlicher) Stand des Projektes"
+                        ]
+                    },
+                    {
+                        "label": "Variables",
+                        "type": "list",
+                        "items": []
+                    },
+                    {
+                        "label": "Core Logic",
+                        "type": "list",
+                        "items": [
+                            "Auch den Erkenntnissen der fortlaufenden Recherchen und Umfragen erneut Bedürfnisse / Needs herausarbeiten",
+                            "Ist die eingehende Problemstellung (noch immer) relevant?",
+                            "Gibt es (inzwischen) etwas was doch passender oder relevanter ist?",
+                            "Wo stehen wir im Projekt? Wäre noch Zeit und Raum neuen Erkenntnisse nachzugehen / neue Wege einzuschlagen?"
+                        ]
+                    },
+                    {
+                        "label": "Outputs",
+                        "type": "list",
+                        "items": [
+                            "Erkenntnis: Ist die eingehende Problemstellung relevant, oder sollte man neue Wege gehen?"
+                        ]
+                    }
+                ]
+            },
+            "width": 600,
+            "height": 579,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 800,
+                "y": -1200
+            },
+            "dragging": false
+        },
+        {
+            "id": "node_1769172836014_912",
+            "type": "custom",
+            "position": {
+                "x": 1300,
+                "y": 300
+            },
+            "data": {
+                "label": "Zielgruppendefinition",
+                "tags": [
+                    "Verstehen",
+                    "Kreieren"
+                ],
+                "elements": [
+                    {
+                        "label": "Title",
+                        "type": "title",
+                        "content": "Zielgruppendefinition"
+                    },
+                    {
+                        "label": "Description",
+                        "type": "list",
+                        "items": [
+                            "Wer sind die Personen die einen Nutzen von dem Projekt haben und welche speziellen Anforderungen haben sie?"
+                        ]
+                    },
+                    {
+                        "label": "Inputs",
+                        "type": "list",
+                        "items": [
+                            "Thema und Problemstellung",
+                            "Personen mit direktem Nutzen"
+                        ]
+                    },
+                    {
+                        "label": "Variables",
+                        "type": "list",
+                        "items": [
+                            "Personen mit indirektem Nutzen",
+                            "Curb Cut Effekt"
+                        ]
+                    },
+                    {
+                        "label": "Core Logic",
+                        "type": "list",
+                        "items": [
+                            "Analysieren und Definieren wer wie einen Nutzen hat und warum",
+                            "Weitreichende Analyse der Anforderungen Einzelner auch in bspw. Alltagsszenarien hinein",
+                            "Wer profitiert sonst noch beiläufig von dem Projekt?"
+                        ]
+                    },
+                    {
+                        "label": "Outputs",
+                        "type": "list",
+                        "items": [
+                            "Liste mit Personen und ihren Anforderungen / Spezifikationen"
+                        ]
+                    }
+                ]
+            },
+            "width": 600,
+            "height": 507,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 1300,
+                "y": 300
+            },
+            "dragging": false
+        },
+        {
+            "id": "node_1769172843872_553",
+            "type": "custom",
+            "position": {
+                "x": -1100,
+                "y": -500
+            },
+            "data": {
+                "label": "Konkurrenzanalyse",
+                "tags": [
+                    "Verstehen",
+                    "Kreieren"
+                ],
+                "elements": [
+                    {
+                        "label": "Title",
+                        "type": "title",
+                        "content": "Konkurrenzanalyse"
+                    },
+                    {
+                        "label": "Description",
+                        "type": "list",
+                        "items": [
+                            "Herausfinden, was es bereits gibt, woran man sich orientieren kann und was man vielleicht vermeiden sollte."
+                        ]
+                    },
+                    {
+                        "label": "Inputs",
+                        "type": "list",
+                        "items": [
+                            "Aufgabenstellung / Projektziel",
+                            "Gewünschte, zu erzielende Erkenntnisse"
+                        ]
+                    },
+                    {
+                        "label": "Variables",
+                        "type": "list",
+                        "items": [
+                            "Zielgruppe",
+                            "Relevante Punkte in der Recherche",
+                            "Visuelle Form der Darstellung"
+                        ]
+                    },
+                    {
+                        "label": "Core Logic",
+                        "type": "list",
+                        "items": [
+                            "Recherche zu bisherigen ähnlichen Projekten betreiben",
+                            "Mit Personen sprechen die im Thema sind",
+                            "Ggf. filtern nach relvanten Punkten wenn zu viel aufkommt",
+                            "Was kennt die Zielgruppe?",
+                            "Passende Form der Darstellung wählen, je nach Form der Erkenntnisse"
+                        ]
+                    },
+                    {
+                        "label": "Outputs",
+                        "type": "list",
+                        "items": [
+                            "Rechercheergebnisse und Erkenntnisse",
+                            "Visuelle Darstellung der Recherche"
+                        ]
+                    }
+                ]
+            },
+            "width": 600,
+            "height": 585,
+            "selected": false,
+            "positionAbsolute": {
+                "x": -1100,
+                "y": -500
+            },
+            "dragging": false
+        },
+        {
+            "id": "node_1769172854242_632",
+            "type": "custom",
+            "position": {
+                "x": 0,
+                "y": -800
+            },
+            "data": {
+                "label": "Konzeptentwicklung",
+                "tags": [
+                    "Kreieren"
+                ],
+                "elements": [
+                    {
+                        "label": "Title",
+                        "type": "title",
+                        "content": "Konzeptentwicklung"
+                    },
+                    {
+                        "label": "Description",
+                        "type": "list",
+                        "items": [
+                            "Anhand vorheriger Recherche, Umfragen und Problemdefinierung "
+                        ]
+                    },
+                    {
+                        "label": "Inputs",
+                        "type": "list",
+                        "items": [
+                            "Themenfeld",
+                            "Recherche- und Umfrageergebnisse",
+                            "Problemdefinierung",
+                            "Spezifikationen und Anforderungen (der Nutzenden)"
+                        ]
+                    },
+                    {
+                        "label": "Variables",
+                        "type": "list",
+                        "items": [
+                            "Personas",
+                            "Zeitplan",
+                            "Vorgaben durch Dritte",
+                            "Limitierende Faktoren"
+                        ]
+                    },
+                    {
+                        "label": "Core Logic",
+                        "type": "list",
+                        "items": [
+                            "Brainstormingtechniken nutzen",
+                            "Schnelle Skizzen runterbringen (nichts ist falsch)",
+                            "Erste Entwürfe Problem orientiert analysieren",
+                            "Werden Anforderungen eingehalten?",
+                            "Definieren warum welche Idee passt und warum nicht"
+                        ]
+                    },
+                    {
+                        "label": "Outputs",
+                        "type": "list",
+                        "items": [
+                            "Eine Auswahl an möglichen Konzepten und warum diese passend sind",
+                            "Ein Lieblingskonzept und warum es besonders passt"
+                        ]
+                    }
+                ]
+            },
+            "width": 543,
+            "height": 640,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 0,
+                "y": -800
+            },
+            "dragging": false
+        },
+        {
+            "id": "node_1769183179312_973",
+            "type": "custom",
+            "position": {
+                "x": 900,
+                "y": -500
+            },
+            "data": {
+                "label": "Nutzertest",
+                "tags": [
+                    "Verstehen"
+                ],
+                "elements": [
+                    {
+                        "label": "Title",
+                        "type": "title",
+                        "content": "Nutzertest"
+                    },
+                    {
+                        "label": "Description",
+                        "type": "list",
+                        "items": [
+                            "Ein Nutzertest wird immer wieder in Gestaltungsprozessen gebraucht. Ziel ist der Erkenntnisgewinn, um Designentscheidung zu evaluieren. "
+                        ]
+                    },
+                    {
+                        "label": "Inputs",
+                        "type": "list",
+                        "items": [
+                            "Prototyp / Anwendung",
+                            "Offene Fragen",
+                            "Instruktionen",
+                            "Persona"
+                        ]
+                    },
+                    {
+                        "label": "Variables",
+                        "type": "list",
+                        "items": [
+                            "Gewünschte Art des Feedbacks"
+                        ]
+                    },
+                    {
+                        "label": "Core Logic",
+                        "type": "list",
+                        "items": [
+                            "Nutzertest auch starten wenn keine offenen Fragen vorhanden sind. Erkenntnisse können trotzdem gewonnen werden",
+                            "Einen Rahmen schaffen wo offene Fragen beantwortet werden",
+                            "Wenn bestimmte Art des Feedbacks gewünscht ist (z.B. Gruppenfeedback) den speziellen Rahmen dafür schaffen",
+                            "Immer vorher überlegen wie viel Instruktion es geben soll oder muss",
+                            "Testenden ggf. auffordern beim Testen laut zu denken",
+                            "Feedbackgespräch danach. Es gibt kein falsch! Die testende Person hat aus ihrer Perspektive recht"
+                        ]
+                    },
+                    {
+                        "label": "Outputs",
+                        "type": "list",
+                        "items": [
+                            "Erkenntnis: Designentscheidungen richtig getroffen?",
+                            "Erkenntnis: Weitere Anforderungen?"
+                        ]
+                    }
+                ]
+            },
+            "width": 600,
+            "height": 664,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 900,
+                "y": -500
+            },
+            "dragging": false
         }
     ],
-    "edges": []
+    "edges": [
+        {
+            "source": "node_1769166899569_791",
+            "sourceHandle": "source-5-2",
+            "target": "node_1769166881218_254",
+            "targetHandle": "target-2-0",
+            "type": "default",
+            "animated": false,
+            "style": {
+                "stroke": "#000",
+                "strokeWidth": 10,
+                "strokeDasharray": "none"
+            },
+            "data": {
+                "isFlow": false
+            },
+            "id": "reactflow__edge-node_1769166899569_791source-5-2-node_1769166881218_254target-2-0"
+        },
+        {
+            "source": "node_1769166899569_791",
+            "sourceHandle": "flow-source",
+            "target": "node_1769166881218_254",
+            "targetHandle": "flow-target",
+            "type": "default",
+            "animated": true,
+            "style": {
+                "stroke": "#787878",
+                "strokeWidth": 10,
+                "strokeDasharray": "15, 15"
+            },
+            "data": {
+                "isFlow": true
+            },
+            "id": "reactflow__edge-node_1769166899569_791flow-source-node_1769166881218_254flow-target"
+        },
+        {
+            "source": "node_1769165730453_35",
+            "sourceHandle": "source-5-1",
+            "target": "node_1769166899569_791",
+            "targetHandle": "target-2-0",
+            "type": "default",
+            "animated": false,
+            "style": {
+                "stroke": "#000",
+                "strokeWidth": 10,
+                "strokeDasharray": "none"
+            },
+            "data": {
+                "isFlow": false
+            },
+            "id": "reactflow__edge-node_1769165730453_35source-5-1-node_1769166899569_791target-2-0"
+        },
+        {
+            "source": "node_1769165730453_35",
+            "sourceHandle": "flow-source",
+            "target": "node_1769166899569_791",
+            "targetHandle": "flow-target",
+            "type": "default",
+            "animated": true,
+            "style": {
+                "stroke": "#787878",
+                "strokeWidth": 10,
+                "strokeDasharray": "15, 15"
+            },
+            "data": {
+                "isFlow": true
+            },
+            "id": "reactflow__edge-node_1769165730453_35flow-source-node_1769166899569_791flow-target"
+        },
+        {
+            "source": "node_1769172854242_632",
+            "sourceHandle": "flow-source",
+            "target": "node_1769183179312_973",
+            "targetHandle": "flow-target",
+            "type": "default",
+            "animated": true,
+            "style": {
+                "stroke": "#787878",
+                "strokeWidth": 10,
+                "strokeDasharray": "15, 15"
+            },
+            "data": {
+                "isFlow": true
+            },
+            "id": "reactflow__edge-node_1769172854242_632flow-source-node_1769183179312_973flow-target"
+        }
+    ]
 }

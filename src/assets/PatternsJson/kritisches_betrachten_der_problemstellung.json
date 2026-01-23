@@ -1,0 +1,56 @@
+{
+    "type": "custom",
+    "label": "Kritisches Betrachten der Problemstellung",
+    "data": {
+        "label": "Kritisches Betrachten der Problemstellung",
+        "tags": [
+            "Evaluieren",
+            "Verstehen"
+        ],
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "Kritisches Betrachten der Problemstellung"
+            },
+            {
+                "label": "Description",
+                "type": "list",
+                "items": [
+                    "Ein Pattern, das immer wieder genutzt werden sollte, um zu überprüfen, ob die eingehende Problemstellung noch relevant ist. Durch weiter Erkenntnisse und Recherchen im Projektverlauf können sich die Erwartungen und Anforderungen ändern. "
+                ]
+            },
+            {
+                "label": "Inputs",
+                "type": "list",
+                "items": [
+                    "Das Problem, die Aufgabe, das Ziel des Projektes",
+                    "Recherche und Umfrageerkenntnisse",
+                    "Aktueller (zeitlicher) Stand des Projektes"
+                ]
+            },
+            {
+                "label": "Variables",
+                "type": "list",
+                "items": []
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "Auch den Erkenntnissen der fortlaufenden Recherchen und Umfragen erneut Bedürfnisse / Needs herausarbeiten",
+                    "Ist die eingehende Problemstellung (noch immer) relevant?",
+                    "Gibt es (inzwischen) etwas was doch passender oder relevanter ist?",
+                    "Wo stehen wir im Projekt? Wäre noch Zeit und Raum neuen Erkenntnisse nachzugehen / neue Wege einzuschlagen?"
+                ]
+            },
+            {
+                "label": "Outputs",
+                "type": "list",
+                "items": [
+                    "Erkenntnis: Ist die eingehende Problemstellung relevant, oder sollte man neue Wege gehen?"
+                ]
+            }
+        ]
+    }
+}

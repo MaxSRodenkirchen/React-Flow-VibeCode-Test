@@ -1,0 +1,59 @@
+{
+    "type": "custom",
+    "label": "Zeit- und Arbeitsplangestaltung",
+    "data": {
+        "label": "Zeit- und Arbeitsplangestaltung",
+        "tags": [
+            "Organisieren",
+            "Kreieren"
+        ],
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "Zeit- und Arbeitsplangestaltung"
+            },
+            {
+                "label": "Description",
+                "type": "list",
+                "items": [
+                    "Sich und anderen einen Überblick über das Projekt verschaffen, um Dauer und Intensität einzuschätzen und Struktur zu geben."
+                ]
+            },
+            {
+                "label": "Inputs",
+                "type": "list",
+                "items": [
+                    "Projektaufgabe und Ziele",
+                    "Zeitplannutzer*innen"
+                ]
+            },
+            {
+                "label": "Variables",
+                "type": "list",
+                "items": [
+                    "Art der Darstellung",
+                    "Detailgrad der Darstellung"
+                ]
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "1. Definieren was alles im Projekt ansteht",
+                    "2. Dauer des Projekts",
+                    "3. Verteilen der Bestandteile über Zeit",
+                    "Die visuelle Gestaltung richtet sich nach den Anforderungen der Nutzenden",
+                    "Manche Personen brauchen eine detaillierte Ansicht, während andere einen schnellen Überblick benötigen"
+                ]
+            },
+            {
+                "label": "Outputs",
+                "type": "list",
+                "items": [
+                    "Eine Übersichtliche Ansicht des gesamten Projektablaufs"
+                ]
+            }
+        ]
+    }
+}

@@ -1,40 +1,84 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './PatternCreator.css';
 
-const EditorListSection = ({ type, title, inputValue, onInputChange, onKeyDown, items, onMove, onRemove }) => (
-    <div className="editor-column list-column">
-        <div className="column-inner">
-            <div className="element-list-label-row">
-                <div className="element-list-label">{title}</div>
-            </div>
+const EditorListSection = ({ type, title, inputValue, onInputChange, onKeyDown, items, onMove, onRemove, onEdit }) => {
+    const [editingIndex, setEditingIndex] = useState(null);
+    const [editValue, setEditValue] = useState('');
+    const editInputRef = useRef(null);
 
-            <div className="editor-input-wrapper">
-                <input
-                    className="editor-inline-input"
-                    value={inputValue}
-                    onChange={e => onInputChange(type, e.target.value)}
-                    onKeyDown={e => onKeyDown(e, type)}
-                    placeholder={`+ Add ${title}...`}
-                />
-            </div>
+    const startEditing = (idx, currentValue) => {
+        setEditingIndex(idx);
+        setEditValue(currentValue);
+    };
 
-            <ul className="element-list">
-                {items.map((item, idx) => (
-                    <li key={idx} className="sub-sub-element editor-list-item">
-                        <span className="item-text">{item}</span>
-                        <div className="item-actions">
-                            <button className="action-btn" onClick={() => onMove(type, idx, -1)}>↑</button>
-                            <button className="action-btn" onClick={() => onMove(type, idx, 1)}>↓</button>
-                            <button className="action-btn remove-btn" onClick={() => onRemove(type, idx)}>×</button>
-                        </div>
-                    </li>
-                ))}
-            </ul>
+    const saveEdit = () => {
+        if (editValue.trim() !== '') {
+            onEdit(type, editingIndex, editValue.trim());
+        }
+        setEditingIndex(null);
+    };
+
+    const cancelEdit = () => {
+        setEditingIndex(null);
+    };
+
+    const handleEditKeyDown = (e) => {
+        if (e.key === 'Enter') saveEdit();
+        if (e.key === 'Escape') cancelEdit();
+    };
+
+    return (
+        <div className="editor-column list-column">
+            <div className="column-inner">
+                <div className="element-list-label-row">
+                    <div className="element-list-label">{title}</div>
+                </div>
+
+                <div className="editor-input-wrapper">
+                    <input
+                        className="editor-inline-input"
+                        value={inputValue}
+                        onChange={e => onInputChange(type, e.target.value)}
+                        onKeyDown={e => onKeyDown(e, type)}
+                        placeholder={`+ Add ${title}...`}
+                    />
+                </div>
+
+                <ul className="element-list">
+                    {items.map((item, idx) => (
+                        <li key={idx} className="sub-sub-element editor-list-item">
+                            {editingIndex === idx ? (
+                                <input
+                                    ref={editInputRef}
+                                    className="editor-inline-input edit-input"
+                                    value={editValue}
+                                    onChange={e => setEditValue(e.target.value)}
+                                    onBlur={saveEdit}
+                                    onKeyDown={handleEditKeyDown}
+                                    autoFocus
+                                />
+                            ) : (
+                                <span
+                                    className="item-text editable"
+                                    onClick={() => startEditing(idx, item)}
+                                >
+                                    {item}
+                                </span>
+                            )}
+                            <div className="item-actions">
+                                <button className="action-btn" onClick={() => onMove(type, idx, -1)}>↑</button>
+                                <button className="action-btn" onClick={() => onMove(type, idx, 1)}>↓</button>
+                                <button className="action-btn remove-btn" onClick={() => onRemove(type, idx)}>×</button>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
-const PatternCreator = ({ onClose, onSaveSuccess, initialPattern, globalTags = [] }) => {
+const PatternCreator = ({ onClose, onSaveSuccess, initialPattern, globalTags = [], onUnsavedChangesChange }) => {
     const [title, setTitle] = useState('');
     const [originalLabel, setOriginalLabel] = useState(''); // Track for deletion
     const titleRef = useRef(null);
@@ -57,6 +101,12 @@ const PatternCreator = ({ onClose, onSaveSuccess, initialPattern, globalTags = [
         outcomes: ''
     });
 
+    // Track the initial state to detect changes
+    const [initialState, setInitialState] = useState(null);
+    const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+
+    console.log('PC: Rendering, hasUnsavedChanges:', hasUnsavedChanges, 'initialState:', !!initialState);
+
     // Handle initialPattern for editing
     useEffect(() => {
         if (initialPattern) {
@@ -74,27 +124,79 @@ const PatternCreator = ({ onClose, onSaveSuccess, initialPattern, globalTags = [
             const coreLogicElement = elements.find(e => e.label === 'Core Logic') || elements.find(e => e.label === 'Steps');
             const outcomesElement = elements.find(e => e.label === 'Outputs') || elements.find(e => e.label === 'Outcomes');
 
-            setLists({
+            const loadedLists = {
                 tags: data.tags || [],
                 inputs: inputsElement?.items || [],
                 variables: variablesElement?.items || [],
                 core_logic: coreLogicElement?.items || [],
                 outcomes: outcomesElement?.items || []
+            };
+
+            setLists(loadedLists);
+
+            // Store initial state for comparison
+            setInitialState({
+                title: initialPattern.label || '',
+                description: descElement?.items?.[0] || '',
+                lists: loadedLists
             });
+            setHasUnsavedChanges(false);
         } else {
             // Reset if no initial pattern (new pattern mode)
             setTitle('');
             setOriginalLabel('');
             setDescription('');
-            setLists({
+            const emptyLists = {
                 tags: [],
                 inputs: [],
                 variables: [],
                 core_logic: [],
                 outcomes: []
+            };
+            setLists(emptyLists);
+            setInitialState({
+                title: '',
+                description: '',
+                lists: emptyLists
             });
+            setHasUnsavedChanges(false);
         }
     }, [initialPattern]);
+
+    // Detect changes
+    useEffect(() => {
+        if (!initialState) return;
+
+        const currentState = {
+            title: title || '',
+            description: description || '',
+            lists: {
+                tags: lists.tags || [],
+                inputs: lists.inputs || [],
+                variables: lists.variables || [],
+                core_logic: lists.core_logic || [],
+                outcomes: lists.outcomes || []
+            }
+        };
+
+        const hasChanges =
+            currentState.title !== initialState.title ||
+            currentState.description !== initialState.description ||
+            JSON.stringify(currentState.lists) !== JSON.stringify(initialState.lists);
+
+        if (hasChanges !== hasUnsavedChanges) {
+            console.log('PC: hasUnsavedChanges changed to:', hasChanges);
+            setHasUnsavedChanges(hasChanges);
+        }
+    }, [title, description, lists, initialState, hasUnsavedChanges]);
+
+    // Notify parent of changes
+    useEffect(() => {
+        if (onUnsavedChangesChange) {
+            console.log('PC: Notifying App of hasUnsavedChanges:', hasUnsavedChanges);
+            onUnsavedChangesChange(hasUnsavedChanges, handleSave);
+        }
+    }, [hasUnsavedChanges, onUnsavedChangesChange, title, description, lists]); // Include state dependencies to ensure save function is fresh
 
     // Auto-resize title textarea
     useEffect(() => {
@@ -152,17 +254,36 @@ const PatternCreator = ({ onClose, onSaveSuccess, initialPattern, globalTags = [
         }));
     };
 
-    const handleNew = () => {
+    const editItem = (type, index, newValue) => {
+        setLists(prev => ({
+            ...prev,
+            [type]: prev[type].map((item, i) => i === index ? newValue : item)
+        }));
+    };
+
+    const handleNew = async () => {
+        if (hasUnsavedChanges) {
+            const userChoice = window.confirm(
+                'You have unsaved changes. Do you want to save them before creating a new pattern?\n\n' +
+                'Click OK to save and continue, or Cancel to discard changes.'
+            );
+
+            if (userChoice) {
+                await handleSave();
+            }
+        }
+
         setTitle('');
         setOriginalLabel('');
         setDescription('');
-        setLists({
+        const emptyLists = {
             tags: [],
             inputs: [],
             variables: [],
             core_logic: [],
             outcomes: []
-        });
+        };
+        setLists(emptyLists);
         setInputValues({
             tags: '',
             inputs: '',
@@ -171,6 +292,13 @@ const PatternCreator = ({ onClose, onSaveSuccess, initialPattern, globalTags = [
             outcomes: ''
         });
         setTagSuggestions([]);
+
+        setInitialState({
+            title: '',
+            description: '',
+            lists: emptyLists
+        });
+        setHasUnsavedChanges(false);
     };
 
     const moveItem = (type, index, direction) => {
@@ -237,6 +365,22 @@ const PatternCreator = ({ onClose, onSaveSuccess, initialPattern, globalTags = [
             });
 
             if (response.ok) {
+                const savedLists = {
+                    tags: lists.tags,
+                    inputs: lists.inputs,
+                    variables: lists.variables,
+                    core_logic: lists.core_logic,
+                    outcomes: lists.outcomes
+                };
+
+                setInitialState({
+                    title: title,
+                    description: description,
+                    lists: savedLists
+                });
+                setHasUnsavedChanges(false);
+                setOriginalLabel(title);
+
                 alert('Pattern saved successfully!');
                 if (onSaveSuccess) onSaveSuccess();
                 // We no longer call onClose() here to stay in the view
@@ -344,6 +488,7 @@ const PatternCreator = ({ onClose, onSaveSuccess, initialPattern, globalTags = [
                         items={lists.inputs}
                         onMove={moveItem}
                         onRemove={removeItem}
+                        onEdit={editItem}
                     />
 
                     <EditorListSection
@@ -355,6 +500,7 @@ const PatternCreator = ({ onClose, onSaveSuccess, initialPattern, globalTags = [
                         items={lists.variables}
                         onMove={moveItem}
                         onRemove={removeItem}
+                        onEdit={editItem}
                     />
 
                     <EditorListSection
@@ -366,6 +512,7 @@ const PatternCreator = ({ onClose, onSaveSuccess, initialPattern, globalTags = [
                         items={lists.core_logic}
                         onMove={moveItem}
                         onRemove={removeItem}
+                        onEdit={editItem}
                     />
 
                     <EditorListSection
@@ -377,6 +524,7 @@ const PatternCreator = ({ onClose, onSaveSuccess, initialPattern, globalTags = [
                         items={lists.outcomes}
                         onMove={moveItem}
                         onRemove={removeItem}
+                        onEdit={editItem}
                     />
                 </div>
             </div>

@@ -3,6 +3,9 @@
     "label": "Crossmediale User Journey",
     "data": {
         "label": "Crossmediale User Journey",
+        "tags": [
+            "Kreieren"
+        ],
         "elements": [
             {
                 "label": "Title",
@@ -10,40 +13,45 @@
                 "content": "Crossmediale User Journey"
             },
             {
-                "label": "Desc",
+                "label": "Description",
                 "type": "list",
                 "items": [
-                    "Ein Pattern um zu analysieren wo Probleme liegen"
+                    "Wie sich Nutzendende durch ein multimediales Konzept bewegen. Z.B. über ein Printmagazin eine Webseite öffnen. "
                 ]
             },
             {
-                "label": "In",
+                "label": "Inputs",
                 "type": "list",
                 "items": [
-                    "Szenario",
-                    "[[Personas]]"
+                    "Personas",
+                    "Medienformate",
+                    "Ablauf (der Anwendung / des Konzeptes)"
                 ]
             },
             {
-                "label": "Var",
+                "label": "Variables",
                 "type": "list",
-                "items": []
+                "items": [
+                    "User Journey typische Fragen",
+                    "Was fühlt die Person?",
+                    "Was sind Hürden?"
+                ]
             },
             {
                 "label": "Core Logic",
                 "type": "list",
                 "items": [
-                    "[[Komplette Journey.canvas|Komplette Journey]] darstellen",
-                    "Fokus auf Übergange von Medium zu Medium",
-                    "Welches Feedback brauche ich von der Person? Auf welche Eigenschaften wird der Fokus gelegt?",
-                    "Bedienbarkeit / Technisches Verständnis"
+                    "Standartisierte Abläufe mit Formatwechseln darstellen",
+                    "Personas durch die Abläuf schicken",
+                    "Definieren anhand ihrer Spezifikationen wo potentielle Schwierigkeiten liegen"
                 ]
             },
             {
-                "label": "Out",
+                "label": "Outputs",
                 "type": "list",
                 "items": [
-                    "Nutzerspezifische Fragen und Herausforderungen / Barrieren im Verständnis und in der Interaktion erkennen und definieren."
+                    "Erkentnisse darüber wo im Wechselspiel der Medienformate potentielle Schwierigkeiten liegen",
+                    "Spezielle Anforderungen einzelner Personas im Bezug zu den Medienformaten"
                 ]
             }
         ]

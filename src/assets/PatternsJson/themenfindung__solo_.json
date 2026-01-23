@@ -1,0 +1,61 @@
+{
+    "type": "custom",
+    "label": "Themenfindung (Solo)",
+    "data": {
+        "label": "Themenfindung (Solo)",
+        "tags": [
+            "Verstehen"
+        ],
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "Themenfindung (Solo)"
+            },
+            {
+                "label": "Description",
+                "type": "list",
+                "items": [
+                    "Wie findet man ein passendes, relevantes und interessantes Thema für eine Solo-Projektarbeit? Schließlich gibt es eine Menge spannender Themen, aus denen man das richtige herausfiltern muss. "
+                ]
+            },
+            {
+                "label": "Inputs",
+                "type": "list",
+                "items": [
+                    "Eigene Interessensfelder",
+                    "Ziel der Projektarbeit"
+                ]
+            },
+            {
+                "label": "Variables",
+                "type": "list",
+                "items": [
+                    "Eigene Wünsche",
+                    "Vorgaben durch Dritte"
+                ]
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "Einen großen Themenpool erstellen",
+                    "Pool immer weiter filtern und eingrenzen",
+                    "Wenn es spezielle Vorgaben oder eigene Wünsche gibt, diese mitbeachten",
+                    "Eine enge Auswahl erstellen (3-5 Themen) und begründen warum diese passen",
+                    "Ein persönliches Lieblingsthema heraustellen",
+                    "Offen bleiben für Feedback von Dritten und möglichen Themenwechsel"
+                ]
+            },
+            {
+                "label": "Outputs",
+                "type": "list",
+                "items": [
+                    "Eine Liste von Themen in der engeren Auswahl",
+                    "Das Lieblingsthema",
+                    "Begründungen warum welches Thema gut ist"
+                ]
+            }
+        ]
+    }
+}

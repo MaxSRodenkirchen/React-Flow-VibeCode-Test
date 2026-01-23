@@ -1,0 +1,61 @@
+{
+    "type": "custom",
+    "label": "Nutzertest",
+    "data": {
+        "label": "Nutzertest",
+        "tags": [
+            "Verstehen"
+        ],
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "Nutzertest"
+            },
+            {
+                "label": "Description",
+                "type": "list",
+                "items": [
+                    "Ein Nutzertest wird immer wieder in Gestaltungsprozessen gebraucht. Ziel ist der Erkenntnisgewinn, um Designentscheidung zu evaluieren. "
+                ]
+            },
+            {
+                "label": "Inputs",
+                "type": "list",
+                "items": [
+                    "Prototyp / Anwendung",
+                    "Offene Fragen",
+                    "Instruktionen",
+                    "Persona"
+                ]
+            },
+            {
+                "label": "Variables",
+                "type": "list",
+                "items": [
+                    "Gewünschte Art des Feedbacks"
+                ]
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "Nutzertest auch starten wenn keine offenen Fragen vorhanden sind. Erkenntnisse können trotzdem gewonnen werden",
+                    "Einen Rahmen schaffen wo offene Fragen beantwortet werden",
+                    "Wenn bestimmte Art des Feedbacks gewünscht ist (z.B. Gruppenfeedback) den speziellen Rahmen dafür schaffen",
+                    "Immer vorher überlegen wie viel Instruktion es geben soll oder muss",
+                    "Testenden ggf. auffordern beim Testen laut zu denken",
+                    "Feedbackgespräch danach. Es gibt kein falsch! Die testende Person hat aus ihrer Perspektive recht"
+                ]
+            },
+            {
+                "label": "Outputs",
+                "type": "list",
+                "items": [
+                    "Erkenntnis: Designentscheidungen richtig getroffen?",
+                    "Erkenntnis: Weitere Anforderungen?"
+                ]
+            }
+        ]
+    }
+}

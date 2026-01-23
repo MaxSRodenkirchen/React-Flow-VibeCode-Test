@@ -1,0 +1,64 @@
+{
+    "type": "custom",
+    "label": "Konzeptentwicklung",
+    "data": {
+        "label": "Konzeptentwicklung",
+        "tags": [
+            "Kreieren"
+        ],
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "Konzeptentwicklung"
+            },
+            {
+                "label": "Description",
+                "type": "list",
+                "items": [
+                    "Anhand vorheriger Recherche, Umfragen und Problemdefinierung "
+                ]
+            },
+            {
+                "label": "Inputs",
+                "type": "list",
+                "items": [
+                    "Themenfeld",
+                    "Recherche- und Umfrageergebnisse",
+                    "Problemdefinierung",
+                    "Spezifikationen und Anforderungen (der Nutzenden)"
+                ]
+            },
+            {
+                "label": "Variables",
+                "type": "list",
+                "items": [
+                    "Personas",
+                    "Zeitplan",
+                    "Vorgaben durch Dritte",
+                    "Limitierende Faktoren"
+                ]
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "Brainstormingtechniken nutzen",
+                    "Schnelle Skizzen runterbringen (nichts ist falsch)",
+                    "Erste Entwürfe Problem orientiert analysieren",
+                    "Werden Anforderungen eingehalten?",
+                    "Definieren warum welche Idee passt und warum nicht",
+                    "Offen bleiben für Feedback"
+                ]
+            },
+            {
+                "label": "Outputs",
+                "type": "list",
+                "items": [
+                    "Eine Auswahl an möglichen Konzepten und warum diese passend sind",
+                    "Ein Lieblingskonzept und warum es besonders passt"
+                ]
+            }
+        ]
+    }
+}

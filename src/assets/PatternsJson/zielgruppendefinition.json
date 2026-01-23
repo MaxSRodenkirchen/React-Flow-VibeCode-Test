@@ -1,0 +1,57 @@
+{
+    "type": "custom",
+    "label": "Zielgruppendefinition",
+    "data": {
+        "label": "Zielgruppendefinition",
+        "tags": [
+            "Verstehen",
+            "Kreieren"
+        ],
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "Zielgruppendefinition"
+            },
+            {
+                "label": "Description",
+                "type": "list",
+                "items": [
+                    "Wer sind die Personen die einen Nutzen von dem Projekt haben und welche speziellen Anforderungen haben sie?"
+                ]
+            },
+            {
+                "label": "Inputs",
+                "type": "list",
+                "items": [
+                    "Thema und Problemstellung",
+                    "Personen mit direktem Nutzen"
+                ]
+            },
+            {
+                "label": "Variables",
+                "type": "list",
+                "items": [
+                    "Personen mit indirektem Nutzen",
+                    "Curb Cut Effekt"
+                ]
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "Analysieren und Definieren wer wie einen Nutzen hat und warum",
+                    "Weitreichende Analyse der Anforderungen Einzelner auch in bspw. Alltagsszenarien hinein",
+                    "Wer profitiert sonst noch beiläufig von dem Projekt?"
+                ]
+            },
+            {
+                "label": "Outputs",
+                "type": "list",
+                "items": [
+                    "Liste mit Personen und ihren Anforderungen / Spezifikationen"
+                ]
+            }
+        ]
+    }
+}

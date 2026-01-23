@@ -1,0 +1,58 @@
+{
+    "type": "custom",
+    "label": "Materialsammlung und Sichtung",
+    "data": {
+        "label": "Materialsammlung und Sichtung",
+        "tags": [
+            "Verstehen"
+        ],
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "Materialsammlung und Sichtung"
+            },
+            {
+                "label": "Description",
+                "type": "list",
+                "items": [
+                    "Meist vor der Konzeption sollte betrachtet werden, mit welchem Material gearbeitet wird. Das Material ist neben der Nutzerzentrierung einer der Projektprozess bestimmenden Faktoren."
+                ]
+            },
+            {
+                "label": "Inputs",
+                "type": "list",
+                "items": [
+                    "Materialrecherche (CI-Elemente, Bilder, Schriften, Formate, ...)",
+                    "Zugang zu Material",
+                    "Auf jeden Fall benötigtes Material"
+                ]
+            },
+            {
+                "label": "Variables",
+                "type": "list",
+                "items": [
+                    "Noch benötigtes Material"
+                ]
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "Über Zugänge Material beschaffen (z.B. Personen schreiben)",
+                    "Strukturiert Sammeln",
+                    "Materialanalyse und Abgleich mit Projektzielen und Anforderungen",
+                    "Wird noch etwas benötigt?",
+                    "Muss noch etwas kreiert werden?"
+                ]
+            },
+            {
+                "label": "Outputs",
+                "type": "list",
+                "items": [
+                    "Erkenntnisse: Möglichkeiten und Anforderungen des Materials"
+                ]
+            }
+        ]
+    }
+}

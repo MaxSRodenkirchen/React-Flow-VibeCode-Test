@@ -1,0 +1,57 @@
+{
+    "type": "custom",
+    "label": "Click-Dummy mit Twine",
+    "data": {
+        "label": "Click-Dummy mit Twine",
+        "tags": [
+            "Gestalten"
+        ],
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "Click-Dummy mit Twine"
+            },
+            {
+                "label": "Description",
+                "type": "list",
+                "items": [
+                    "Einen interaktiven Storyprototyp erstellen – Schnell, einfach, visuell mit Twine (Tool für interaktives Geschichten Erzählen in HTML)"
+                ]
+            },
+            {
+                "label": "Inputs",
+                "type": "list",
+                "items": [
+                    "Story",
+                    "Meilensteine"
+                ]
+            },
+            {
+                "label": "Variables",
+                "type": "list",
+                "items": [
+                    "Decision Tree"
+                ]
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "Falls noch kein Decision Tree vorhanden, Story in Parts aufteilen",
+                    "Meilensteine als erste Blöcke setzen",
+                    "Zwischen Storyblöcken mit Brackets navigieren (Verlinken)",
+                    "Über die visuellen Verknüpfungen erkennt man die Tiefe, die die Geschichte erreicht"
+                ]
+            },
+            {
+                "label": "Outputs",
+                "type": "list",
+                "items": [
+                    "Visuelle Darstellung, Decision Tree",
+                    "Klickbarer HTML Prototyp der Story"
+                ]
+            }
+        ]
+    }
+}

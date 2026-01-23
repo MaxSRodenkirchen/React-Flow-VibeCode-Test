@@ -1,0 +1,61 @@
+{
+    "type": "custom",
+    "label": "Aufgaben- und Problemdefinierung",
+    "data": {
+        "label": "Aufgaben- und Problemdefinierung",
+        "tags": [
+            "Verstehen"
+        ],
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "Aufgaben- und Problemdefinierung"
+            },
+            {
+                "label": "Description",
+                "type": "list",
+                "items": [
+                    "Das Pattern bezieht sich auf die Frage, was die eigentliche Aufgabe ist / wo im Themenfeld ein Bedarf für eine Projektarbeit liegt?"
+                ]
+            },
+            {
+                "label": "Inputs",
+                "type": "list",
+                "items": [
+                    "Themenfeld",
+                    "Recherche",
+                    "Eigene Erwartungen an die Projektarbeit"
+                ]
+            },
+            {
+                "label": "Variables",
+                "type": "list",
+                "items": [
+                    "Expert*innen im Feld",
+                    "Personen die sich auskennen"
+                ]
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "Zum gewählten Themenfeld Recherche betreiben",
+                    "Am besten mit Personen sprechen die direkten Bezug haben",
+                    "Durch Fragen und Recherche auf mögliche Needs kommen",
+                    "Eine Auswahl an Problemstellungen",
+                    "Abgleichen mit eigenen Erwartungen"
+                ]
+            },
+            {
+                "label": "Outputs",
+                "type": "list",
+                "items": [
+                    "Eine Auswahl an Problemstellungen",
+                    "Begründet warum was gut umzusetzen und sinnvoll ist",
+                    "Das Lieblingsproblem herausstellen"
+                ]
+            }
+        ]
+    }
+}

@@ -40,6 +40,12 @@ const App = () => {
   const [currentView, setCurrentView] = useState('explore');
   const [isInitialized, setIsInitialized] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const [hasUnsavedPatternChanges, setHasUnsavedPatternChanges] = useState(false);
+  const [patternSaveFunction, setPatternSaveFunction] = useState(null);
+
+  if (hasUnsavedPatternChanges) {
+    console.log('App: Rendering with hasUnsavedPatternChanges = true');
+  }
 
   // --- Logic Extraction using Custom Hooks ---
 
@@ -97,10 +103,25 @@ const App = () => {
     setNodes((nds) => nds.concat({ id: getId(), type, position, data }));
   }, [reactFlowInstance, setNodes]);
 
-  const onAddNode = useCallback((node) => {
+  const onAddNode = useCallback(async (node) => {
     // If we are in 'define' view, clicking a node means we want to edit it
     if (currentView === 'define') {
-      console.log('App: Editing template:', node);
+      console.log('App: onAddNode called in define view. hasUnsavedPatternChanges:', hasUnsavedPatternChanges);
+
+      // Check for unsaved changes before switching
+      if (hasUnsavedPatternChanges) {
+        const userChoice = window.confirm(
+          'You have unsaved changes. Do you want to save them before switching patterns?\n\n' +
+          'Click OK to save and continue, or Cancel to discard changes.'
+        );
+
+        if (userChoice && patternSaveFunction) {
+          // User wants to save
+          await patternSaveFunction();
+        }
+        // If user clicks Cancel, we proceed to switch without saving
+      }
+
       setSelectedTemplate(node);
       return;
     }
@@ -119,7 +140,7 @@ const App = () => {
       position,
       data: { ...node.data, label: node.label }
     }));
-  }, [reactFlowInstance, setNodes, currentView]);
+  }, [reactFlowInstance, setNodes, currentView, hasUnsavedPatternChanges, patternSaveFunction]);
 
   // --- Global State & Shortcuts ---
   const setGlobalCollapseState = useCallback((state) => {
@@ -138,6 +159,12 @@ const App = () => {
     const templates = await loadTemplatesFromServer();
     console.log('App: Refreshing templates:', templates);
     setCustomTemplates(templates);
+  }, []);
+
+  const handleUnsavedChanges = useCallback((hasChanges, saveFunc) => {
+    console.log('App: handleUnsavedChanges called. hasChanges:', hasChanges);
+    setHasUnsavedPatternChanges(hasChanges);
+    setPatternSaveFunction(() => saveFunc);
   }, []);
 
   // Initial Load from Server
@@ -179,6 +206,37 @@ const App = () => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [toggleAllCollapse]);
+
+  // Warn before leaving page with unsaved changes
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (hasUnsavedPatternChanges) {
+        e.preventDefault();
+        e.returnValue = ''; // Required for Chrome
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [hasUnsavedPatternChanges]);
+
+  // Warn before switching views with unsaved changes
+  const handleViewChange = useCallback(async (newView) => {
+    console.log('App: handleViewChange called to:', newView, 'hasUnsavedPatternChanges:', hasUnsavedPatternChanges);
+    if (currentView === 'define' && hasUnsavedPatternChanges) {
+      console.log('App: Showing view change confirmation');
+      const userChoice = window.confirm(
+        'You have unsaved changes in the pattern editor. Do you want to save them before switching views?\n\n' +
+        'Click OK to save and continue, or Cancel to discard changes.'
+      );
+
+      if (userChoice && patternSaveFunction) {
+        console.log('App: User chose to save before view change');
+        await patternSaveFunction();
+      }
+    }
+    setCurrentView(newView);
+  }, [currentView, hasUnsavedPatternChanges, patternSaveFunction]);
 
   // --- Data Preparation for Display ---
   const connectedHandleIdsPerNode = useMemo(() => {
@@ -271,7 +329,7 @@ const App = () => {
 
   return (
     <div className="dndflow">
-      <Navigation activeView={currentView} onViewChange={setCurrentView} />
+      <Navigation activeView={currentView} onViewChange={handleViewChange} />
 
       <div className={`sidebar-container ${sidebarVisible ? '' : 'sidebar-hidden'}`}>
         <Sidebar
@@ -373,6 +431,7 @@ const App = () => {
             initialPattern={selectedTemplate}
             onSaveSuccess={refreshTemplates}
             globalTags={allTags}
+            onUnsavedChangesChange={handleUnsavedChanges}
           />
         </div>
       )}

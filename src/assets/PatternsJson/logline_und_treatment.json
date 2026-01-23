@@ -1,47 +1,51 @@
 {
     "type": "custom",
-    "label": "Projektdokumentation",
+    "label": "Logline und Treatment",
     "data": {
-        "label": "Projektdokumentation",
+        "label": "Logline und Treatment",
+        "tags": [
+            "Gestalten"
+        ],
         "elements": [
             {
                 "label": "Title",
                 "type": "title",
-                "content": "Projektdokumentation"
+                "content": "Logline und Treatment"
             },
             {
                 "label": "Description",
                 "type": "list",
                 "items": [
-                    "-"
+                    "Eine Technik aus dem Filmbereich zum Zusammenfassen einer Geschichte."
                 ]
             },
             {
                 "label": "Inputs",
                 "type": "list",
                 "items": [
-                    "-"
+                    "Story (-Bestandteile)"
                 ]
             },
             {
                 "label": "Variables",
                 "type": "list",
                 "items": [
-                    "-"
+                    "Was ist besonder von Interesse für Dritte? Z.B. Auftreten von bestimmten Charakteren"
                 ]
             },
             {
                 "label": "Core Logic",
                 "type": "list",
                 "items": [
-                    "-"
+                    "Logline: Einen Satz der die Geschichte auf den Punkt bringt",
+                    "Treatment: Maximal auf einer Seite zusammenfassen worum es hauptsächlich in der Story geht"
                 ]
             },
             {
-                "label": "Outcomes",
+                "label": "Outputs",
                 "type": "list",
                 "items": [
-                    "-"
+                    "Eine Seite mit einer kurzen Zusammenfassung der Geschichte / Handlung"
                 ]
             }
         ]

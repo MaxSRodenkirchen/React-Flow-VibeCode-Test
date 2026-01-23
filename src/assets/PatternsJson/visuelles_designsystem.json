@@ -1,0 +1,61 @@
+{
+    "type": "custom",
+    "label": "Visuelles Designsystem",
+    "data": {
+        "label": "Visuelles Designsystem",
+        "tags": [
+            "Gestalten"
+        ],
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "Visuelles Designsystem"
+            },
+            {
+                "label": "Description",
+                "type": "list",
+                "items": [
+                    "Ein System zu visuellen Gestaltung "
+                ]
+            },
+            {
+                "label": "Inputs",
+                "type": "list",
+                "items": [
+                    "Ziel der visuellen Gestaltung",
+                    "Konzeption",
+                    "Herausgearbeitete Anforderungen und Vorgaben (z.B. der Personas)"
+                ]
+            },
+            {
+                "label": "Variables",
+                "type": "list",
+                "items": [
+                    "Materialsammlung",
+                    "Weitere Vorgaben und Anforderungen"
+                ]
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "Nach Ziel Gestalten (Ein Ziel könnte z.B. Kompabilität im Browser sein. Dann wären bestimmte Browservorgaben zu bedenken)",
+                    "Vorhandene Gestaltung beachten",
+                    "Darauf aufbauen, interpretieren oder neu gestalten",
+                    "Aus Konzept und Anforderungen / Vorgaben eine visuelle Sprache ableiten",
+                    "Es kann helfen sich Adjektive aus verschiedenen Bereichen zudefinieren, als Designrichtung",
+                    "Top Notch ist eine visuelle Aufstellung aller Designparameter auf einem Screen",
+                    "Workflows und Prozesse können in einem Textfile beschrieben werden oder per Screenshots / Video dokumentiert sein"
+                ]
+            },
+            {
+                "label": "Outputs",
+                "type": "list",
+                "items": [
+                    "Designparameter / Variablen"
+                ]
+            }
+        ]
+    }
+}
