@@ -10,6 +10,7 @@ import './App.css';
 // Components
 import PatternCreator from './components/PatternCreator';
 import Navigation from './components/Navigation';
+import ResizableAside from './components/ResizableAside';
 
 // Hooks
 import useFlowConnections from './hooks/useFlowConnections';
@@ -408,144 +409,155 @@ const App = () => {
 
   return (
     <div className="dndflow">
-      <Navigation activeView={currentView} onViewChange={handleViewChange} />
+      <ResizableAside>
+        <Navigation activeView={currentView} onViewChange={handleViewChange} />
 
-      <div className={`sidebar-container ${sidebarVisible ? '' : 'sidebar-hidden'}`}>
-        <Sidebar
-          templates={customTemplates}
-          onAddNode={onAddNode}
-          allTags={allTags}
-        />
-      </div>
-
-      <button
-        className={`sidebar-toggle ${sidebarVisible ? 'sidebar-visible' : 'sidebar-collapsed'}`}
-        onClick={toggleSidebar}
-        title={sidebarVisible ? "Hide Sidebar" : "Show Sidebar"}
-      >
-        {sidebarVisible ? '‹' : '›'}
-      </button>
-
-      {currentView === 'explore' && (
-        <>
-          <div className="reactflow-wrapper" ref={reactFlowWrapper}>
-            {nodes.length === 0 && (
-              <div className="empty-state-message">
-                Start your project by adding a pattern from the library!
-              </div>
-            )}
-            <ReactFlow
-              nodes={displayNodes}
-              edges={displayEdges}
-              onNodesChange={onNodesChange}
-              onEdgesChange={onEdgesChange}
-              onConnect={onConnect}
-              onDrop={onDrop}
-              onDragOver={onDragOver}
-              onNodeClick={onNodeClick}
-              onNodeDoubleClick={onNodeDoubleClick}
-              onInit={setReactFlowInstance}
-              onEdgeDoubleClick={onEdgeDoubleClick}
-              onNodeDrag={onNodeDrag}
-              onConnectStart={onConnectStart}
-              onConnectEnd={onConnectEnd}
-              nodeTypes={nodeTypes}
-              edgeTypes={edgeTypes}
-              connectionLineStyle={{
-                stroke: connectionLineColor,
-                strokeWidth: 10,
-                strokeDasharray: isFlowConnection ? '15, 15' : 'none',
-              }}
-              connectionLineType="default"
-              fitView
-              elevateNodesOnSelect={true}
-              minZoom={0.1}
-              maxZoom={4}
-              snapToGrid={true}
-              snapGrid={[200, 200]}
-              zoomOnDoubleClick={false}
-            >
-              <Controls />
-              <Background variant="dots" gap={200} size={3} color="#000" style={{ opacity: 0.4 }} />
-            </ReactFlow>
-          </div>
-
-          {/* Global Floating Toolbar */}
-          <div className="global-toolbar">
-            <div className="toolbar-inner">
-              <button
-                className={`toolbar-btn ${globalCollapseMode === 0 ? 'active' : ''}`}
-                onClick={() => setGlobalCollapseState(0)}
-              >
-                <span className="btn-icon">Full</span>
-                <span className="btn-label">Expanded</span>
-              </button>
-              <button
-                className={`toolbar-btn ${globalCollapseMode === 1 ? 'active' : ''}`}
-                onClick={() => setGlobalCollapseState(1)}
-              >
-                <span className="btn-icon">Balanced</span>
-                <span className="btn-label">Connected</span>
-              </button>
-              <button
-                className={`toolbar-btn ${globalCollapseMode === 2 ? 'active' : ''}`}
-                onClick={() => setGlobalCollapseState(2)}
-              >
-                <span className="btn-icon">Min</span>
-                <span className="btn-label">Titles</span>
-              </button>
-              <div style={{ width: '1px', background: 'rgba(0,0,0,0.1)', margin: '4px 2px' }} />
-              <button
-                className={`toolbar-btn ${globalCollapseMode === 'auto' ? 'active' : ''}`}
-                onClick={() => setGlobalCollapseState('auto')}
-              >
-                <span className="btn-icon">AI</span>
-                <span className="btn-label">Auto Zoom</span>
-              </button>
-
-              <div style={{ width: '1px', background: 'rgba(0,0,0,0.1)', margin: '4px 2px' }} />
-
-              <button
-                className="toolbar-btn"
-                onClick={() => handleAddStandalone('title')}
-                title="Add a heading module"
-              >
-                <span className="btn-icon">#</span>
-                <span className="btn-label">Title</span>
-              </button>
-
-              <button
-                className="toolbar-btn"
-                onClick={() => handleAddStandalone('text')}
-                title="Add a text module"
-              >
-                <span className="btn-icon">Type</span>
-                <span className="btn-label">Text</span>
-              </button>
-            </div>
-          </div>
-        </>
-      )}
-
-      {currentView === 'define' && (
-        <div className="view-container define-view">
-          <PatternCreator
-            initialPattern={selectedTemplate}
-            onSaveSuccess={refreshTemplates}
-            globalTags={allTags}
-            onUnsavedChangesChange={handleUnsavedChanges}
+        <div className={`sidebar-container ${sidebarVisible ? '' : 'sidebar-hidden'}`}>
+          <Sidebar
+            templates={customTemplates}
+            onAddNode={onAddNode}
+            allTags={allTags}
           />
         </div>
-      )}
 
-      {currentView === 'materialize' && (
-        <div className="view-container materialize-view">
-          <div className="empty-state-message" style={{ opacity: 0.5, position: 'static', transform: 'none', padding: '100px' }}>
-            Materialize View<br />
-            <span style={{ fontSize: '20px' }}>Evaluation tools coming soon...</span>
+        <button
+          className={`sidebar-toggle ${sidebarVisible ? 'sidebar-visible' : 'sidebar-collapsed'}`}
+          onClick={toggleSidebar}
+          title={sidebarVisible ? "Hide Sidebar" : "Show Sidebar"}
+        >
+          {sidebarVisible ? '‹' : '›'}
+        </button>
+      </ResizableAside>
+
+      <main className="layout-main">
+        {currentView === 'explore' && (
+          <div className="whiteboard-view">
+            <div className="reactflow-wrapper" ref={reactFlowWrapper}>
+              {nodes.length === 0 && (
+                <div className="empty-state-message">
+                  Start your project by adding a pattern from the library!
+                </div>
+              )}
+              <ReactFlow
+                nodes={displayNodes}
+                edges={displayEdges}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                onConnect={onConnect}
+                onDrop={onDrop}
+                onDragOver={onDragOver}
+                onNodeClick={onNodeClick}
+                onNodeDoubleClick={onNodeDoubleClick}
+                onInit={setReactFlowInstance}
+                onEdgeDoubleClick={onEdgeDoubleClick}
+                onNodeDrag={onNodeDrag}
+                onConnectStart={onConnectStart}
+                onConnectEnd={onConnectEnd}
+                nodeTypes={nodeTypes}
+                edgeTypes={edgeTypes}
+                connectionLineStyle={{
+                  stroke: connectionLineColor,
+                  strokeWidth: 10,
+                  strokeDasharray: isFlowConnection ? '15, 15' : 'none',
+                }}
+                connectionLineType="default"
+                fitView
+                elevateNodesOnSelect={true}
+                minZoom={0.1}
+                maxZoom={4}
+                snapToGrid={true}
+                snapGrid={[200, 200]}
+                zoomOnDoubleClick={false}
+              >
+                <Controls />
+                <Background variant="dots" gap={200} size={3} color="#000" style={{ opacity: 0.4 }} />
+              </ReactFlow>
+            </div>
+
+            {/* Global Floating Toolbar - Top Right (View Modes) */}
+            <div className="global-toolbar toolbar-top-right">
+              <div className="toolbar-inner">
+                <button
+                  className={`toolbar-btn ${globalCollapseMode === 0 ? 'active' : ''}`}
+                  onClick={() => setGlobalCollapseState(0)}
+                  title="Expanded View"
+                >
+                  <span className="btn-icon">Full</span>
+                  <span className="btn-label">Expanded</span>
+                </button>
+                <button
+                  className={`toolbar-btn ${globalCollapseMode === 1 ? 'active' : ''}`}
+                  onClick={() => setGlobalCollapseState(1)}
+                  title="Balanced View"
+                >
+                  <span className="btn-icon">Balanced</span>
+                  <span className="btn-label">Connected</span>
+                </button>
+                <button
+                  className={`toolbar-btn ${globalCollapseMode === 2 ? 'active' : ''}`}
+                  onClick={() => setGlobalCollapseState(2)}
+                  title="Compressed View"
+                >
+                  <span className="btn-icon">Min</span>
+                  <span className="btn-label">Titles</span>
+                </button>
+                <div style={{ width: '1px', background: 'rgba(0,0,0,0.1)', margin: '4px 2px' }} />
+                <button
+                  className={`toolbar-btn ${globalCollapseMode === 'auto' ? 'active' : ''}`}
+                  onClick={() => setGlobalCollapseState('auto')}
+                  title="AI Auto-Zoom"
+                >
+                  <span className="btn-icon">AI</span>
+                  <span className="btn-label">Auto Zoom</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Global Floating Toolbar - Bottom Right (Creation Tools) */}
+            <div className="global-toolbar toolbar-bottom-right">
+              <div className="toolbar-inner">
+                <button
+                  className="toolbar-btn"
+                  onClick={() => handleAddStandalone('title')}
+                  title="Add a heading module"
+                >
+                  <span className="btn-icon">#</span>
+                  <span className="btn-label">Title</span>
+                </button>
+
+                <button
+                  className="toolbar-btn"
+                  onClick={() => handleAddStandalone('text')}
+                  title="Add a text module"
+                >
+                  <span className="btn-icon">Type</span>
+                  <span className="btn-label">Text</span>
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+
+        {currentView === 'define' && (
+          <div className="view-container define-view">
+            <PatternCreator
+              initialPattern={selectedTemplate}
+              onSaveSuccess={refreshTemplates}
+              globalTags={allTags}
+              onUnsavedChangesChange={handleUnsavedChanges}
+            />
+          </div>
+        )}
+
+        {currentView === 'materialize' && (
+          <div className="view-container materialize-view">
+            <div className="empty-state-message" style={{ opacity: 0.5, position: 'static', transform: 'none', padding: '100px' }}>
+              Materialize View<br />
+              <span style={{ fontSize: '20px' }}>Evaluation tools coming soon...</span>
+            </div>
+          </div>
+        )}
+      </main>
     </div>
   );
 };

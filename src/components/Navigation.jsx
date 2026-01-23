@@ -17,7 +17,6 @@ const Navigation = ({ activeView, onViewChange }) => {
                         className={`nav-item ${activeView === view.id ? 'active' : ''}`}
                         onClick={() => onViewChange(view.id)}
                     >
-                        <span className="nav-icon">{view.icon}</span>
                         <span className="nav-label">{view.label}</span>
                     </button>
                 ))}

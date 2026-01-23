@@ -1,0 +1,38 @@
+.resizable-aside {
+    position: relative;
+    transition: width 0.3s ease;
+    overflow: hidden;
+}
+
+.resizable-aside.collapsed {
+    width: 0 !important;
+}
+
+.resize-handle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8px;
+    height: 100%;
+    cursor: ew-resize;
+    background: transparent;
+    z-index: 10000;
+    transition: background-color 0.2s ease;
+}
+
+.resize-handle:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.resize-handle:active {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.resizable-aside.collapsed .resize-handle {
+    right: -8px;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.resizable-aside.collapsed .resize-handle:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+}

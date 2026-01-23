@@ -16,7 +16,7 @@
                 "label": "Description",
                 "type": "list",
                 "items": [
-                    "Was ist zu beachten, wenn man in ein Meeting geht?"
+                    "Was ist zu beachten, wenn man in ein Meeting geht?\n"
                 ]
             },
             {
