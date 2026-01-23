@@ -36,7 +36,7 @@ const EditorListSection = ({ type, title, inputValue, onInputChange, onKeyDown, 
 
                 <div className="editor-input-wrapper">
                     <input
-                        className="editor-inline-input"
+                        className={`editor-inline-input ${inputValue.trim() ? 'has-content' : ''}`}
                         value={inputValue}
                         onChange={e => onInputChange(type, e.target.value)}
                         onKeyDown={e => onKeyDown(e, type)}
@@ -427,7 +427,7 @@ const PatternCreator = ({ onClose, onSaveSuccess, initialPattern, globalTags = [
                                     <div className="element-list-label">Tags</div>
                                 </div>
                                 <input
-                                    className="editor-inline-input"
+                                    className={`editor-inline-input ${inputValues.tags.trim() ? 'has-content' : ''}`}
                                     value={inputValues.tags}
                                     onChange={e => handleInputChange('tags', e.target.value)}
                                     onKeyDown={e => handleKeyDown(e, 'tags')}

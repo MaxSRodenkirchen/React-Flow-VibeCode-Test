@@ -14,12 +14,18 @@ import Navigation from './components/Navigation';
 // Hooks
 import useFlowConnections from './hooks/useFlowConnections';
 import useEdgeSnapping from './hooks/useEdgeSnapping';
+import FlowEdge from './components/edge/FlowEdge';
 
 const nodeTypes = {
   custom: CustomNode,
   input: CustomNode,
   output: CustomNode,
   default: CustomNode,
+};
+
+const edgeTypes = {
+  default: FlowEdge,
+  step: FlowEdge,
 };
 
 const getId = () => `node_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
@@ -62,6 +68,31 @@ const App = () => {
 
   // --- Node Events ---
   const onNodeClick = useCallback((event, node) => setSelectedNodeId(node.id), []);
+
+  const onNodeDoubleClick = useCallback((event, node) => {
+    const isStandalone = node.data?.isStandaloneTitle || node.data?.isStandaloneText;
+    if (isStandalone) {
+      const currentLabel = node.data.label || '';
+      const newText = window.prompt('Edit Content:', currentLabel);
+      if (newText !== null && newText.trim() !== '') {
+        setNodes((nds) => nds.map((n) => {
+          if (n.id === node.id) {
+            return {
+              ...n,
+              data: {
+                ...n.data,
+                label: newText,
+                elements: (n.data.elements || []).map(el =>
+                  el.type === 'title' ? { ...el, content: newText } : el
+                )
+              }
+            };
+          }
+          return n;
+        }));
+      }
+    }
+  }, [setNodes]);
 
 
   const onEdgeDoubleClick = useCallback((event, edge) => {
@@ -142,6 +173,31 @@ const App = () => {
     }));
   }, [reactFlowInstance, setNodes, currentView, hasUnsavedPatternChanges, patternSaveFunction]);
 
+  const handleAddStandalone = useCallback((variant) => {
+    if (!reactFlowInstance || !reactFlowWrapper.current) return;
+
+    const wrapperRect = reactFlowWrapper.current.getBoundingClientRect();
+    const centerPosition = reactFlowInstance.screenToFlowPosition({
+      x: wrapperRect.left + wrapperRect.width / 2,
+      y: wrapperRect.top + wrapperRect.height / 2,
+    });
+
+    const defaultText = variant === 'title' ? 'New Title' : 'New Text';
+    setNodes((nds) => nds.concat({
+      id: getId(),
+      type: 'custom',
+      position: centerPosition,
+      data: {
+        label: defaultText,
+        isStandaloneTitle: variant === 'title',
+        isStandaloneText: variant === 'text',
+        elements: [
+          { type: 'title', content: defaultText }
+        ]
+      }
+    }));
+  }, [reactFlowInstance, setNodes]);
+
   // --- Global State & Shortcuts ---
   const setGlobalCollapseState = useCallback((state) => {
     setGlobalCollapseMode(state);
@@ -157,9 +213,28 @@ const App = () => {
 
   const refreshTemplates = useCallback(async () => {
     const templates = await loadTemplatesFromServer();
-    console.log('App: Refreshing templates:', templates);
+    console.log('App: Refreshing templates and syncing canvas nodes:', templates);
     setCustomTemplates(templates);
-  }, []);
+
+    // Sync existing nodes on the canvas with the updated template data
+    setNodes((nds) => nds.map((node) => {
+      // Find the template that matches this node's label
+      const template = templates.find(t => t.label === (node.data?.label || node.label));
+
+      if (template) {
+        console.log(`App: Syncing node "${node.id}" (${node.data?.label}) with new template data`);
+        // Return a new node object with updated data while preserving position and id
+        return {
+          ...node,
+          data: {
+            ...template.data,
+            label: template.label // Ensure label stays consistent
+          }
+        };
+      }
+      return node;
+    }));
+  }, [setNodes]);
 
   const handleUnsavedChanges = useCallback((hasChanges, saveFunc) => {
     console.log('App: handleUnsavedChanges called. hasChanges:', hasChanges);
@@ -257,13 +332,8 @@ const App = () => {
   }, [edges]);
 
   const displayNodes = useMemo(() => nodes.map((node) => {
-    // Generate a stable random rotation between -0.7 and 0.7 based on node ID
-    const seed = node.id.split('_').pop() || '0';
-    const rotation = ((parseInt(seed) % 140) - 70) / 100;
-
     return {
       ...node,
-      style: { ...node.style, rotate: `${rotation}deg` },
       data: {
         ...node.data,
         connectedHandleIds: connectedHandleIdsPerNode[node.id] || [],
@@ -273,7 +343,12 @@ const App = () => {
   }), [nodes, connectedHandleIdsPerNode, globalCollapseMode]);
 
   const displayEdges = useMemo(() => edges.map((edge) => {
-    const isFlow = edge.data?.isFlow || edge.sourceHandle?.includes('flow') || edge.targetHandle?.includes('flow');
+    const sourceNode = nodes.find(n => n.id === edge.source);
+    const targetNode = nodes.find(n => n.id === edge.target);
+    const isStandalone = sourceNode?.data?.isStandaloneTitle || sourceNode?.data?.isStandaloneText ||
+      targetNode?.data?.isStandaloneTitle || targetNode?.data?.isStandaloneText;
+
+    const isFlow = !isStandalone && (edge.data?.isFlow || edge.sourceHandle?.includes('flow') || edge.targetHandle?.includes('flow'));
 
     // Determine effective collapse state for a node
     const getCollapseState = (nodeId) => {
@@ -307,7 +382,11 @@ const App = () => {
 
     return {
       ...edge,
-      type: 'step',
+      type: 'default',
+      data: {
+        ...edge.data,
+        isFlow
+      },
       animated: isFlow && isEdgeVisible,
       style: {
         ...edge.style,
@@ -335,6 +414,7 @@ const App = () => {
         <Sidebar
           templates={customTemplates}
           onAddNode={onAddNode}
+          allTags={allTags}
         />
       </div>
 
@@ -363,28 +443,30 @@ const App = () => {
               onDrop={onDrop}
               onDragOver={onDragOver}
               onNodeClick={onNodeClick}
+              onNodeDoubleClick={onNodeDoubleClick}
               onInit={setReactFlowInstance}
               onEdgeDoubleClick={onEdgeDoubleClick}
               onNodeDrag={onNodeDrag}
               onConnectStart={onConnectStart}
               onConnectEnd={onConnectEnd}
               nodeTypes={nodeTypes}
+              edgeTypes={edgeTypes}
               connectionLineStyle={{
                 stroke: connectionLineColor,
                 strokeWidth: 10,
                 strokeDasharray: isFlowConnection ? '15, 15' : 'none',
               }}
-              connectionLineType="step"
+              connectionLineType="default"
               fitView
               elevateNodesOnSelect={true}
               minZoom={0.1}
               maxZoom={4}
               snapToGrid={true}
-              snapGrid={[100, 100]}
+              snapGrid={[200, 200]}
               zoomOnDoubleClick={false}
             >
               <Controls />
-              <Background variant="dots" gap={100} size={3} color="#000" style={{ opacity: 0.4 }} />
+              <Background variant="dots" gap={200} size={3} color="#000" style={{ opacity: 0.4 }} />
             </ReactFlow>
           </div>
 
@@ -419,6 +501,26 @@ const App = () => {
               >
                 <span className="btn-icon">AI</span>
                 <span className="btn-label">Auto Zoom</span>
+              </button>
+
+              <div style={{ width: '1px', background: 'rgba(0,0,0,0.1)', margin: '4px 2px' }} />
+
+              <button
+                className="toolbar-btn"
+                onClick={() => handleAddStandalone('title')}
+                title="Add a heading module"
+              >
+                <span className="btn-icon">#</span>
+                <span className="btn-label">Title</span>
+              </button>
+
+              <button
+                className="toolbar-btn"
+                onClick={() => handleAddStandalone('text')}
+                title="Add a text module"
+              >
+                <span className="btn-icon">Type</span>
+                <span className="btn-label">Text</span>
               </button>
             </div>
           </div>

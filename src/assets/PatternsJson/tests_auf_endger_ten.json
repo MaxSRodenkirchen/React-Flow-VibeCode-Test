@@ -1,0 +1,55 @@
+{
+    "type": "custom",
+    "label": "Tests auf Endgeräten",
+    "data": {
+        "label": "Tests auf Endgeräten",
+        "tags": [
+            "Gestalten"
+        ],
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "Tests auf Endgeräten"
+            },
+            {
+                "label": "Description",
+                "type": "list",
+                "items": [
+                    "Digitale Prototypen und Anwendungen auf mehreren Endgeräten testen, um mögliche Fehlerquellen zu erkennen."
+                ]
+            },
+            {
+                "label": "Inputs",
+                "type": "list",
+                "items": [
+                    "Prototyp / Anwendung",
+                    "Endgeräte"
+                ]
+            },
+            {
+                "label": "Variables",
+                "type": "list",
+                "items": [
+                    "Szenarien der Nutzung"
+                ]
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "Anwendung auf jeglichen Endgeräten öffnen",
+                    "Ggf. betrachten wie unterschiedlich die Anwendung auf verschiedenen Geräten genutzt wird",
+                    "Hürden, Probleme, Bugs aufschreiben"
+                ]
+            },
+            {
+                "label": "Outputs",
+                "type": "list",
+                "items": [
+                    "Liste mit Fehlerquellen oder möglichen Verbesserung"
+                ]
+            }
+        ]
+    }
+}

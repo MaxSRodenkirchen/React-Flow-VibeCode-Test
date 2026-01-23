@@ -1,0 +1,61 @@
+{
+    "type": "custom",
+    "label": "LoFi Designs",
+    "data": {
+        "label": "LoFi Designs",
+        "tags": [
+            "Gestalten"
+        ],
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "LoFi Designs"
+            },
+            {
+                "label": "Description",
+                "type": "list",
+                "items": [
+                    "Von der Skizze zum LoFi - Most Basic Designs mit Platzhaltern"
+                ]
+            },
+            {
+                "label": "Inputs",
+                "type": "list",
+                "items": [
+                    "Konzept",
+                    "Designsystem"
+                ]
+            },
+            {
+                "label": "Variables",
+                "type": "list",
+                "items": [
+                    "Liste aller benötigten Designelemente"
+                ]
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "Überblick verschaffen",
+                    "Architektur der Elemente überlegen (Komponenten, Musterseiten etc.)",
+                    "Grundlayout aufbauen",
+                    "Mit ersten Inhalten oder Platzhaltern füllen",
+                    "Designsystem anwenden",
+                    "Designsystem testen und ggf. überarbeiten"
+                ]
+            },
+            {
+                "label": "Outputs",
+                "type": "list",
+                "items": [
+                    "Alle Designelemente in Form von Platzhaltern",
+                    "Ziel: Elemente zum frühen Testen parat haben",
+                    "Eine Übersicht über alles benötigte bekommen",
+                    "Desingsystem testen"
+                ]
+            }
+        ]
+    }
+}

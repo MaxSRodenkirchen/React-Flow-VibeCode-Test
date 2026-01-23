@@ -5,7 +5,7 @@ import NodeListElement from './components/node/NodeListElement';
 
 const zoomSelector = (s) => s.transform[2] || 1;
 
-const CustomNode = ({ data, isConnectable, selected }) => {
+const CustomNode = ({ id, data, isConnectable, selected }) => {
     const zoom = useStore(zoomSelector);
 
     // 1. Determine Individual Override (from Double Click)
@@ -63,11 +63,15 @@ const CustomNode = ({ data, isConnectable, selected }) => {
                         <div className="element-content">
                             {isTitle ? (
                                 <NodeTitle
+                                    id={id}
                                     content={element.content}
                                     label={data.label}
                                     index={index}
                                     isConnectable={isConnectable}
                                     connectedHandleIds={connectedHandleIds}
+                                    isStandaloneTitle={data.isStandaloneTitle}
+                                    isStandaloneText={data.isStandaloneText}
+                                    selected={selected}
                                 />
                             ) : (
                                 <NodeListElement

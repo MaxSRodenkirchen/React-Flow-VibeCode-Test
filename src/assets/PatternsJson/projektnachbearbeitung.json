@@ -1,0 +1,64 @@
+{
+    "type": "custom",
+    "label": "Projektnachbearbeitung",
+    "data": {
+        "label": "Projektnachbearbeitung",
+        "tags": [
+            "Organisieren"
+        ],
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "Projektnachbearbeitung"
+            },
+            {
+                "label": "Description",
+                "type": "list",
+                "items": [
+                    "Ein wichtiger Schritt in jedem Projekt ist das Dokumentieren und Archivieren um später darauf zurückgreifen zu können. "
+                ]
+            },
+            {
+                "label": "Inputs",
+                "type": "list",
+                "items": [
+                    "Prozessdokumentationen: Screenshots, etc,",
+                    "Jegliches genutztes Material",
+                    "Alle analogen und digitalen Dateien"
+                ]
+            },
+            {
+                "label": "Variables",
+                "type": "list",
+                "items": [
+                    "Späterer Nutzen des Projektes"
+                ]
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "Alles aus CLOUD Diensten raus exportieren",
+                    "Z.B. in Obsidian ein MOC, oder Obsidian Vault komplett in Archivordner",
+                    "Alles in einem digitalen und einem analogen Ordner sammeln",
+                    "Komplexe Workflows und Prozesse erklären",
+                    "Ggf. Dateien hervorheben die später genutzt werden sollen: Finale Dateien, Beautyshots,..",
+                    "Neben der reinen Archivierung kann sich eine Form der Dokumentation überlegt werden in der das Projekt noch einmal genau beschrieben wird",
+                    "Projekt auf Festplatte und in analogem Archiv verstauen / einordnen",
+                    "Back Up erstellen"
+                ]
+            },
+            {
+                "label": "Outputs",
+                "type": "list",
+                "items": [
+                    "Eine übersichtliche und verständliche Sammlung, an nicht mehr als zwei Orten (Digital, Analog)",
+                    "Eine erklärende Dokumentation",
+                    "Ziel: In 30 Jahren noch verstehen können was hier gemacht wurde",
+                    "Ziel: Dateien so sammeln, dass am Projekt weitergearbeitet werden könnte"
+                ]
+            }
+        ]
+    }
+}

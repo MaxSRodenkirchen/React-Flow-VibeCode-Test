@@ -1,0 +1,56 @@
+{
+    "type": "custom",
+    "label": "HiFi Designs",
+    "data": {
+        "label": "HiFi Designs",
+        "tags": [
+            "Gestalten"
+        ],
+        "elements": [
+            {
+                "label": "Title",
+                "type": "title",
+                "content": "HiFi Designs"
+            },
+            {
+                "label": "Description",
+                "type": "list",
+                "items": [
+                    "Vom LoFi Design hin zur detaillierten Ausgestaltung"
+                ]
+            },
+            {
+                "label": "Inputs",
+                "type": "list",
+                "items": [
+                    "Konzept",
+                    "Designsystem"
+                ]
+            },
+            {
+                "label": "Variables",
+                "type": "list",
+                "items": [
+                    "LoFi Designs"
+                ]
+            },
+            {
+                "label": "Core Logic",
+                "type": "list",
+                "items": [
+                    "Auf Basis von LoFi Designs weiterarbeiten",
+                    "Wenn LoFi nicht vorhanden, erstmal LoFi erstellen, aber direkt die richtigen Inhalte verwenden",
+                    "Mehr Fokus auf korrekter Verwendung aller Designparameter und Workflows",
+                    "Wenn die grobe Ausarbeitung fertig ist, in das Finetuning gehen: Abstände anpassen, Farben checken, etc."
+                ]
+            },
+            {
+                "label": "Outputs",
+                "type": "list",
+                "items": [
+                    "Detaillierte Ausarbeitung und Finalisierung der Designs"
+                ]
+            }
+        ]
+    }
+}

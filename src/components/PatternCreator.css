@@ -85,12 +85,12 @@
 /* Typography & Inputs */
 .editor-title-input {
     width: 100%;
-    font-size: 40px;
+    font-size: 55px;
     font-weight: 700;
     line-height: 1.1;
     border: none;
     background: transparent;
-    font-family: inherit;
+    font-family: "Space Grotesk", sans-serif;
     color: inherit;
     padding: 0;
     margin: 0;
@@ -120,6 +120,12 @@
     background: transparent;
     font-family: inherit;
     font-size: 12px;
+    transition: border-bottom 0.2s ease;
+}
+
+.editor-inline-input.has-content {
+    border-bottom: 2px solid #2ecc71;
+    /* Green border */
 }
 
 .editor-node-tags {
@@ -231,7 +237,7 @@
     box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
     text-transform: uppercase;
     letter-spacing: 2px;
-    font-family: inherit;
+    font-family: "Space Grotesk", sans-serif;
     transition: all 0.1s;
 }
 
