@@ -36,7 +36,7 @@ body {
   /* Spacing & Geometry */
   --sidebar-width: 442px;
   --node-min-width: 250px;
-  --node-max-width: 700px;
+  --node-max-width: 600px;
   --node-padding: 10px 14px;
   /* Increased padding slightly for handles */
   --row-padding-h: 5px;
@@ -70,7 +70,7 @@ body {
 .layout-aside {
   display: flex;
   flex-direction: column;
-  gap: 100px;
+  gap: var(--paddingMid);
   padding: 0 var(--paddingMid) 0 var(--paddingMid);
   height: 100%;
   background-color: var(--bg2);
@@ -121,7 +121,7 @@ body {
 .sidebar {
   pointer-events: auto;
   /* background-color: var(--bg); */
-  backdrop-filter: blur(8px);
+  /* backdrop-filter: blur(8px); */
   /* padding: 20px; */
   border-radius: var(--radius);
   border: none;
@@ -159,29 +159,6 @@ body {
 .reactflow-wrapper {
   flex-grow: 1;
   height: 100%;
-}
-
-.sidebar-toggle {
-  background: var(--ash-grey);
-  color: var(--main);
-  border: none;
-  border-radius: 0;
-  width: 24px;
-  height: 60px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-size-base);
-  transition: all 0.3s ease;
-  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
-  margin-top: -30px;
-  /* Offset to float near sidebar center if needed, or adjust */
-  align-self: flex-start;
-}
-
-.sidebar-toggle.sidebar-collapsed {
-  margin-left: 0;
 }
 
 /* ==========================================================================
@@ -263,7 +240,7 @@ body {
 
 .dndnode {
 
-  padding: 10px;
+  padding: 5px;
   border-radius: var(--radius);
   /* background: rgba(255, 255, 255, 0.4); */
   /* Glass effect for nodes inside sidebar */
@@ -278,7 +255,7 @@ body {
 }
 
 .dndnode:hover {
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--bg)
 }
 
 /* ==========================================================================
@@ -751,6 +728,13 @@ body {
   pointer-events: none;
   z-index: 0;
   user-select: none;
+}
+
+/* ==========================================================================
+   REACT FLOW GRID
+   ========================================================================== */
+.custom-grid {
+  opacity: 0.1;
 }
 
 .view-container {

@@ -21,6 +21,10 @@ const Navigation = ({ activeView, onViewChange }) => {
                     </button>
                 ))}
             </div>
+            <div className="logo">
+                <h1>IVCO</h1>
+                <p>A modular Patternsystem</p>
+            </div>
         </nav>
     );
 };

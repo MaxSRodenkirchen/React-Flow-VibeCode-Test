@@ -262,7 +262,7 @@ const App = () => {
       setIsInitialized(true);
     };
     initLoad();
-  }, [setNodes, setEdges, refreshTemplates]);
+  }, []); // Empty dependencies - only run on mount
 
   // Auto-Save to Server
   useEffect(() => {
@@ -419,14 +419,6 @@ const App = () => {
             allTags={allTags}
           />
         </div>
-
-        <button
-          className={`sidebar-toggle ${sidebarVisible ? 'sidebar-visible' : 'sidebar-collapsed'}`}
-          onClick={toggleSidebar}
-          title={sidebarVisible ? "Hide Sidebar" : "Show Sidebar"}
-        >
-          {sidebarVisible ? '‹' : '›'}
-        </button>
       </ResizableAside>
 
       <main className="layout-main">
@@ -470,7 +462,7 @@ const App = () => {
                 zoomOnDoubleClick={false}
               >
                 <Controls />
-                <Background variant="dots" gap={200} size={3} color="#000" style={{ opacity: 0.4 }} />
+                <Background variant="lines" gap={200} size={1} color="#b0bea9" style={{ opacity: 0.2 }} />
               </ReactFlow>
             </div>
 

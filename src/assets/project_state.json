@@ -64,8 +64,8 @@
                     }
                 ]
             },
-            "width": 700,
-            "height": 115,
+            "width": 600,
+            "height": 773,
             "measured": {
                 "width": 600,
                 "height": 628
@@ -74,7 +74,7 @@
             "dragging": false,
             "positionAbsolute": {
                 "x": 0,
-                "y": -200
+                "y": -214
             }
         },
         {
@@ -141,8 +141,8 @@
                     }
                 ]
             },
-            "width": 700,
-            "height": 175,
+            "width": 600,
+            "height": 797,
             "selected": false,
             "positionAbsolute": {
                 "x": 800,
@@ -216,8 +216,8 @@
                     }
                 ]
             },
-            "width": 700,
-            "height": 236,
+            "width": 600,
+            "height": 743,
             "selected": false,
             "positionAbsolute": {
                 "x": 1600,
@@ -287,8 +287,8 @@
                     }
                 ]
             },
-            "width": 700,
-            "height": 175,
+            "width": 600,
+            "height": 767,
             "selected": false,
             "positionAbsolute": {
                 "x": 3200,
@@ -361,8 +361,8 @@
                     }
                 ]
             },
-            "width": 700,
-            "height": 175,
+            "width": 600,
+            "height": 683,
             "selected": false,
             "positionAbsolute": {
                 "x": 4000,
@@ -434,8 +434,8 @@
                     }
                 ]
             },
-            "width": 700,
-            "height": 115,
+            "width": 600,
+            "height": 634,
             "selected": false,
             "positionAbsolute": {
                 "x": 4600,
@@ -509,8 +509,8 @@
                     }
                 ]
             },
-            "width": 700,
-            "height": 175,
+            "width": 600,
+            "height": 743,
             "selected": false,
             "positionAbsolute": {
                 "x": 5400,
@@ -589,8 +589,8 @@
                     }
                 ]
             },
-            "width": 692,
-            "height": 115,
+            "width": 600,
+            "height": 791,
             "selected": false,
             "positionAbsolute": {
                 "x": 6200,
@@ -658,8 +658,8 @@
                     }
                 ]
             },
-            "width": 700,
-            "height": 115,
+            "width": 600,
+            "height": 562,
             "selected": false,
             "positionAbsolute": {
                 "x": 7000,
@@ -731,8 +731,8 @@
                     }
                 ]
             },
-            "width": 700,
-            "height": 175,
+            "width": 600,
+            "height": 658,
             "selected": false,
             "positionAbsolute": {
                 "x": 7800,
@@ -808,8 +808,8 @@
                     }
                 ]
             },
-            "width": 700,
-            "height": 115,
+            "width": 600,
+            "height": 731,
             "selected": false,
             "positionAbsolute": {
                 "x": 8600,
@@ -885,8 +885,8 @@
                     }
                 ]
             },
-            "width": 700,
-            "height": 175,
+            "width": 600,
+            "height": 792,
             "selected": false,
             "positionAbsolute": {
                 "x": 5400,
@@ -962,8 +962,8 @@
                     }
                 ]
             },
-            "width": 694,
-            "height": 115,
+            "width": 563,
+            "height": 658,
             "selected": false,
             "positionAbsolute": {
                 "x": 6400,
@@ -1034,8 +1034,8 @@
                     }
                 ]
             },
-            "width": 700,
-            "height": 115,
+            "width": 600,
+            "height": 592,
             "selected": false,
             "positionAbsolute": {
                 "x": 7000,
@@ -1105,8 +1105,8 @@
                     }
                 ]
             },
-            "width": 700,
-            "height": 115,
+            "width": 600,
+            "height": 610,
             "selected": false,
             "positionAbsolute": {
                 "x": 7800,
@@ -1185,8 +1185,8 @@
                     }
                 ]
             },
-            "width": 700,
-            "height": 175,
+            "width": 600,
+            "height": 864,
             "selected": false,
             "positionAbsolute": {
                 "x": 8600,
@@ -1261,8 +1261,8 @@
                     }
                 ]
             },
-            "width": 684,
-            "height": 115,
+            "width": 600,
+            "height": 695,
             "selected": false,
             "positionAbsolute": {
                 "x": 2400,
@@ -1275,16 +1275,16 @@
             "type": "custom",
             "position": {
                 "x": 2800,
-                "y": 600
+                "y": 581
             },
             "data": {
-                "label": "Connector",
+                "label": "Projektablauf",
                 "isStandaloneTitle": false,
                 "isStandaloneText": true,
                 "elements": [
                     {
                         "type": "title",
-                        "content": "Connector"
+                        "content": "Projektablauf"
                     }
                 ],
                 "connectedHandleIds": [
@@ -1294,40 +1294,113 @@
                 "globalCollapseMode": 0
             },
             "width": 250,
-            "height": 79,
+            "height": 74,
             "selected": false,
             "positionAbsolute": {
                 "x": 2800,
-                "y": 600
+                "y": 581
             },
             "dragging": false
         },
         {
-            "id": "node_1769200431158_232",
+            "id": "node_1769215655747_70",
             "type": "custom",
             "position": {
-                "x": 2400,
-                "y": -800
+                "x": 3800,
+                "y": -1200
             },
             "data": {
-                "label": "WIiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiieidnasjkndjkasnjkdnjkasndjsahdbjkasndjkajs",
+                "label": "Konkurrenzanalyse",
+                "tags": [
+                    "Verstehen",
+                    "Kreieren"
+                ],
+                "elements": [
+                    {
+                        "label": "Title",
+                        "type": "title",
+                        "content": "Konkurrenzanalyse"
+                    },
+                    {
+                        "label": "Description",
+                        "type": "list",
+                        "items": [
+                            "Herausfinden, was es bereits gibt, woran man sich orientieren kann und was man vielleicht vermeiden sollte."
+                        ]
+                    },
+                    {
+                        "label": "Inputs",
+                        "type": "list",
+                        "items": [
+                            "Aufgabenstellung / Projektziel",
+                            "Gewünschte, zu erzielende Erkenntnisse"
+                        ]
+                    },
+                    {
+                        "label": "Variables",
+                        "type": "list",
+                        "items": [
+                            "Zielgruppe",
+                            "Relevante Punkte in der Recherche",
+                            "Visuelle Form der Darstellung"
+                        ]
+                    },
+                    {
+                        "label": "Core Logic",
+                        "type": "list",
+                        "items": [
+                            "Recherche zu bisherigen ähnlichen Projekten betreiben",
+                            "Mit Personen sprechen die im Thema sind",
+                            "Ggf. filtern nach relvanten Punkten wenn zu viel aufkommt",
+                            "Was kennt die Zielgruppe?",
+                            "Passende Form der Darstellung wählen, je nach Form der Erkenntnisse"
+                        ]
+                    },
+                    {
+                        "label": "Outputs",
+                        "type": "list",
+                        "items": [
+                            "Rechercheergebnisse und Erkenntnisse",
+                            "Visuelle Darstellung der Recherche"
+                        ]
+                    }
+                ]
+            },
+            "width": 600,
+            "height": 713,
+            "selected": true,
+            "positionAbsolute": {
+                "x": 3800,
+                "y": -1200
+            },
+            "dragging": false
+        },
+        {
+            "id": "node_1769218277168_508",
+            "type": "custom",
+            "position": {
+                "x": 800,
+                "y": 800
+            },
+            "data": {
+                "label": "TODO: 1. Toolbars 2.Colors 3. Groups",
                 "isStandaloneTitle": true,
                 "isStandaloneText": false,
                 "elements": [
                     {
                         "type": "title",
-                        "content": "WIiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiieidnasjkndjkasnjkdnjkasndjsahdbjkasndjkajs"
+                        "content": "TODO: 1. Toolbars 2.Colors 3. Groups"
                     }
                 ],
                 "connectedHandleIds": [],
                 "globalCollapseMode": 0
             },
-            "width": 700,
-            "height": 296,
+            "width": 600,
+            "height": 175,
             "selected": false,
             "positionAbsolute": {
-                "x": 2400,
-                "y": -800
+                "x": 800,
+                "y": 800
             },
             "dragging": false
         }
@@ -1691,6 +1764,23 @@
                 "isFlow": false
             },
             "id": "reactflow__edge-node_1769200184006_287source-0-node_1769192539949_90target-2-2"
+        },
+        {
+            "source": "node_1769192568113_321",
+            "sourceHandle": "source-5-0",
+            "target": "node_1769192578075_530",
+            "targetHandle": "target-2-0",
+            "type": "default",
+            "animated": false,
+            "style": {
+                "stroke": "#000",
+                "strokeWidth": 10,
+                "strokeDasharray": "none"
+            },
+            "data": {
+                "isFlow": false
+            },
+            "id": "reactflow__edge-node_1769192568113_321source-5-0-node_1769192578075_530target-2-0"
         }
     ]
 }

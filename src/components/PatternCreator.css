@@ -4,7 +4,8 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    padding: 0 var(--paddingMid)
+    padding: 0 var(--paddingMid);
+
 }
 
 .define-actions {
@@ -28,16 +29,18 @@
     min-height: 0;
     width: 100%;
     overflow: hidden;
+    gap: var(--paddingMid)
 }
 
 /* Row 1: Meta (Full width) */
 .meta-container-row {
     border-radius: var(--radius);
-    padding: 0px;
+    padding-top: 100px;
     position: relative;
     z-index: 100;
     flex-shrink: 0;
-    overflow-y: auto;
+    overflow: visible;
+
 }
 
 /* Custom scrollbar styling */
@@ -69,6 +72,18 @@
     gap: var(--gap);
     /* margin-top: 10px; */
     align-items: start;
+
+}
+
+.meta-description-container {
+    gap: var(--gap);
+}
+
+.meta-tags-container {
+    /* Styles for tags container */
+    overflow: visible !important;
+    gap: var(--gap);
+
 }
 
 /* Row 2: Content (4 columns) */
@@ -79,6 +94,7 @@
     min-height: 0;
     overflow: hidden;
     gap: var(--gap);
+
 }
 
 .editor-column {
@@ -94,12 +110,16 @@
     flex-direction: column;
     overflow: hidden;
     height: 100%;
+    gap: var(--gap);
+
 }
 
 .element-list {
     flex: 1;
     overflow-y: auto;
     min-height: 0;
+    padding-top: var(--gap);
+
 }
 
 /* Custom scrollbar styling */
@@ -165,15 +185,18 @@
 }
 
 .editor-inline-input:focus {
-    outline: none
-        /* Green border */
+    outline: none;
+    opacity: 1;
+
+    /* Green border */
 }
 
 
 .editor-inline-input.has-content {
     /* border-bottom: 2px solid var(--bg); */
     /* Green border */
-    background-color: var(--bg2);
+    opacity: 1;
+
 }
 
 .editor-inline-input::placeholder {
@@ -191,6 +214,11 @@
 .tag-input-wrapper {
     position: relative;
     width: 100%;
+    overflow: visible;
+}
+
+.element-label-tags {
+    overflow: visible !important;
 }
 
 .tag-suggestions {
@@ -198,25 +226,47 @@
     top: 100%;
     left: 0;
     right: 0;
-    background: #f9fbf8;
-    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
-    border: 2px solid var(--main);
-    z-index: 9999;
-    max-height: 150px;
+    background: var(--bg);
+    border: 1px solid var(--main);
+    z-index: 10000;
+    max-height: 200px;
     overflow-y: auto;
-    margin-top: 2px;
+    margin-top: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 4px;
 }
 
 .suggestion-item {
-    padding: 8px 12px;
+    padding: 4px 4px;
     font-size: var(--font-size-base);
-    font-weight: 700;
     cursor: pointer;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border: 0px solid var(--main);
+    background: transparent;
+    transition: background 0.1s ease;
 }
 
 .suggestion-item:hover {
-    background: var(--lime-cream);
+    background: var(--bg2);
+}
+
+/* Custom scrollbar for suggestions */
+.tag-suggestions::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tag-suggestions::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.tag-suggestions::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 0px;
+}
+
+.tag-suggestions::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
 }
 
 /* List Items */
@@ -249,7 +299,7 @@
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
-    gap: 1px;
+    gap: 2px;
     opacity: 0;
 }
 
@@ -261,13 +311,14 @@
     width: 16px;
     height: 16px;
     border: 1px solid var(--main);
-    background: var(--ash-grey);
+    background: var(--bg);
     cursor: pointer;
     font-size: var(--font-size-small);
     padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 1;
 }
 
 /* Footer */
@@ -341,7 +392,7 @@
     align-items: center;
     gap: 8px;
     font-size: var(--font-size-base);
-    font-weight: 700;
+    /* font-weight: 700; */
 }
 
 .tag-element button {

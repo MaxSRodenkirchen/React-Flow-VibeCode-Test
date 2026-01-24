@@ -410,7 +410,7 @@ const PatternCreator = ({ onClose, onSaveSuccess, initialPattern, globalTags = [
                         </div>
 
                         <div className="meta-details">
-                            <div className="node-element element-type-list element-label-description">
+                            <div className="meta-description-container node-element element-type-list element-label-description">
                                 <div className="element-list-label-row">
                                     <div className="element-list-label">Description</div>
                                 </div>
@@ -422,48 +422,32 @@ const PatternCreator = ({ onClose, onSaveSuccess, initialPattern, globalTags = [
                                 />
                             </div>
 
-                            <div className="node-element element-type-list element-label-tags">
+                            <div className="meta-tags-container node-element element-type-list element-label-tags">
                                 <div className="element-list-label-row">
                                     <div className="element-list-label">Tags</div>
                                 </div>
-                                <input
-                                    className={`editor-inline-input ${inputValues.tags.trim() ? 'has-content' : ''}`}
-                                    value={inputValues.tags}
-                                    onChange={e => handleInputChange('tags', e.target.value)}
-                                    onKeyDown={e => handleKeyDown(e, 'tags')}
-                                    placeholder="+ Add Tag..."
-                                />
-                                {tagSuggestions.length > 0 && (
-                                    <div
-                                        style={{
-                                            background: 'red',
-                                            border: '5px solid blue',
-                                            padding: '10px',
-                                            marginTop: '5px',
-                                            minHeight: '50px'
-                                        }}
-                                    >
-                                        <div style={{ color: 'white', fontWeight: 'bold', marginBottom: '5px' }}>
-                                            SUGGESTIONS ({tagSuggestions.length}):
+                                <div className="tag-input-wrapper">
+                                    <input
+                                        className={`editor-inline-input ${inputValues.tags.trim() ? 'has-content' : ''}`}
+                                        value={inputValues.tags}
+                                        onChange={e => handleInputChange('tags', e.target.value)}
+                                        onKeyDown={e => handleKeyDown(e, 'tags')}
+                                        placeholder="+ Add Tag..."
+                                    />
+                                    {tagSuggestions.length > 0 && (
+                                        <div className="tag-suggestions">
+                                            {tagSuggestions.map((suggestion, idx) => (
+                                                <div
+                                                    key={idx}
+                                                    className="suggestion-item"
+                                                    onClick={() => addListItem('tags', suggestion)}
+                                                >
+                                                    {suggestion}
+                                                </div>
+                                            ))}
                                         </div>
-                                        {tagSuggestions.map((suggestion, idx) => (
-                                            <div
-                                                key={idx}
-                                                className="suggestion-item"
-                                                onClick={() => addListItem('tags', suggestion)}
-                                                style={{
-                                                    background: 'yellow',
-                                                    padding: '10px',
-                                                    margin: '5px',
-                                                    cursor: 'pointer',
-                                                    border: '2px solid green'
-                                                }}
-                                            >
-                                                {suggestion}
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
+                                    )}
+                                </div>
                                 <div className="editor-node-tags">
                                     {lists.tags.map((tag, idx) => (
                                         <div key={idx} className="tag-element">
@@ -527,16 +511,16 @@ const PatternCreator = ({ onClose, onSaveSuccess, initialPattern, globalTags = [
                         onEdit={editItem}
                     />
                 </div>
-            </div>
 
-            <footer className="define-footer">
-                <div className="footer-grid">
-                    <button className="secondary-btn" onClick={handleNew}>New Pattern</button>
-                    <button className="delete-btn" onClick={handleDelete} disabled={!title}>Delete Pattern</button>
-                    <div /> {/* Spacer */}
-                    <button className="primary-btn" onClick={handleSave}>Finalize & Save Pattern</button>
-                </div>
-            </footer>
+                <footer className="define-footer">
+                    <div className="footer-grid">
+                        <button className="secondary-btn" onClick={handleNew}>New Pattern</button>
+                        <button className="delete-btn" onClick={handleDelete} disabled={!title}>Delete Pattern</button>
+                        <div /> {/* Spacer */}
+                        <button className="primary-btn" onClick={handleSave}>Finalize & Save Pattern</button>
+                    </div>
+                </footer>
+            </div>
         </div>
     );
 };
