@@ -1,0 +1,156 @@
+.canvas-toolbar {
+    /* Removed absolute positioning to be handled by footer container */
+    z-index: 2000;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap);
+}
+
+.toolbar-feedback {
+    background-color: transparent;
+    color: var(--main);
+    opacity: 0.5;
+    padding: 4px 8px;
+    font-size: var(--font-size-small);
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    animation: fadeInOut 2s ease forwards;
+    pointer-events: none;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    15% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    85% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+}
+
+.canvas-toolbar .toolbar-inner {
+    pointer-events: none;
+    /* Let clicks pass through gaps */
+    background-color: transparent;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    gap: var(--gap);
+}
+
+.canvas-toolbar .toolbar-group {
+    pointer-events: auto;
+    background-color: var(--bg2);
+    display: flex;
+    gap: 0;
+}
+
+/* Divider Removed */
+
+.canvas-toolbar .toolbar-btn {
+    background: transparent;
+    border: none;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--main);
+    transition: all 0.1s ease;
+    padding: 0;
+
+}
+
+.canvas-toolbar .toolbar-btn:hover {
+    background: var(--ash-grey);
+    filter: brightness(0.9);
+}
+
+.canvas-toolbar .toolbar-btn.active {
+    background: var(--main);
+    color: var(--bg);
+}
+
+/* Icons: Rects */
+.icon-rects {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 18px;
+}
+
+.icon-rects span {
+    display: block;
+    height: 4px;
+    width: 100%;
+    background-color: currentColor;
+}
+
+.canvas-toolbar .toolbar-btn.active .icon-rects span {
+    background-color: var(--bg);
+}
+
+.icon-rects.titles {
+    justify-content: center;
+    height: 18px;
+}
+
+.icon-rects.balanced {
+    justify-content: center;
+    height: 18px;
+}
+
+.icon-rects.auto-zoom .op-high {
+    opacity: 1;
+}
+
+.icon-rects.auto-zoom .op-mid {
+    opacity: 0.6;
+}
+
+.icon-rects.auto-zoom .op-low {
+    opacity: 0.3;
+}
+
+/* Icons: Letters */
+.icon-letter {
+    font-family: "Space Grotesk", sans-serif;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bold-t {
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.small-t {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.icon-surface {
+    width: 18px;
+    height: 18px;
+    border: 1px solid currentColor;
+    background-color: currentColor;
+    opacity: 0.3;
+}

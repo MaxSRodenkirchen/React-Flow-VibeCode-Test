@@ -1,157 +1,64 @@
 {
     "nodes": [
         {
-            "id": "node_1769192512394_354",
-            "type": "custom",
+            "id": "node_1769251929979_167",
+            "type": "group",
             "position": {
-                "x": 0,
-                "y": -214
-            },
-            "data": {
-                "label": "Themenfindung (Solo)",
-                "tags": [
-                    "Verstehen"
-                ],
-                "elements": [
-                    {
-                        "label": "Title",
-                        "type": "title",
-                        "content": "Themenfindung (Solo)"
-                    },
-                    {
-                        "label": "Description",
-                        "type": "list",
-                        "items": [
-                            "Wie findet man ein passendes, relevantes und interessantes Thema für eine Solo-Projektarbeit? Schließlich gibt es eine Menge spannender Themen, aus denen man das richtige herausfiltern muss. "
-                        ]
-                    },
-                    {
-                        "label": "Inputs",
-                        "type": "list",
-                        "items": [
-                            "Eigene Interessensfelder",
-                            "Ziel der Projektarbeit"
-                        ]
-                    },
-                    {
-                        "label": "Variables",
-                        "type": "list",
-                        "items": [
-                            "Eigene Wünsche",
-                            "Vorgaben durch Dritte"
-                        ]
-                    },
-                    {
-                        "label": "Core Logic",
-                        "type": "list",
-                        "items": [
-                            "Einen großen Themenpool erstellen",
-                            "Pool immer weiter filtern und eingrenzen",
-                            "Wenn es spezielle Vorgaben oder eigene Wünsche gibt, diese mitbeachten",
-                            "Eine enge Auswahl erstellen (3-5 Themen) und begründen warum diese passen",
-                            "Ein persönliches Lieblingsthema heraustellen",
-                            "Offen bleiben für Feedback von Dritten und möglichen Themenwechsel"
-                        ]
-                    },
-                    {
-                        "label": "Outputs",
-                        "type": "list",
-                        "items": [
-                            "Eine Liste von Themen in der engeren Auswahl",
-                            "Das Lieblingsthema",
-                            "Begründungen warum welches Thema gut ist"
-                        ]
-                    }
-                ]
+                "x": -2530.306666004619,
+                "y": -1025.1100637875813
             },
             "width": 600,
-            "height": 773,
+            "height": 1040,
             "measured": {
-                "width": 600,
-                "height": 628
+                "width": 400,
+                "height": 400
             },
+            "style": {
+                "width": 1445,
+                "height": 1040
+            },
+            "data": {
+                "label": "Group",
+                "color": "#e0edc5",
+                "connectedHandleIds": [],
+                "globalCollapseMode": 0
+            },
+            "draggable": true,
+            "selectable": true,
+            "zIndex": -1,
             "selected": false,
-            "dragging": false,
             "positionAbsolute": {
-                "x": 0,
-                "y": -214
-            }
+                "x": -2530.306666004619,
+                "y": -1025.1100637875813
+            },
+            "dragging": false,
+            "resizing": false
         },
         {
-            "id": "node_1769192522263_277",
-            "type": "custom",
+            "id": "node_1769250918564_500",
+            "type": "group",
             "position": {
-                "x": 800,
-                "y": -214
+                "x": 4100,
+                "y": -270.3272884283248
+            },
+            "style": {
+                "width": "400px",
+                "height": "400px"
             },
             "data": {
-                "label": "Aufgaben- und Problemdefinierung",
-                "tags": [
-                    "Verstehen"
-                ],
-                "elements": [
-                    {
-                        "label": "Title",
-                        "type": "title",
-                        "content": "Aufgaben- und Problemdefinierung"
-                    },
-                    {
-                        "label": "Description",
-                        "type": "list",
-                        "items": [
-                            "Das Pattern bezieht sich auf die Frage, was die eigentliche Aufgabe ist / wo im Themenfeld ein Bedarf für eine Projektarbeit liegt?"
-                        ]
-                    },
-                    {
-                        "label": "Inputs",
-                        "type": "list",
-                        "items": [
-                            "Themenfeld",
-                            "Recherche",
-                            "Eigene Erwartungen an die Projektarbeit"
-                        ]
-                    },
-                    {
-                        "label": "Variables",
-                        "type": "list",
-                        "items": [
-                            "Expert*innen im Feld",
-                            "Personen die sich auskennen"
-                        ]
-                    },
-                    {
-                        "label": "Core Logic",
-                        "type": "list",
-                        "items": [
-                            "Zum gewählten Themenfeld Recherche betreiben",
-                            "Am besten mit Personen sprechen die direkten Bezug haben",
-                            "Durch Fragen und Recherche auf mögliche Needs kommen",
-                            "Eine Auswahl an Problemstellungen",
-                            "Abgleichen mit eigenen Erwartungen"
-                        ]
-                    },
-                    {
-                        "label": "Outputs",
-                        "type": "list",
-                        "items": [
-                            "Eine Auswahl an Problemstellungen",
-                            "Begründet warum was gut umzusetzen und sinnvoll ist",
-                            "Das Lieblingsproblem herausstellen"
-                        ]
-                    }
-                ]
+                "label": "Group",
+                "color": "#f1f7ee",
+                "connectedHandleIds": [],
+                "globalCollapseMode": 0
             },
-            "width": 600,
-            "height": 797,
-            "selected": false,
+            "draggable": true,
+            "selectable": true,
+            "zIndex": -1,
+            "width": 400,
+            "height": 400,
             "positionAbsolute": {
-                "x": 800,
-                "y": -214
-            },
-            "dragging": false,
-            "measured": {
-                "width": 600,
-                "height": 653
+                "x": 4100,
+                "y": -270.3272884283248
             }
         },
         {
@@ -214,10 +121,17 @@
                             "Eine Übersichtliche Ansicht des gesamten Projektablaufs"
                         ]
                     }
-                ]
+                ],
+                "connectedHandleIds": [
+                    "flow-source",
+                    "flow-target",
+                    "source-5-0",
+                    "flow-target"
+                ],
+                "globalCollapseMode": 0
             },
             "width": 600,
-            "height": 743,
+            "height": 662,
             "selected": false,
             "positionAbsolute": {
                 "x": 1600,
@@ -285,10 +199,17 @@
                             "Erkenntnis: Ist die eingehende Problemstellung relevant, oder sollte man neue Wege gehen?"
                         ]
                     }
-                ]
+                ],
+                "connectedHandleIds": [
+                    "flow-source",
+                    "flow-target",
+                    "target-2-2",
+                    "flow-source"
+                ],
+                "globalCollapseMode": 0
             },
             "width": 600,
-            "height": 767,
+            "height": 687,
             "selected": false,
             "positionAbsolute": {
                 "x": 3200,
@@ -359,10 +280,15 @@
                             "Erkenntnisse: Möglichkeiten und Anforderungen des Materials"
                         ]
                     }
-                ]
+                ],
+                "connectedHandleIds": [
+                    "flow-target",
+                    "flow-source"
+                ],
+                "globalCollapseMode": 0
             },
             "width": 600,
-            "height": 683,
+            "height": 699,
             "selected": false,
             "positionAbsolute": {
                 "x": 4000,
@@ -378,8 +304,8 @@
             "id": "node_1769192568113_321",
             "type": "custom",
             "position": {
-                "x": 4600,
-                "y": -1000
+                "x": 5400,
+                "y": -1200
             },
             "data": {
                 "label": "Zielgruppendefinition",
@@ -432,14 +358,20 @@
                             "Liste mit Personen und ihren Anforderungen / Spezifikationen"
                         ]
                     }
-                ]
+                ],
+                "connectedHandleIds": [
+                    "flow-target",
+                    "flow-source",
+                    "source-5-0"
+                ],
+                "globalCollapseMode": 0
             },
             "width": 600,
-            "height": 634,
+            "height": 581,
             "selected": false,
             "positionAbsolute": {
-                "x": 4600,
-                "y": -1000
+                "x": 5400,
+                "y": -1200
             },
             "dragging": false,
             "measured": {
@@ -451,8 +383,8 @@
             "id": "node_1769192578075_530",
             "type": "custom",
             "position": {
-                "x": 5400,
-                "y": -1000
+                "x": 6200,
+                "y": -1200
             },
             "data": {
                 "label": "Crossmediale User Journey",
@@ -507,14 +439,20 @@
                             "Spezielle Anforderungen einzelner Personas im Bezug zu den Medienformaten"
                         ]
                     }
-                ]
+                ],
+                "connectedHandleIds": [
+                    "flow-target",
+                    "flow-source",
+                    "target-2-0"
+                ],
+                "globalCollapseMode": 0
             },
             "width": 600,
-            "height": 743,
+            "height": 686,
             "selected": false,
             "positionAbsolute": {
-                "x": 5400,
-                "y": -1000
+                "x": 6200,
+                "y": -1200
             },
             "dragging": false,
             "measured": {
@@ -526,7 +464,7 @@
             "id": "node_1769192584336_743",
             "type": "custom",
             "position": {
-                "x": 6200,
+                "x": 7000,
                 "y": -1000
             },
             "data": {
@@ -587,13 +525,18 @@
                             "Ein Lieblingskonzept und warum es besonders passt"
                         ]
                     }
-                ]
+                ],
+                "connectedHandleIds": [
+                    "flow-target",
+                    "flow-source"
+                ],
+                "globalCollapseMode": 0
             },
             "width": 600,
-            "height": 791,
+            "height": 738,
             "selected": false,
             "positionAbsolute": {
-                "x": 6200,
+                "x": 7000,
                 "y": -1000
             },
             "dragging": false,
@@ -606,7 +549,7 @@
             "id": "node_1769192639751_374",
             "type": "custom",
             "position": {
-                "x": 7000,
+                "x": 7800,
                 "y": -1000
             },
             "data": {
@@ -656,13 +599,18 @@
                             "Eine Seite mit einer kurzen Zusammenfassung der Geschichte / Handlung"
                         ]
                     }
-                ]
+                ],
+                "connectedHandleIds": [
+                    "flow-target",
+                    "flow-source"
+                ],
+                "globalCollapseMode": 0
             },
             "width": 600,
-            "height": 562,
+            "height": 509,
             "selected": false,
             "positionAbsolute": {
-                "x": 7000,
+                "x": 7800,
                 "y": -1000
             },
             "dragging": false,
@@ -675,7 +623,7 @@
             "id": "node_1769192647386_472",
             "type": "custom",
             "position": {
-                "x": 7800,
+                "x": 8600,
                 "y": -1000
             },
             "data": {
@@ -729,13 +677,18 @@
                             "Klickbarer HTML Prototyp der Story"
                         ]
                     }
-                ]
+                ],
+                "connectedHandleIds": [
+                    "flow-target",
+                    "flow-source"
+                ],
+                "globalCollapseMode": 0
             },
             "width": 600,
-            "height": 658,
+            "height": 638,
             "selected": false,
             "positionAbsolute": {
-                "x": 7800,
+                "x": 8600,
                 "y": -1000
             },
             "dragging": false,
@@ -748,7 +701,7 @@
             "id": "node_1769192652941_72",
             "type": "custom",
             "position": {
-                "x": 8600,
+                "x": 9400,
                 "y": -1000
             },
             "data": {
@@ -806,13 +759,18 @@
                             "Erkenntnis: Weitere Anforderungen?"
                         ]
                     }
-                ]
+                ],
+                "connectedHandleIds": [
+                    "flow-target",
+                    "flow-source"
+                ],
+                "globalCollapseMode": 0
             },
             "width": 600,
-            "height": 731,
+            "height": 757,
             "selected": false,
             "positionAbsolute": {
-                "x": 8600,
+                "x": 9400,
                 "y": -1000
             },
             "dragging": false,
@@ -825,7 +783,7 @@
             "id": "node_1769192711154_450",
             "type": "custom",
             "position": {
-                "x": 5400,
+                "x": 6200,
                 "y": 200
             },
             "data": {
@@ -883,13 +841,18 @@
                             "Designparameter / Variablen"
                         ]
                     }
-                ]
+                ],
+                "connectedHandleIds": [
+                    "flow-target",
+                    "flow-source"
+                ],
+                "globalCollapseMode": 0
             },
             "width": 600,
-            "height": 792,
+            "height": 789,
             "selected": false,
             "positionAbsolute": {
-                "x": 5400,
+                "x": 6200,
                 "y": 200
             },
             "dragging": false,
@@ -902,7 +865,7 @@
             "id": "node_1769192723454_987",
             "type": "custom",
             "position": {
-                "x": 6400,
+                "x": 7200,
                 "y": 200
             },
             "data": {
@@ -960,13 +923,18 @@
                             "Desingsystem testen"
                         ]
                     }
-                ]
+                ],
+                "connectedHandleIds": [
+                    "flow-target",
+                    "flow-source"
+                ],
+                "globalCollapseMode": 0
             },
-            "width": 563,
-            "height": 658,
+            "width": 600,
+            "height": 648,
             "selected": false,
             "positionAbsolute": {
-                "x": 6400,
+                "x": 7200,
                 "y": 200
             },
             "dragging": false,
@@ -979,7 +947,7 @@
             "id": "node_1769192732198_25",
             "type": "custom",
             "position": {
-                "x": 7000,
+                "x": 7800,
                 "y": 200
             },
             "data": {
@@ -1032,13 +1000,18 @@
                             "Detaillierte Ausarbeitung und Finalisierung der Designs"
                         ]
                     }
-                ]
+                ],
+                "connectedHandleIds": [
+                    "flow-target",
+                    "flow-source"
+                ],
+                "globalCollapseMode": 0
             },
             "width": 600,
-            "height": 592,
+            "height": 563,
             "selected": false,
             "positionAbsolute": {
-                "x": 7000,
+                "x": 7800,
                 "y": 200
             },
             "dragging": false,
@@ -1051,7 +1024,7 @@
             "id": "node_1769192740593_0",
             "type": "custom",
             "position": {
-                "x": 7800,
+                "x": 8600,
                 "y": 200
             },
             "data": {
@@ -1103,13 +1076,18 @@
                             "Liste mit Fehlerquellen oder möglichen Verbesserung"
                         ]
                     }
-                ]
+                ],
+                "connectedHandleIds": [
+                    "flow-target",
+                    "flow-source"
+                ],
+                "globalCollapseMode": 0
             },
             "width": 600,
-            "height": 610,
+            "height": 521,
             "selected": false,
             "positionAbsolute": {
-                "x": 7800,
+                "x": 8600,
                 "y": 200
             },
             "dragging": false,
@@ -1122,7 +1100,7 @@
             "id": "node_1769192744985_486",
             "type": "custom",
             "position": {
-                "x": 8600,
+                "x": 9400,
                 "y": 200
             },
             "data": {
@@ -1183,13 +1161,17 @@
                             "Ziel: Dateien so sammeln, dass am Projekt weitergearbeitet werden könnte"
                         ]
                     }
-                ]
+                ],
+                "connectedHandleIds": [
+                    "flow-target"
+                ],
+                "globalCollapseMode": 0
             },
             "width": 600,
-            "height": 864,
+            "height": 917,
             "selected": false,
             "positionAbsolute": {
-                "x": 8600,
+                "x": 9400,
                 "y": 200
             },
             "dragging": false,
@@ -1259,10 +1241,16 @@
                             "Zielgerichteter Ablauf des Meetings"
                         ]
                     }
-                ]
+                ],
+                "connectedHandleIds": [
+                    "flow-target",
+                    "flow-source",
+                    "flow-source"
+                ],
+                "globalCollapseMode": 0
             },
             "width": 600,
-            "height": 695,
+            "height": 623,
             "selected": false,
             "positionAbsolute": {
                 "x": 2400,
@@ -1293,7 +1281,7 @@
                 ],
                 "globalCollapseMode": 0
             },
-            "width": 250,
+            "width": 287,
             "height": 74,
             "selected": false,
             "positionAbsolute": {
@@ -1306,7 +1294,7 @@
             "id": "node_1769215655747_70",
             "type": "custom",
             "position": {
-                "x": 3800,
+                "x": 4000,
                 "y": -1200
             },
             "data": {
@@ -1364,65 +1352,204 @@
                             "Visuelle Darstellung der Recherche"
                         ]
                     }
-                ]
-            },
-            "width": 600,
-            "height": 713,
-            "selected": true,
-            "positionAbsolute": {
-                "x": 3800,
-                "y": -1200
-            },
-            "dragging": false
-        },
-        {
-            "id": "node_1769218277168_508",
-            "type": "custom",
-            "position": {
-                "x": 800,
-                "y": 800
-            },
-            "data": {
-                "label": "TODO: 1. Toolbars 2.Colors 3. Groups",
-                "isStandaloneTitle": true,
-                "isStandaloneText": false,
-                "elements": [
-                    {
-                        "type": "title",
-                        "content": "TODO: 1. Toolbars 2.Colors 3. Groups"
-                    }
                 ],
                 "connectedHandleIds": [],
                 "globalCollapseMode": 0
             },
             "width": 600,
-            "height": 175,
+            "height": 642,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 4000,
+                "y": -1200
+            },
+            "dragging": false
+        },
+        {
+            "id": "node_1769335664027_684",
+            "type": "custom",
+            "position": {
+                "x": -6.871090406745907,
+                "y": -214
+            },
+            "data": {
+                "label": "Themenfindung (Solo)",
+                "tags": [
+                    "Verstehen"
+                ],
+                "elements": [
+                    {
+                        "label": "Title",
+                        "type": "title",
+                        "content": "Themenfindung (Solo)"
+                    },
+                    {
+                        "label": "Description",
+                        "type": "list",
+                        "items": [
+                            "Wie findet man ein passendes, relevantes und interessantes Thema für eine Solo-Projektarbeit? Schließlich gibt es eine Menge spannender Themen, aus denen man das richtige herausfiltern muss. "
+                        ]
+                    },
+                    {
+                        "label": "Inputs",
+                        "type": "list",
+                        "items": [
+                            "Eigene Interessensfelder",
+                            "Ziel der Projektarbeit"
+                        ]
+                    },
+                    {
+                        "label": "Variables",
+                        "type": "list",
+                        "items": [
+                            "Eigene Wünsche",
+                            "Vorgaben durch Dritte"
+                        ]
+                    },
+                    {
+                        "label": "Core Logic",
+                        "type": "list",
+                        "items": [
+                            "Einen großen Themenpool erstellen",
+                            "Pool immer weiter filtern und eingrenzen",
+                            "Wenn es spezielle Vorgaben oder eigene Wünsche gibt, diese mitbeachten",
+                            "Eine enge Auswahl erstellen (3-5 Themen) und begründen warum diese passen",
+                            "Ein persönliches Lieblingsthema heraustellen",
+                            "Offen bleiben für Feedback von Dritten und möglichen Themenwechsel"
+                        ]
+                    },
+                    {
+                        "label": "Outputs",
+                        "type": "list",
+                        "items": [
+                            "Eine Liste von Themen in der engeren Auswahl",
+                            "Das Lieblingsthema",
+                            "Begründungen warum welches Thema gut ist"
+                        ]
+                    }
+                ],
+                "connectedHandleIds": [
+                    "flow-source"
+                ],
+                "globalCollapseMode": 0
+            },
+            "width": 600,
+            "height": 739,
+            "selected": false,
+            "positionAbsolute": {
+                "x": -6.871090406745907,
+                "y": -214
+            },
+            "dragging": false
+        },
+        {
+            "id": "node_1769335671277_695",
+            "type": "custom",
+            "position": {
+                "x": 800,
+                "y": -214
+            },
+            "data": {
+                "label": "Aufgaben- und Problemdefinierung",
+                "tags": [
+                    "Verstehen"
+                ],
+                "elements": [
+                    {
+                        "label": "Title",
+                        "type": "title",
+                        "content": "Aufgaben- und Problemdefinierung"
+                    },
+                    {
+                        "label": "Description",
+                        "type": "list",
+                        "items": [
+                            "Das Pattern bezieht sich auf die Frage, was die eigentliche Aufgabe ist / wo im Themenfeld ein Bedarf für eine Projektarbeit liegt?"
+                        ]
+                    },
+                    {
+                        "label": "Inputs",
+                        "type": "list",
+                        "items": [
+                            "Themenfeld",
+                            "Recherche",
+                            "Eigene Erwartungen an die Projektarbeit"
+                        ]
+                    },
+                    {
+                        "label": "Variables",
+                        "type": "list",
+                        "items": [
+                            "Expert*innen im Feld",
+                            "Personen die sich auskennen"
+                        ]
+                    },
+                    {
+                        "label": "Core Logic",
+                        "type": "list",
+                        "items": [
+                            "Zum gewählten Themenfeld Recherche betreiben",
+                            "Am besten mit Personen sprechen die direkten Bezug haben",
+                            "Durch Fragen und Recherche auf mögliche Needs kommen",
+                            "Eine Auswahl an Problemstellungen",
+                            "Abgleichen mit eigenen Erwartungen"
+                        ]
+                    },
+                    {
+                        "label": "Outputs",
+                        "type": "list",
+                        "items": [
+                            "Eine Auswahl an Problemstellungen",
+                            "Begründet warum was gut umzusetzen und sinnvoll ist",
+                            "Das Lieblingsproblem herausstellen"
+                        ]
+                    }
+                ],
+                "connectedHandleIds": [
+                    "flow-source",
+                    "flow-target",
+                    "flow-target"
+                ],
+                "globalCollapseMode": 0
+            },
+            "width": 600,
+            "height": 698,
             "selected": false,
             "positionAbsolute": {
                 "x": 800,
-                "y": 800
+                "y": -214
             },
             "dragging": false
+        },
+        {
+            "id": "node_1769353050632_241",
+            "type": "color",
+            "position": {
+                "x": -200,
+                "y": -1400
+            },
+            "data": {
+                "label": "SURFACE",
+                "color": "#b0bea9",
+                "connectedHandleIds": [],
+                "globalCollapseMode": 0
+            },
+            "style": {
+                "width": 5200,
+                "height": 2200
+            },
+            "width": 5200,
+            "height": 2200,
+            "selected": false,
+            "positionAbsolute": {
+                "x": -200,
+                "y": -1400
+            },
+            "dragging": false,
+            "resizing": false
         }
     ],
     "edges": [
-        {
-            "source": "node_1769192512394_354",
-            "sourceHandle": "flow-source",
-            "target": "node_1769192522263_277",
-            "targetHandle": "flow-target",
-            "type": "default",
-            "animated": true,
-            "style": {
-                "stroke": "#787878",
-                "strokeWidth": 10,
-                "strokeDasharray": "15, 15"
-            },
-            "data": {
-                "isFlow": true
-            },
-            "id": "reactflow__edge-node_1769192512394_354flow-source-node_1769192522263_277flow-target"
-        },
         {
             "source": "node_1769192539949_90",
             "sourceHandle": "flow-source",
@@ -1622,23 +1749,6 @@
             "selected": false
         },
         {
-            "source": "node_1769192522263_277",
-            "sourceHandle": "flow-source",
-            "target": "node_1769192532488_945",
-            "targetHandle": "flow-target",
-            "type": "default",
-            "animated": true,
-            "style": {
-                "stroke": "#787878",
-                "strokeWidth": 10,
-                "strokeDasharray": "15, 15"
-            },
-            "data": {
-                "isFlow": true
-            },
-            "id": "reactflow__edge-node_1769192522263_277flow-source-node_1769192532488_945flow-target"
-        },
-        {
             "source": "node_1769192740593_0",
             "sourceHandle": "flow-source",
             "target": "node_1769192744985_486",
@@ -1690,29 +1800,6 @@
             },
             "id": "reactflow__edge-node_1769197688163_445flow-source-node_1769192532488_945flow-target",
             "selected": false
-        },
-        {
-            "source": "node_1769192539949_90",
-            "sourceHandle": "flow-source",
-            "target": "node_1769192522263_277",
-            "targetHandle": "flow-target",
-            "type": "default",
-            "animated": true,
-            "style": {
-                "stroke": "#787878",
-                "strokeWidth": 10,
-                "strokeDasharray": "15, 15"
-            },
-            "data": {
-                "isFlow": true
-            },
-            "id": "reactflow__edge-node_1769192539949_90flow-source-node_1769192522263_277flow-target",
-            "selected": false,
-            "label": "Iterativer Prozess",
-            "labelStyle": {
-                "fill": "#000",
-                "fontWeight": 700
-            }
         },
         {
             "source": "node_1769197688163_445",
@@ -1780,7 +1867,59 @@
             "data": {
                 "isFlow": false
             },
-            "id": "reactflow__edge-node_1769192568113_321source-5-0-node_1769192578075_530target-2-0"
+            "id": "reactflow__edge-node_1769192568113_321source-5-0-node_1769192578075_530target-2-0",
+            "selected": false
+        },
+        {
+            "source": "node_1769335671277_695",
+            "sourceHandle": "flow-source",
+            "target": "node_1769192532488_945",
+            "targetHandle": "flow-target",
+            "type": "default",
+            "animated": true,
+            "style": {
+                "stroke": "#787878",
+                "strokeWidth": 10,
+                "strokeDasharray": "15, 15"
+            },
+            "data": {
+                "isFlow": true
+            },
+            "id": "reactflow__edge-node_1769335671277_695flow-source-node_1769192532488_945flow-target"
+        },
+        {
+            "source": "node_1769192539949_90",
+            "sourceHandle": "flow-source",
+            "target": "node_1769335671277_695",
+            "targetHandle": "flow-target",
+            "type": "default",
+            "animated": true,
+            "style": {
+                "stroke": "#787878",
+                "strokeWidth": 10,
+                "strokeDasharray": "15, 15"
+            },
+            "data": {
+                "isFlow": true
+            },
+            "id": "reactflow__edge-node_1769192539949_90flow-source-node_1769335671277_695flow-target"
+        },
+        {
+            "source": "node_1769335664027_684",
+            "sourceHandle": "flow-source",
+            "target": "node_1769335671277_695",
+            "targetHandle": "flow-target",
+            "type": "default",
+            "animated": true,
+            "style": {
+                "stroke": "#787878",
+                "strokeWidth": 10,
+                "strokeDasharray": "15, 15"
+            },
+            "data": {
+                "isFlow": true
+            },
+            "id": "reactflow__edge-node_1769335664027_684flow-source-node_1769335671277_695flow-target"
         }
     ]
 }

@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './ResizableAside.css';
 
-const ResizableAside = ({ children, minWidth = 350, maxWidth = 500, defaultWidth = 442 }) => {
+const ResizableAside = ({ children, minWidth = 350, maxWidth = 500, defaultWidth = 350, isCollapsed = false }) => {
     const [width, setWidth] = useState(defaultWidth);
     const [isResizing, setIsResizing] = useState(false);
     const asideRef = useRef(null);
 
     useEffect(() => {
         const handleMouseMove = (e) => {
-            if (!isResizing) return;
+            if (!isResizing || isCollapsed) return;
 
             const newWidth = e.clientX;
             if (newWidth >= minWidth && newWidth <= maxWidth) {
@@ -33,9 +33,10 @@ const ResizableAside = ({ children, minWidth = 350, maxWidth = 500, defaultWidth
             document.removeEventListener('mousemove', handleMouseMove);
             document.removeEventListener('mouseup', handleMouseUp);
         };
-    }, [isResizing, minWidth, maxWidth]);
+    }, [isResizing, minWidth, maxWidth, isCollapsed]);
 
     const handleMouseDown = (e) => {
+        if (isCollapsed) return;
         e.preventDefault();
         setIsResizing(true);
     };
@@ -43,14 +44,18 @@ const ResizableAside = ({ children, minWidth = 350, maxWidth = 500, defaultWidth
     return (
         <aside
             ref={asideRef}
-            className="layout-aside resizable-aside"
-            style={{ width: `${width}px` }}
+            className={`layout-aside resizable-aside ${isCollapsed ? 'collapsed' : ''}`}
+            style={{ width: isCollapsed ? '0px' : `${width}px` }}
         >
-            {children}
-            <div
-                className="resize-handle"
-                onMouseDown={handleMouseDown}
-            />
+            <div className="aside-content" style={{ opacity: isCollapsed ? 0 : 1 }}>
+                {children}
+            </div>
+            {!isCollapsed && (
+                <div
+                    className="resize-handle"
+                    onMouseDown={handleMouseDown}
+                />
+            )}
         </aside>
     );
 };

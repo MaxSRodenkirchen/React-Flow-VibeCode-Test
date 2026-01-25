@@ -42,15 +42,94 @@ body {
   --row-padding-h: 5px;
   --row-padding-v: 5px;
   --handle-size: 16px;
+  --handle-size-large: 32px;
   --paddingMid: 40px;
+  --paddingLow: 20px;
   --gap: 10px;
   /* Font Sizes */
-  --font-size-large: 55px;
+  --font-size-large: 36px;
   --font-size-base: 14px;
   --font-size-small: 10px;
 
+  --handle-gutter-width: 84px;
+
   --opacity-medium: 0.4;
 }
+
+.element-title-row:not(.standalone-text-block) .element-handle {
+  margin-top: 14.5px;
+  width: var(--handle-size-large) !important;
+  height: var(--handle-size-large) !important;
+  /* Align with center of first line (60.5px line-height / 2 - 16px handle half) */
+}
+
+.flow-handle {
+  width: var(--handle-size-large) !important;
+  height: var(--handle-size-large) !important;
+}
+
+.title-standard-handle:not(.standalone-text-block *) {
+  width: var(--handle-size-large) !important;
+  height: var(--handle-size-large) !important;
+}
+
+/* ColorNode Resizer Styles */
+.custom-resizer-handle {
+  width: var(--handle-size-large) !important;
+  height: var(--handle-size-large) !important;
+  background-color: transparent !important;
+  border: 2px solid var(--selection-color) !important;
+  border-radius: 0px !important;
+  z-index: 2000 !important;
+}
+
+/* Offset and Cursor for corner handles */
+.react-flow__node-resizer__handle.top-left {
+  margin-top: -16px;
+  margin-left: -16px;
+  cursor: nwse-resize !important;
+}
+
+.react-flow__node-resizer__handle.top-right {
+  margin-top: -16px;
+  margin-right: -16px;
+  cursor: nesw-resize !important;
+}
+
+.react-flow__node-resizer__handle.bottom-left {
+  margin-bottom: -16px;
+  margin-left: -16px;
+  cursor: nesw-resize !important;
+}
+
+.react-flow__node-resizer__handle.bottom-right {
+  margin-bottom: -16px;
+  margin-right: -16px;
+  cursor: nwse-resize !important;
+}
+
+/* Hide side handles - user only wants to pull edges/corners */
+.react-flow__node-resizer__handle.top,
+.react-flow__node-resizer__handle.bottom,
+.react-flow__node-resizer__handle.left,
+.react-flow__node-resizer__handle.right {
+  display: none !important;
+}
+
+/* Make edges draggable by giving the invisible lines a width */
+.custom-resizer-line {
+  border: 20px solid transparent !important;
+}
+
+.react-flow__node-color {
+  z-index: -1 !important;
+  min-width: 0 !important;
+  /* Ensure it can snap to any grid point */
+  min-height: 0 !important;
+}
+
+/* Hide default lines */
+
 
 /* ==========================================================================
    LAYOUT
@@ -58,23 +137,20 @@ body {
 .dndflow {
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-rows: 100vh;
+  grid-template-rows: 100dvh;
   gap: 0px;
   padding: 0px;
   background-color: var(--bg);
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 }
 
 .layout-aside {
   display: flex;
   flex-direction: column;
-  gap: var(--paddingMid);
-  padding: 0 var(--paddingMid) 0 var(--paddingMid);
   height: 100%;
   background-color: var(--bg2);
-  /* border: 2px solid red; */
 }
 
 .layout-main {
@@ -262,13 +338,20 @@ body {
    REACT FLOW NODES
    ========================================================================== */
 .react-flow__node {
-  min-width: var(--node-min-width) !important;
-  max-width: var(--node-max-width) !important;
-  width: auto !important;
   background: transparent !important;
   border: none !important;
   padding: 0 !important;
-  z-index: 1;
+  z-index: 10;
+}
+
+.react-flow__node-color {
+  z-index: -1 !important;
+}
+
+.react-flow__node:not(.react-flow__node-color) {
+  min-width: var(--node-min-width);
+  max-width: var(--node-max-width);
+  width: auto;
 }
 
 .custom-node-stacked {
@@ -285,8 +368,13 @@ body {
   box-shadow: none;
 }
 
-.react-flow__node.selected {
+.react-flow__node.selected:not(.react-flow__node-color) {
   z-index: 9999 !important;
+}
+
+.react-flow__node-color.selected {
+  z-index: -5 !important;
+  /* Higher than other surfaces but still behind modules/edges */
 }
 
 .react-flow__node.selected .custom-node-stacked {
@@ -475,7 +563,8 @@ body {
 .react-flow__node.selected .flow-handle,
 .react-flow__handle-connecting,
 .react-flow__handle-valid {
-  opacity: var(--opacity-medium) !important;
+  opacity: 1 !important;
+  background-color: var(--selection-color) !important;
   pointer-events: auto !important;
 }
 
@@ -499,6 +588,7 @@ body {
 .element-handle:hover,
 .flow-handle:hover {
   opacity: 1 !important;
+  background-color: var(--selection-color) !important;
 }
 
 /* Special alignment for handles in the flow */
@@ -512,30 +602,31 @@ body {
 }
 
 .react-flow__handle-left.element-handle {
-  margin-right: 20px;
+  margin-right: 0;
 }
 
 .react-flow__handle-right.element-handle {
-  margin-left: 20px;
-}
-
-.element-title-row .element-handle {
-  margin-top: 22px;
-  /* Align with center of first line (60.5px line-height / 2 - 8px handle half) */
+  margin-left: 0;
 }
 
 .handle-group {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 0;
+  width: var(--handle-gutter-width);
+  flex-shrink: 0;
 }
 
 .handle-group.left {
   flex-direction: row;
+  justify-content: flex-end;
+  padding-right: 20px;
 }
 
 .handle-group.right {
   flex-direction: row;
+  justify-content: flex-start;
+  padding-left: 20px;
 }
 
 .title-standard-handle {
@@ -558,16 +649,15 @@ body {
 
 .standalone-title-block .title-standard-handle.visible-handle,
 .standalone-title-block .title-standard-handle.connected {
-  margin-top: 22px;
-  /* Centering for 55px text in standalone */
+  margin-top: 11.5px;
+  /* Centering for 55px text in standalone (27.5 - 16) */
 }
 
 .placeholder-handle {
-  width: var(--handle-size);
-  height: var(--handle-size);
+  width: var(--handle-gutter-width);
+  height: 1px;
   visibility: hidden;
-  margin: 0 20px 0 0;
-  /* Only right margin for left placeholder to align label */
+  flex-shrink: 0;
 }
 
 .placeholder-handle+.item-text+.placeholder-handle {
@@ -576,35 +666,50 @@ body {
 }
 
 /* ==========================================================================
-   EDGES
+   EDGES (STYLING VIA CLASSES)
    ========================================================================== */
+
+/* Base path for all edges */
 .react-flow__edge-path {
   stroke: #000;
-  stroke-width: 20;
+  transition: opacity 0.2s, stroke-width 0.2s, stroke 0.2s;
+  fill: none;
+}
+
+/* Standard Edges (Data/Text) */
+.react-flow__edge-path.is-standard {
+  stroke-width: 30;
+  opacity: 0.25;
+  stroke: #000;
+}
+
+/* Flow Edges (Logik/Titel) */
+.react-flow__edge-path.is-flow {
+  stroke-width: 64;
   opacity: 0.5;
-  transition: opacity 0.2s, stroke-width 0.2s;
+  stroke: #000;
+  stroke-dasharray: 15, 15;
 }
 
-.react-flow__edge:hover .react-flow__edge-path {
-  opacity: 1;
+/* State: Selected */
+.react-flow__edge-path.is-selected {
+  opacity: 1 !important;
+  stroke-width: 36 !important;
 }
 
-.react-flow__edge.selected .react-flow__edge-path {
-  opacity: 1;
-  stroke-width: 24;
+.is-flow.is-selected {
+  stroke-width: 40 !important;
 }
 
-/* Fix for the glitchy animation: 
-   We define a custom animation that moves the dashoffset linearly. 
-   React Flow adds the .animated class. 
-*/
+/* State: Animated */
+.is-animated,
+.is-flow,
 .react-flow__edge.animated .react-flow__edge-path {
-  animation: flowAnimation 2s linear infinite;
-  stroke-dasharray: 15;
-  /* Fixed array for consistency */
+  stroke-dasharray: 15, 15;
+  animation: edge_flow 1s linear infinite;
 }
 
-@keyframes flowAnimation {
+@keyframes edge_flow {
   from {
     stroke-dashoffset: 30;
   }
@@ -625,79 +730,9 @@ body {
 /* ==========================================================================
    GLOBAL TOOLBAR
    ========================================================================== */
-.global-toolbar {
-  z-index: 2000;
-  display: flex;
-  pointer-events: none;
-  /* Allow clicks through to board */
-}
+/* Global Toolbar is now handled by CanvasToolbar.jsx/css */
 
-.toolbar-top-right {
-  justify-content: flex-end;
-  align-items: flex-start;
-  padding: 0;
-}
-
-.toolbar-bottom-right {
-  justify-content: flex-end;
-  align-items: flex-end;
-  padding: 0;
-}
-
-.toolbar-inner {
-  pointer-events: auto;
-  background-color: rgba(241, 247, 238, 0.85);
-  /* Translucent like nodes */
-  backdrop-filter: blur(8px);
-  padding: 6px;
-  border-radius: var(--radius);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  display: flex;
-  gap: 4px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-}
-
-.toolbar-btn {
-  background: transparent;
-  border: none;
-  border-radius: var(--radius);
-  padding: 8px 16px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  color: #000;
-  opacity: 0.5;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  min-width: 64px;
-  font-family: inherit;
-}
-
-.toolbar-btn:hover {
-  opacity: 0.8;
-  background: rgba(0, 0, 0, 0.03);
-  transform: translateY(-1px);
-}
-
-.toolbar-btn.active {
-  opacity: 1;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.btn-icon {
-  font-size: var(--font-size-base);
-  line-height: 1;
-}
-
-.btn-label {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: var(--font-size-small);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
+/* Old Toolbar Styles Removed */
 
 
 /* ==========================================================================
@@ -737,9 +772,59 @@ body {
   opacity: 0.1;
 }
 
+/* ==========================================================================
+   CANVAS FOOTER & UI TOGGLE
+   ========================================================================== */
+.canvas-footer {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  gap: var(--gap);
+  z-index: 2000;
+  pointer-events: none;
+}
+
+.ui-toggle-btn {
+  pointer-events: auto;
+  background-color: var(--bg2);
+  border: none;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--main);
+  transition: all 0.1s ease;
+  padding: 0;
+}
+
+.ui-toggle-btn:hover {
+  background: var(--ash-grey);
+  filter: brightness(0.9);
+}
+
+.icon-square-outline {
+  width: 18px;
+  height: 18px;
+  border: 1px solid currentColor;
+  opacity: 0.5;
+}
+
+.ui-toggle-btn:hover .icon-square-outline {
+  opacity: 1;
+}
+
+.ui-toggle-btn.ui-hidden {
+  opacity: 0.3;
+}
+
 .view-container {
   flex: 1;
-  height: 100vh;
+  height: 100dvh;
   padding-top: 0;
   /* Space for the top navigation */
   background-color: var(--bg);

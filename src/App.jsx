@@ -4,6 +4,7 @@ import 'reactflow/dist/style.css';
 
 import Sidebar from './Sidebar';
 import CustomNode from './CustomNode';
+import ColorNode from './components/node/ColorNode';
 import { loadTemplatesFromServer, loadProjectFromServer, saveProjectToServer } from './dataService';
 import './App.css';
 
@@ -11,6 +12,10 @@ import './App.css';
 import PatternCreator from './components/PatternCreator';
 import Navigation from './components/Navigation';
 import ResizableAside from './components/ResizableAside';
+import CanvasToolbar from './components/CanvasToolbar';
+
+// Assets
+import ivcoLogo from './assets/IVCO_logo.png';
 
 // Hooks
 import useFlowConnections from './hooks/useFlowConnections';
@@ -22,10 +27,12 @@ const nodeTypes = {
   input: CustomNode,
   output: CustomNode,
   default: CustomNode,
+  color: ColorNode,
 };
 
 const edgeTypes = {
   default: FlowEdge,
+  custom: FlowEdge,
   step: FlowEdge,
 };
 
@@ -42,6 +49,7 @@ const App = () => {
   const [customTemplates, setCustomTemplates] = useState([]);
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [sidebarVisible, setSidebarVisible] = useState(true);
+  const [uiVisible, setUiVisible] = useState(true);
   // globalCollapseMode: 'auto', 0, 1, 2
   const [globalCollapseMode, setGlobalCollapseMode] = useState('auto');
   const [currentView, setCurrentView] = useState('explore');
@@ -174,36 +182,48 @@ const App = () => {
     }));
   }, [reactFlowInstance, setNodes, currentView, hasUnsavedPatternChanges, patternSaveFunction]);
 
-  const handleAddStandalone = useCallback((variant) => {
-    if (!reactFlowInstance || !reactFlowWrapper.current) return;
+  const handleAddStandalone = useCallback((type) => {
+    const position = {
+      x: Math.random() * 400 + 100,
+      y: Math.random() * 400 + 100
+    };
 
-    const wrapperRect = reactFlowWrapper.current.getBoundingClientRect();
-    const centerPosition = reactFlowInstance.screenToFlowPosition({
-      x: wrapperRect.left + wrapperRect.width / 2,
-      y: wrapperRect.top + wrapperRect.height / 2,
-    });
+    if (type === 'surface') {
+      const newNode = {
+        id: getId(),
+        type: 'color',
+        position: {
+          x: Math.round(position.x / 100) * 100,
+          y: Math.round(position.y / 100) * 100
+        },
+        data: { label: 'ADD TEXT', color: 'var(--bg2)' },
+        style: { width: 400, height: 400 },
+      };
+      setNodes((nds) => nds.concat(newNode));
+      return;
+    }
 
-    const defaultText = variant === 'title' ? 'New Title' : 'New Text';
-    setNodes((nds) => nds.concat({
+    const newNode = {
       id: getId(),
       type: 'custom',
-      position: centerPosition,
+      position,
       data: {
-        label: defaultText,
-        isStandaloneTitle: variant === 'title',
-        isStandaloneText: variant === 'text',
-        elements: [
-          { type: 'title', content: defaultText }
-        ]
+        label: type === 'title' ? 'NEW TITLE' : 'NEW TEXT',
+        isStandaloneTitle: type === 'title',
+        isStandaloneText: type === 'text',
+        elements: [{
+          type: type,
+          content: type === 'title' ? 'NEW TITLE' : 'NEW TEXT'
+        }]
       }
-    }));
-  }, [reactFlowInstance, setNodes]);
+    };
+    setNodes((nds) => nds.concat(newNode));
+  }, [setNodes]);
 
   // --- Global State & Shortcuts ---
   const setGlobalCollapseState = useCallback((state) => {
     setGlobalCollapseMode(state);
   }, []);
-
 
   const toggleAllCollapse = useCallback(() => {
     setGlobalCollapseMode((prev) => {
@@ -349,7 +369,21 @@ const App = () => {
     const isStandalone = sourceNode?.data?.isStandaloneTitle || sourceNode?.data?.isStandaloneText ||
       targetNode?.data?.isStandaloneTitle || targetNode?.data?.isStandaloneText;
 
-    const isFlow = !isStandalone && (edge.data?.isFlow || edge.sourceHandle?.includes('flow') || edge.targetHandle?.includes('flow'));
+    const checkIsTitleHandle = (node, handleId) => {
+      if (!node || !handleId) return false;
+      const match = handleId.match(/^(source|target)-(\d+)/);
+      if (!match) return false;
+      const elementIndex = parseInt(match[2]);
+      return node.data?.elements?.[elementIndex]?.type === 'title';
+    };
+
+    const isFlow = !isStandalone && (
+      edge.data?.isFlow ||
+      edge.sourceHandle?.includes('flow') ||
+      edge.targetHandle?.includes('flow') ||
+      checkIsTitleHandle(sourceNode, edge.sourceHandle) ||
+      checkIsTitleHandle(targetNode, edge.targetHandle)
+    );
 
     // Determine effective collapse state for a node
     const getCollapseState = (nodeId) => {
@@ -371,29 +405,45 @@ const App = () => {
     const sState = getCollapseState(edge.source);
     const tState = getCollapseState(edge.target);
 
-    // Visible if element index 0 (Title) or if node is expanded/balanced
-    const isHandleVisible = (handleId, state) => {
+    // Visible if element is a Title or if node is expanded/balanced
+    const isHandleVisible = (nodeId, handleId, state) => {
       if (!handleId || state === 0) return true;
-      if (state === 2) return /^(source|target)-0(-|$)/.test(handleId);
-      return true; // State 1: Connected elements are visible
+      if (handleId.includes('flow')) return true;
+
+      const node = nodes.find(n => n.id === nodeId);
+      if (!node) return true;
+
+      const match = handleId.match(/^(source|target)-(\d+)/);
+      if (!match) return true;
+
+      const elementIndex = parseInt(match[2]);
+      const elements = node.data.elements || [];
+      const element = elements[elementIndex];
+
+      if (state === 2) {
+        // Mode 2: Titles only. Only show handles on title elements.
+        return element?.type === 'title';
+      }
+
+      // Mode 1: Balanced. Standard handles are shown if they are connected.
+      // Since this is an existing edge, this handle is connected.
+      return true;
     };
 
-    const isEdgeVisible = isFlow || (isHandleVisible(edge.sourceHandle, sState) &&
-      isHandleVisible(edge.targetHandle, tState));
+    const isEdgeVisible = (
+      isHandleVisible(edge.source, edge.sourceHandle, sState) &&
+      isHandleVisible(edge.target, edge.targetHandle, tState)
+    );
 
     return {
       ...edge,
-      type: 'default',
+      type: 'custom',
+      hidden: !isEdgeVisible,
       data: {
         ...edge.data,
         isFlow
       },
-      animated: isFlow && isEdgeVisible,
-      style: {
-        ...edge.style,
-        opacity: isEdgeVisible ? (edge.style?.opacity || 0.5) : 0,
-        transition: 'opacity 0.1s ease'
-      }
+      animated: isFlow && isEdgeVisible
     };
   }), [edges, nodes, zoom, globalCollapseMode]);
 
@@ -409,10 +459,10 @@ const App = () => {
 
   return (
     <div className="dndflow">
-      <ResizableAside>
+      <ResizableAside isCollapsed={!uiVisible || !sidebarVisible}>
         <Navigation activeView={currentView} onViewChange={handleViewChange} />
 
-        <div className={`sidebar-container ${sidebarVisible ? '' : 'sidebar-hidden'}`}>
+        <div className={`sidebar-container`}>
           <Sidebar
             templates={customTemplates}
             onAddNode={onAddNode}
@@ -466,66 +516,22 @@ const App = () => {
               </ReactFlow>
             </div>
 
-            {/* Global Floating Toolbar - Top Right (View Modes) */}
-            <div className="global-toolbar toolbar-top-right">
-              <div className="toolbar-inner">
-                <button
-                  className={`toolbar-btn ${globalCollapseMode === 0 ? 'active' : ''}`}
-                  onClick={() => setGlobalCollapseState(0)}
-                  title="Expanded View"
-                >
-                  <span className="btn-icon">Full</span>
-                  <span className="btn-label">Expanded</span>
-                </button>
-                <button
-                  className={`toolbar-btn ${globalCollapseMode === 1 ? 'active' : ''}`}
-                  onClick={() => setGlobalCollapseState(1)}
-                  title="Balanced View"
-                >
-                  <span className="btn-icon">Balanced</span>
-                  <span className="btn-label">Connected</span>
-                </button>
-                <button
-                  className={`toolbar-btn ${globalCollapseMode === 2 ? 'active' : ''}`}
-                  onClick={() => setGlobalCollapseState(2)}
-                  title="Compressed View"
-                >
-                  <span className="btn-icon">Min</span>
-                  <span className="btn-label">Titles</span>
-                </button>
-                <div style={{ width: '1px', background: 'rgba(0,0,0,0.1)', margin: '4px 2px' }} />
-                <button
-                  className={`toolbar-btn ${globalCollapseMode === 'auto' ? 'active' : ''}`}
-                  onClick={() => setGlobalCollapseState('auto')}
-                  title="AI Auto-Zoom"
-                >
-                  <span className="btn-icon">AI</span>
-                  <span className="btn-label">Auto Zoom</span>
-                </button>
-              </div>
-            </div>
+            <div className="canvas-footer">
+              <button
+                className={`ui-toggle-btn ${!uiVisible ? 'ui-hidden' : ''}`}
+                onClick={() => setUiVisible(!uiVisible)}
+                title={uiVisible ? "Focus Mode (Hide UI)" : "Standard Mode (Show UI)"}
+              >
+                <div className="icon-square-outline"></div>
+              </button>
 
-            {/* Global Floating Toolbar - Bottom Right (Creation Tools) */}
-            <div className="global-toolbar toolbar-bottom-right">
-              <div className="toolbar-inner">
-                <button
-                  className="toolbar-btn"
-                  onClick={() => handleAddStandalone('title')}
-                  title="Add a heading module"
-                >
-                  <span className="btn-icon">#</span>
-                  <span className="btn-label">Title</span>
-                </button>
-
-                <button
-                  className="toolbar-btn"
-                  onClick={() => handleAddStandalone('text')}
-                  title="Add a text module"
-                >
-                  <span className="btn-icon">Type</span>
-                  <span className="btn-label">Text</span>
-                </button>
-              </div>
+              {uiVisible && (
+                <CanvasToolbar
+                  collapseMode={globalCollapseMode}
+                  onCollapseModeChange={setGlobalCollapseState}
+                  onAddStandalone={handleAddStandalone}
+                />
+              )}
             </div>
           </div>
         )}

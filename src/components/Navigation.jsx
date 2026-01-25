@@ -1,5 +1,6 @@
 import React from 'react';
 import './Navigation.css';
+import ivcoLogo from '../assets/IVCO_logo.png';
 
 const Navigation = ({ activeView, onViewChange }) => {
     const views = [
@@ -22,8 +23,9 @@ const Navigation = ({ activeView, onViewChange }) => {
                 ))}
             </div>
             <div className="logo">
-                <h1>IVCO</h1>
-                <p>A modular Patternsystem</p>
+                <img src={ivcoLogo} alt="IVCO Logo" className="nav-logo-img" />
+                <p className="logo-tagline">A modular Patternsystem</p>
+                <p className="logo-subtitle">VIBE CODE — HUMAN CONCEPT</p>
             </div>
         </nav>
     );
