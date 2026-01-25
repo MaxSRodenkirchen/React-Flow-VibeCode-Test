@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { savePatternToServer, deletePatternFromServer } from '../dataService';
 import './PatternCreator.css';
 
 const EditorListSection = ({ type, title, inputValue, onInputChange, onKeyDown, items, onMove, onRemove, onEdit }) => {
@@ -315,24 +316,14 @@ const PatternCreator = ({ onClose, onSaveSuccess, initialPattern, globalTags = [
         if (!labelToDelete) return;
         if (!window.confirm(`Are you sure you want to delete "${labelToDelete}"?`)) return;
 
-        try {
-            const HOST = window.location.hostname || '127.0.0.1';
-            const response = await fetch(`http://${HOST}:3001/api/delete-pattern`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ label: labelToDelete })
-            });
+        const success = await deletePatternFromServer(labelToDelete);
 
-            if (response.ok) {
-                alert('Pattern deleted.');
-                handleNew();
-                if (onSaveSuccess) onSaveSuccess();
-            } else {
-                const errData = await response.json();
-                alert(`Error: ${errData.error || 'Failed to delete pattern.'}`);
-            }
-        } catch (error) {
-            alert('Server error. Is the backend running?');
+        if (success) {
+            alert('Pattern deleted (Exhibition Mode: Local Only).');
+            handleNew();
+            if (onSaveSuccess) onSaveSuccess();
+        } else {
+            alert('Failed to delete pattern.');
         }
     };
 
@@ -356,39 +347,29 @@ const PatternCreator = ({ onClose, onSaveSuccess, initialPattern, globalTags = [
             }
         };
 
-        try {
-            const HOST = window.location.hostname || '127.0.0.1';
-            const response = await fetch(`http://${HOST}:3001/api/save-pattern`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(pattern)
+        const success = await savePatternToServer(pattern);
+
+        if (success) {
+            const savedLists = {
+                tags: lists.tags,
+                inputs: lists.inputs,
+                variables: lists.variables,
+                core_logic: lists.core_logic,
+                outcomes: lists.outcomes
+            };
+
+            setInitialState({
+                title: title,
+                description: description,
+                lists: savedLists
             });
+            setHasUnsavedChanges(false);
+            setOriginalLabel(title);
 
-            if (response.ok) {
-                const savedLists = {
-                    tags: lists.tags,
-                    inputs: lists.inputs,
-                    variables: lists.variables,
-                    core_logic: lists.core_logic,
-                    outcomes: lists.outcomes
-                };
-
-                setInitialState({
-                    title: title,
-                    description: description,
-                    lists: savedLists
-                });
-                setHasUnsavedChanges(false);
-                setOriginalLabel(title);
-
-                alert('Pattern saved successfully!');
-                if (onSaveSuccess) onSaveSuccess();
-                // We no longer call onClose() here to stay in the view
-            } else {
-                alert('Failed to save pattern.');
-            }
-        } catch (error) {
-            alert('Server error. Is the backend running?');
+            alert('Pattern saved successfully (Exhibition Mode: Local Only)!');
+            if (onSaveSuccess) onSaveSuccess();
+        } else {
+            alert('Failed to save pattern.');
         }
     };
 

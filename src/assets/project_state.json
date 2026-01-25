@@ -2,7 +2,7 @@
     "nodes": [
         {
             "id": "node_1769251929979_167",
-            "type": "group",
+            "type": "color",
             "position": {
                 "x": -2530.306666004619,
                 "y": -1025.1100637875813
@@ -36,7 +36,7 @@
         },
         {
             "id": "node_1769250918564_500",
-            "type": "group",
+            "type": "color",
             "position": {
                 "x": 4100,
                 "y": -270.3272884283248
@@ -282,8 +282,7 @@
                     }
                 ],
                 "connectedHandleIds": [
-                    "flow-target",
-                    "flow-source"
+                    "flow-target"
                 ],
                 "globalCollapseMode": 0
             },
@@ -304,8 +303,8 @@
             "id": "node_1769192568113_321",
             "type": "custom",
             "position": {
-                "x": 5400,
-                "y": -1200
+                "x": 0,
+                "y": 1000
             },
             "data": {
                 "label": "Zielgruppendefinition",
@@ -360,7 +359,6 @@
                     }
                 ],
                 "connectedHandleIds": [
-                    "flow-target",
                     "flow-source",
                     "source-5-0"
                 ],
@@ -370,8 +368,8 @@
             "height": 581,
             "selected": false,
             "positionAbsolute": {
-                "x": 5400,
-                "y": -1200
+                "x": 0,
+                "y": 1000
             },
             "dragging": false,
             "measured": {
@@ -383,8 +381,8 @@
             "id": "node_1769192578075_530",
             "type": "custom",
             "position": {
-                "x": 6200,
-                "y": -1200
+                "x": 800,
+                "y": 1000
             },
             "data": {
                 "label": "Crossmediale User Journey",
@@ -451,8 +449,8 @@
             "height": 686,
             "selected": false,
             "positionAbsolute": {
-                "x": 6200,
-                "y": -1200
+                "x": 800,
+                "y": 1000
             },
             "dragging": false,
             "measured": {
@@ -464,8 +462,8 @@
             "id": "node_1769192584336_743",
             "type": "custom",
             "position": {
-                "x": 7000,
-                "y": -1000
+                "x": 1600,
+                "y": 1000
             },
             "data": {
                 "label": "Konzeptentwicklung",
@@ -536,8 +534,8 @@
             "height": 738,
             "selected": false,
             "positionAbsolute": {
-                "x": 7000,
-                "y": -1000
+                "x": 1600,
+                "y": 1000
             },
             "dragging": false,
             "measured": {
@@ -549,8 +547,8 @@
             "id": "node_1769192639751_374",
             "type": "custom",
             "position": {
-                "x": 7800,
-                "y": -1000
+                "x": 2400,
+                "y": 1000
             },
             "data": {
                 "label": "Logline und Treatment",
@@ -610,8 +608,8 @@
             "height": 509,
             "selected": false,
             "positionAbsolute": {
-                "x": 7800,
-                "y": -1000
+                "x": 2400,
+                "y": 1000
             },
             "dragging": false,
             "measured": {
@@ -623,8 +621,8 @@
             "id": "node_1769192647386_472",
             "type": "custom",
             "position": {
-                "x": 8600,
-                "y": -1000
+                "x": 3200,
+                "y": 1000
             },
             "data": {
                 "label": "Click-Dummy mit Twine",
@@ -688,8 +686,8 @@
             "height": 638,
             "selected": false,
             "positionAbsolute": {
-                "x": 8600,
-                "y": -1000
+                "x": 3200,
+                "y": 1000
             },
             "dragging": false,
             "measured": {
@@ -701,8 +699,8 @@
             "id": "node_1769192652941_72",
             "type": "custom",
             "position": {
-                "x": 9400,
-                "y": -1000
+                "x": 4000,
+                "y": 1000
             },
             "data": {
                 "label": "Nutzertest",
@@ -761,8 +759,7 @@
                     }
                 ],
                 "connectedHandleIds": [
-                    "flow-target",
-                    "flow-source"
+                    "flow-target"
                 ],
                 "globalCollapseMode": 0
             },
@@ -770,8 +767,8 @@
             "height": 757,
             "selected": false,
             "positionAbsolute": {
-                "x": 9400,
-                "y": -1000
+                "x": 4000,
+                "y": 1000
             },
             "dragging": false,
             "measured": {
@@ -783,8 +780,8 @@
             "id": "node_1769192711154_450",
             "type": "custom",
             "position": {
-                "x": 6200,
-                "y": 200
+                "x": 0,
+                "y": 2200
             },
             "data": {
                 "label": "Visuelles Designsystem",
@@ -843,7 +840,6 @@
                     }
                 ],
                 "connectedHandleIds": [
-                    "flow-target",
                     "flow-source"
                 ],
                 "globalCollapseMode": 0
@@ -852,8 +848,8 @@
             "height": 789,
             "selected": false,
             "positionAbsolute": {
-                "x": 6200,
-                "y": 200
+                "x": 0,
+                "y": 2200
             },
             "dragging": false,
             "measured": {
@@ -865,8 +861,8 @@
             "id": "node_1769192723454_987",
             "type": "custom",
             "position": {
-                "x": 7200,
-                "y": 200
+                "x": 1000,
+                "y": 2200
             },
             "data": {
                 "label": "LoFi Designs",
@@ -934,8 +930,8 @@
             "height": 648,
             "selected": false,
             "positionAbsolute": {
-                "x": 7200,
-                "y": 200
+                "x": 1000,
+                "y": 2200
             },
             "dragging": false,
             "measured": {
@@ -947,8 +943,8 @@
             "id": "node_1769192732198_25",
             "type": "custom",
             "position": {
-                "x": 7800,
-                "y": 200
+                "x": 1600,
+                "y": 2200
             },
             "data": {
                 "label": "HiFi Designs",
@@ -1011,8 +1007,8 @@
             "height": 563,
             "selected": false,
             "positionAbsolute": {
-                "x": 7800,
-                "y": 200
+                "x": 1600,
+                "y": 2200
             },
             "dragging": false,
             "measured": {
@@ -1024,8 +1020,8 @@
             "id": "node_1769192740593_0",
             "type": "custom",
             "position": {
-                "x": 8600,
-                "y": 200
+                "x": 2400,
+                "y": 2200
             },
             "data": {
                 "label": "Tests auf Endgeräten",
@@ -1087,8 +1083,8 @@
             "height": 521,
             "selected": false,
             "positionAbsolute": {
-                "x": 8600,
-                "y": 200
+                "x": 2400,
+                "y": 2200
             },
             "dragging": false,
             "measured": {
@@ -1100,8 +1096,8 @@
             "id": "node_1769192744985_486",
             "type": "custom",
             "position": {
-                "x": 9400,
-                "y": 200
+                "x": 3200,
+                "y": 2200
             },
             "data": {
                 "label": "Projektnachbearbeitung",
@@ -1171,8 +1167,8 @@
             "height": 917,
             "selected": false,
             "positionAbsolute": {
-                "x": 9400,
-                "y": 200
+                "x": 3200,
+                "y": 2200
             },
             "dragging": false,
             "measured": {
@@ -1547,6 +1543,78 @@
             },
             "dragging": false,
             "resizing": false
+        },
+        {
+            "id": "node_1769353428004_354",
+            "type": "color",
+            "position": {
+                "x": -200,
+                "y": 800
+            },
+            "data": {
+                "label": "Kreieren-Phase",
+                "color": "var(--bg2)",
+                "connectedHandleIds": [],
+                "globalCollapseMode": 0
+            },
+            "style": {
+                "width": 5200,
+                "height": 1200
+            },
+            "width": 5200,
+            "height": 1200,
+            "selected": false,
+            "positionAbsolute": {
+                "x": -200,
+                "y": 800
+            },
+            "dragging": false,
+            "resizing": false
+        },
+        {
+            "id": "node_1769353615380_501",
+            "type": "color",
+            "position": {
+                "x": -200,
+                "y": 2000
+            },
+            "data": {
+                "label": "Gestalten-Phase",
+                "color": "var(--bg2)",
+                "connectedHandleIds": [],
+                "globalCollapseMode": 0
+            },
+            "style": {
+                "width": 5200,
+                "height": 1200
+            },
+            "width": 5200,
+            "height": 1200,
+            "selected": false,
+            "positionAbsolute": {
+                "x": -200,
+                "y": 2000
+            },
+            "dragging": false,
+            "resizing": false
+        },
+        {
+            "id": "node_1769353716166_829",
+            "type": "color",
+            "position": {
+                "x": 100,
+                "y": 100
+            },
+            "data": {
+                "label": "ADD TEXT",
+                "color": "var(--bg2)"
+            },
+            "style": {
+                "width": 400,
+                "height": 400
+            },
+            "width": 400,
+            "height": 400
         }
     ],
     "edges": [
@@ -1566,24 +1634,6 @@
                 "isFlow": true
             },
             "id": "reactflow__edge-node_1769192539949_90flow-source-node_1769192545852_450flow-target",
-            "selected": false
-        },
-        {
-            "source": "node_1769192545852_450",
-            "sourceHandle": "flow-source",
-            "target": "node_1769192568113_321",
-            "targetHandle": "flow-target",
-            "type": "default",
-            "animated": true,
-            "style": {
-                "stroke": "#787878",
-                "strokeWidth": 10,
-                "strokeDasharray": "15, 15"
-            },
-            "data": {
-                "isFlow": true
-            },
-            "id": "reactflow__edge-node_1769192545852_450flow-source-node_1769192568113_321flow-target",
             "selected": false
         },
         {
@@ -1674,24 +1724,6 @@
                 "isFlow": true
             },
             "id": "reactflow__edge-node_1769192647386_472flow-source-node_1769192652941_72flow-target",
-            "selected": false
-        },
-        {
-            "source": "node_1769192652941_72",
-            "sourceHandle": "flow-source",
-            "target": "node_1769192711154_450",
-            "targetHandle": "flow-target",
-            "type": "default",
-            "animated": true,
-            "style": {
-                "stroke": "#787878",
-                "strokeWidth": 10,
-                "strokeDasharray": "15, 15"
-            },
-            "data": {
-                "isFlow": true
-            },
-            "id": "reactflow__edge-node_1769192652941_72flow-source-node_1769192711154_450flow-target",
             "selected": false
         },
         {
@@ -1920,6 +1952,18 @@
                 "isFlow": true
             },
             "id": "reactflow__edge-node_1769335664027_684flow-source-node_1769335671277_695flow-target"
+        },
+        {
+            "source": "node_1769335671277_695",
+            "sourceHandle": "source-5-0",
+            "target": "node_1769192584336_743",
+            "targetHandle": "target-2-3",
+            "type": "custom",
+            "animated": false,
+            "data": {
+                "isFlow": false
+            },
+            "id": "reactflow__edge-node_1769335671277_695source-5-0-node_1769192584336_743target-2-3"
         }
     ]
 }

@@ -183,10 +183,18 @@ const App = () => {
   }, [reactFlowInstance, setNodes, currentView, hasUnsavedPatternChanges, patternSaveFunction]);
 
   const handleAddStandalone = useCallback((type) => {
-    const position = {
+    let position = {
       x: Math.random() * 400 + 100,
       y: Math.random() * 400 + 100
     };
+
+    if (reactFlowInstance && reactFlowWrapper.current) {
+      const wrapperRect = reactFlowWrapper.current.getBoundingClientRect();
+      position = reactFlowInstance.screenToFlowPosition({
+        x: wrapperRect.left + wrapperRect.width / 2,
+        y: wrapperRect.top + wrapperRect.height / 2,
+      });
+    }
 
     if (type === 'surface') {
       const newNode = {
@@ -218,7 +226,7 @@ const App = () => {
       }
     };
     setNodes((nds) => nds.concat(newNode));
-  }, [setNodes]);
+  }, [setNodes, reactFlowInstance]);
 
   // --- Global State & Shortcuts ---
   const setGlobalCollapseState = useCallback((state) => {

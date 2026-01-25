@@ -1,52 +1,46 @@
-// Use current hostname (e.g. localhost or 127.0.0.1) but fixed port 3001
-const HOST = window.location.hostname || '127.0.0.1';
-const SERVER_URL = `http://${HOST}:3001/api`;
+// Exhibition Mode: Loading data from local files instead of a server
+import projectState from './assets/project_state.json';
+
+// Use Vite's glob import to get all patterns from the folder
+const patternModules = import.meta.glob('./assets/PatternsJson/*.json', { eager: true });
 
 /**
- * Save the entire flow to the server (project_state.json)
+ * Save the entire flow to the server (Disabled for Exhibition)
  */
 export const saveProjectToServer = async (flow) => {
-  try {
-    const response = await fetch(`${SERVER_URL}/save-project`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(flow)
-    });
-    if (!response.ok) {
-      console.error('Server returned error:', response.status);
-    }
-    return response.ok;
-  } catch (e) {
-    console.error('Failed to save project to server:', e);
-    // alert('Network Error: Could not reach the backend server.');
-    return false;
-  }
+  console.log('Exhibition Mode: Saving is disabled. State would be:', flow);
+  return true;
 };
 
 /**
- * Load the entire flow from the server
+ * Load the entire flow from local assets
  */
 export const loadProjectFromServer = async () => {
-  try {
-    const response = await fetch(`${SERVER_URL}/load-project`);
-    if (!response.ok) return null;
-    return await response.json();
-  } catch (e) {
-    console.error('Failed to load project from server:', e);
-    return null;
-  }
+  console.log('Exhibition Mode: Loading project state from local assets');
+  return projectState;
 };
 
 /**
- * Load all pattern templates from the server
+ * Load all pattern templates from local assets
  */
 export const loadTemplatesFromServer = async () => {
-  try {
-    const response = await fetch(`${SERVER_URL}/load-templates`);
-    if (!response.ok) return [];
-    return await response.json();
-  } catch (e) {
-    console.error('Failed to load templates from server:', e);
-    return [];
-  }
+  console.log('Exhibition Mode: Loading templates from local assets');
+  // Convert the glob modules object to an array of pattern objects
+  return Object.values(patternModules).map(module => module.default || module);
+};
+
+/**
+ * Save a new pattern template (Disabled for Exhibition)
+ */
+export const savePatternToServer = async (pattern) => {
+  console.log('Exhibition Mode: Saving pattern is disabled. Pattern would be:', pattern);
+  return true;
+};
+
+/**
+ * Delete a pattern template (Disabled for Exhibition)
+ */
+export const deletePatternFromServer = async (label) => {
+  console.log('Exhibition Mode: Deleting pattern is disabled. Label was:', label);
+  return true;
 };
