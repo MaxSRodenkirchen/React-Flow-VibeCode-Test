@@ -13,6 +13,7 @@ import PatternCreator from './components/PatternCreator';
 import Navigation from './components/Navigation';
 import ResizableAside from './components/ResizableAside';
 import CanvasToolbar from './components/CanvasToolbar';
+import MaterializeView from './components/MaterializeView';
 
 // Assets
 import ivcoLogo from './assets/IVCO_logo.png';
@@ -183,18 +184,21 @@ const App = () => {
   }, [reactFlowInstance, setNodes, currentView, hasUnsavedPatternChanges, patternSaveFunction]);
 
   const handleAddStandalone = useCallback((type) => {
-    const position = {
-      x: Math.random() * 400 + 100,
-      y: Math.random() * 400 + 100
-    };
+    if (!reactFlowInstance || !reactFlowWrapper.current) return;
+
+    const wrapperRect = reactFlowWrapper.current.getBoundingClientRect();
+    const centerPosition = reactFlowInstance.screenToFlowPosition({
+      x: wrapperRect.left + wrapperRect.width / 2,
+      y: wrapperRect.top + wrapperRect.height / 2,
+    });
 
     if (type === 'surface') {
       const newNode = {
         id: getId(),
         type: 'color',
         position: {
-          x: Math.round(position.x / 100) * 100,
-          y: Math.round(position.y / 100) * 100
+          x: Math.round(centerPosition.x / 100) * 100,
+          y: Math.round(centerPosition.y / 100) * 100
         },
         data: { label: 'ADD TEXT', color: 'var(--bg2)' },
         style: { width: 400, height: 400 },
@@ -206,7 +210,7 @@ const App = () => {
     const newNode = {
       id: getId(),
       type: 'custom',
-      position,
+      position: centerPosition,
       data: {
         label: type === 'title' ? 'NEW TITLE' : 'NEW TEXT',
         isStandaloneTitle: type === 'title',
@@ -218,7 +222,7 @@ const App = () => {
       }
     };
     setNodes((nds) => nds.concat(newNode));
-  }, [setNodes]);
+  }, [reactFlowInstance, setNodes]);
 
   // --- Global State & Shortcuts ---
   const setGlobalCollapseState = useCallback((state) => {
@@ -377,7 +381,7 @@ const App = () => {
       return node.data?.elements?.[elementIndex]?.type === 'title';
     };
 
-    const isFlow = !isStandalone && (
+    const isFlow = (
       edge.data?.isFlow ||
       edge.sourceHandle?.includes('flow') ||
       edge.targetHandle?.includes('flow') ||
@@ -549,10 +553,7 @@ const App = () => {
 
         {currentView === 'materialize' && (
           <div className="view-container materialize-view">
-            <div className="empty-state-message" style={{ opacity: 0.5, position: 'static', transform: 'none', padding: '100px' }}>
-              Materialize View<br />
-              <span style={{ fontSize: '20px' }}>Evaluation tools coming soon...</span>
-            </div>
+            <MaterializeView />
           </div>
         )}
       </main>

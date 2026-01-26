@@ -412,7 +412,8 @@ body {
   /* Critical for grid unroll animation */
 }
 
-.element-type-title {
+.element-type-title,
+.element-type-text {
   padding: 15px 0;
   width: 100%;
 }
@@ -644,7 +645,6 @@ body {
 .standalone-text-block .title-standard-handle.visible-handle,
 .standalone-text-block .title-standard-handle.connected {
   margin-top: 4px;
-  /* Centering for 14px text in standalone */
 }
 
 .standalone-title-block .title-standard-handle.visible-handle,

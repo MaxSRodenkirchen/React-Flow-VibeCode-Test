@@ -50,3 +50,18 @@ export const loadTemplatesFromServer = async () => {
     return [];
   }
 };
+
+/**
+ * Load materialize content (Materialize.md) from the server
+ */
+export const loadMaterializeContent = async () => {
+  try {
+    const response = await fetch(`${SERVER_URL}/load-materialize`);
+    if (!response.ok) return '';
+    const data = await response.json();
+    return data.content || '';
+  } catch (e) {
+    console.error('Failed to load materialize content:', e);
+    return '';
+  }
+};

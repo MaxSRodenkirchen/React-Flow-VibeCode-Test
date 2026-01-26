@@ -37,7 +37,7 @@ const CustomNode = ({ id, data, isConnectable, selected }) => {
             className={`custom-node-stacked collapse-state-${collapseState} ${selected ? 'node-selected' : ''}`}
         >
             {elements.map((element, index) => {
-                const isTitle = element.type === 'title';
+                const isTitle = element.type === 'title' || element.type === 'text';
 
                 // --- Smart Collapse Logic ---
                 const hasConnectedHandles = connectedHandleIds.some(
@@ -50,9 +50,9 @@ const CustomNode = ({ id, data, isConnectable, selected }) => {
 
                 let shouldShowElement = true;
                 if (collapseState === 1) {
-                    shouldShowElement = isTitle || hasConnectedHandles || hasConnectedSubItems;
+                    shouldShowElement = isTitle || element.type === 'text' || hasConnectedHandles || hasConnectedSubItems;
                 } else if (collapseState === 2) {
-                    shouldShowElement = isTitle;
+                    shouldShowElement = isTitle || element.type === 'text';
                 }
 
                 return (

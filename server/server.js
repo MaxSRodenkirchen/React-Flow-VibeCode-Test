@@ -13,9 +13,11 @@ const PORT = 3001;
 // Paths
 const PATTERNS_DIR = path.join(__dirname, '..', 'src', 'assets', 'PatternsJson');
 const PROJECT_FILE = path.join(__dirname, '..', 'src', 'assets', 'project_state.json');
+const MATERIALIZE_FILE = path.join(__dirname, '..', 'src', 'assets', 'Materialize.md');
 
 console.log('Patterns Directory:', PATTERNS_DIR);
 console.log('Project File Path:', PROJECT_FILE);
+console.log('Materialize File Path:', MATERIALIZE_FILE);
 
 // Ensure directories and files exist
 if (!fs.existsSync(PATTERNS_DIR)) {
@@ -115,6 +117,22 @@ app.post('/api/save-project', (req, res) => {
         }
         console.log('Project state saved successfully.');
         res.json({ success: true });
+    });
+});
+
+
+app.get('/api/load-materialize', (req, res) => {
+    console.log('Loading materialize content...');
+    if (!fs.existsSync(MATERIALIZE_FILE)) {
+        console.log('Materialize file not found.');
+        return res.status(404).json({ error: 'File not found' });
+    }
+    fs.readFile(MATERIALIZE_FILE, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Read error:', err);
+            return res.status(500).json({ error: 'Read error' });
+        }
+        res.json({ content: data });
     });
 });
 

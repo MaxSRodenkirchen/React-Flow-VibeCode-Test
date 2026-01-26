@@ -1,0 +1,49 @@
+.materialize-content {
+    padding: 60px;
+    max-width: 900px;
+    margin: 0 auto;
+    color: #000;
+    font-family: "Open Sans", sans-serif;
+    line-height: 1.6;
+}
+
+.markdown-body h1 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--selection-color);
+    padding-bottom: 10px;
+}
+
+.markdown-body h2 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.markdown-body p {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.markdown-body strong {
+    font-weight: 700;
+}
+
+.markdown-body em {
+    font-style: italic;
+}
+
+.markdown-body ul {
+    margin-bottom: 20px;
+    padding-left: 20px;
+}
+
+.markdown-body li {
+    font-size: 18px;
+    margin-bottom: 8px;
+    list-style-type: disc;
+}
