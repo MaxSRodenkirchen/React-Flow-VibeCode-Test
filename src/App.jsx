@@ -52,7 +52,7 @@ const App = () => {
   const [sidebarVisible, setSidebarVisible] = useState(true);
   const [uiVisible, setUiVisible] = useState(true);
   // globalCollapseMode: 'auto', 0, 1, 2
-  const [globalCollapseMode, setGlobalCollapseMode] = useState('auto');
+  const [globalCollapseMode, setGlobalCollapseMode] = useState(0);
   const [currentView, setCurrentView] = useState('explore');
   const [isInitialized, setIsInitialized] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState(null);

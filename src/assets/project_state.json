@@ -94,16 +94,7 @@
                             "Eine Übersichtliche Ansicht des gesamten Projektablaufs"
                         ]
                     }
-                ],
-                "connectedHandleIds": [
-                    "flow-source",
-                    "flow-target",
-                    "flow-target",
-                    "source-5-0",
-                    "target-2-0",
-                    "source-2-0"
-                ],
-                "globalCollapseMode": 0
+                ]
             },
             "width": 600,
             "height": 662,
@@ -174,16 +165,7 @@
                             "Erkenntnis: Ist die eingehende Problemstellung relevant, oder sollte man neue Wege gehen?"
                         ]
                     }
-                ],
-                "connectedHandleIds": [
-                    "flow-source",
-                    "flow-target",
-                    "flow-source",
-                    "target-2-2",
-                    "target-2-0",
-                    "source-2-0"
-                ],
-                "globalCollapseMode": 0
+                ]
             },
             "width": 600,
             "height": 687,
@@ -257,12 +239,7 @@
                             "Erkenntnisse: Möglichkeiten und Anforderungen des Materials"
                         ]
                     }
-                ],
-                "connectedHandleIds": [
-                    "flow-target",
-                    "flow-source"
-                ],
-                "globalCollapseMode": 0
+                ]
             },
             "width": 600,
             "height": 699,
@@ -335,14 +312,7 @@
                             "Liste mit Personen und ihren Anforderungen / Spezifikationen"
                         ]
                     }
-                ],
-                "connectedHandleIds": [
-                    "flow-target",
-                    "flow-source",
-                    "target-2-0",
-                    "source-5-0"
-                ],
-                "globalCollapseMode": 0
+                ]
             },
             "width": 600,
             "height": 581,
@@ -417,11 +387,7 @@
                             "Spezielle Anforderungen einzelner Personas im Bezug zu den Medienformaten"
                         ]
                     }
-                ],
-                "connectedHandleIds": [
-                    "flow-source"
-                ],
-                "globalCollapseMode": 0
+                ]
             },
             "width": 600,
             "height": 686,
@@ -501,12 +467,7 @@
                             "Ein Lieblingskonzept und warum es besonders passt"
                         ]
                     }
-                ],
-                "connectedHandleIds": [
-                    "flow-target",
-                    "flow-source"
-                ],
-                "globalCollapseMode": 0
+                ]
             },
             "width": 600,
             "height": 738,
@@ -575,12 +536,7 @@
                             "Eine Seite mit einer kurzen Zusammenfassung der Geschichte / Handlung"
                         ]
                     }
-                ],
-                "connectedHandleIds": [
-                    "flow-target",
-                    "flow-source"
-                ],
-                "globalCollapseMode": 0
+                ]
             },
             "width": 600,
             "height": 509,
@@ -653,12 +609,7 @@
                             "Klickbarer HTML Prototyp der Story"
                         ]
                     }
-                ],
-                "connectedHandleIds": [
-                    "flow-target",
-                    "flow-source"
-                ],
-                "globalCollapseMode": 0
+                ]
             },
             "width": 600,
             "height": 638,
@@ -735,12 +686,7 @@
                             "Erkenntnis: Weitere Anforderungen?"
                         ]
                     }
-                ],
-                "connectedHandleIds": [
-                    "flow-target",
-                    "flow-source"
-                ],
-                "globalCollapseMode": 0
+                ]
             },
             "width": 600,
             "height": 757,
@@ -817,12 +763,7 @@
                             "Designparameter / Variablen"
                         ]
                     }
-                ],
-                "connectedHandleIds": [
-                    "flow-source",
-                    "flow-target"
-                ],
-                "globalCollapseMode": 0
+                ]
             },
             "width": 600,
             "height": 789,
@@ -899,12 +840,7 @@
                             "Desingsystem testen"
                         ]
                     }
-                ],
-                "connectedHandleIds": [
-                    "flow-target",
-                    "flow-source"
-                ],
-                "globalCollapseMode": 0
+                ]
             },
             "width": 600,
             "height": 648,
@@ -976,12 +912,7 @@
                             "Detaillierte Ausarbeitung und Finalisierung der Designs"
                         ]
                     }
-                ],
-                "connectedHandleIds": [
-                    "flow-target",
-                    "flow-source"
-                ],
-                "globalCollapseMode": 0
+                ]
             },
             "width": 600,
             "height": 563,
@@ -1052,12 +983,7 @@
                             "Liste mit Fehlerquellen oder möglichen Verbesserung"
                         ]
                     }
-                ],
-                "connectedHandleIds": [
-                    "flow-target",
-                    "flow-source"
-                ],
-                "globalCollapseMode": 0
+                ]
             },
             "width": 600,
             "height": 521,
@@ -1137,11 +1063,7 @@
                             "Ziel: Dateien so sammeln, dass am Projekt weitergearbeitet werden könnte"
                         ]
                     }
-                ],
-                "connectedHandleIds": [
-                    "flow-target"
-                ],
-                "globalCollapseMode": 0
+                ]
             },
             "width": 600,
             "height": 917,
@@ -1217,13 +1139,7 @@
                             "Zielgerichteter Ablauf des Meetings"
                         ]
                     }
-                ],
-                "connectedHandleIds": [
-                    "flow-target",
-                    "flow-source",
-                    "flow-source"
-                ],
-                "globalCollapseMode": 0
+                ]
             },
             "width": 600,
             "height": 623,
@@ -1296,12 +1212,7 @@
                             "Visuelle Darstellung der Recherche"
                         ]
                     }
-                ],
-                "connectedHandleIds": [
-                    "flow-target",
-                    "target-3-0"
-                ],
-                "globalCollapseMode": 0
+                ]
             },
             "width": 600,
             "height": 642,
@@ -1374,12 +1285,7 @@
                             "Begründungen warum welches Thema gut ist"
                         ]
                     }
-                ],
-                "connectedHandleIds": [
-                    "flow-source",
-                    "source-5-1"
-                ],
-                "globalCollapseMode": 0
+                ]
             },
             "width": 600,
             "height": 739,
@@ -1452,15 +1358,7 @@
                             "Das Lieblingsproblem herausstellen"
                         ]
                     }
-                ],
-                "connectedHandleIds": [
-                    "flow-source",
-                    "flow-target",
-                    "flow-target",
-                    "target-2-0",
-                    "source-5-2"
-                ],
-                "globalCollapseMode": 0
+                ]
             },
             "width": 600,
             "height": 698,
@@ -1517,7 +1415,7 @@
             },
             "width": 4200,
             "height": 1200,
-            "selected": true,
+            "selected": false,
             "positionAbsolute": {
                 "x": -200,
                 "y": 600
@@ -1580,85 +1478,6 @@
                 "y": 0
             },
             "dragging": false
-        },
-        {
-            "id": "node_1769427822645_305",
-            "type": "custom",
-            "position": {
-                "x": 2200,
-                "y": 2000
-            },
-            "data": {
-                "label": "NEW TITLE",
-                "isStandaloneTitle": true,
-                "isStandaloneText": false,
-                "elements": [
-                    {
-                        "type": "title",
-                        "content": "NEW TITLE"
-                    }
-                ]
-            },
-            "width": 377,
-            "height": 98,
-            "selected": false,
-            "positionAbsolute": {
-                "x": 2200,
-                "y": 2000
-            },
-            "dragging": false
-        },
-        {
-            "id": "node_1769427829917_208",
-            "type": "custom",
-            "position": {
-                "x": 2800,
-                "y": 2000
-            },
-            "data": {
-                "label": "NEW TEXT",
-                "isStandaloneTitle": false,
-                "isStandaloneText": true,
-                "elements": [
-                    {
-                        "type": "text",
-                        "content": "NEW TEXT"
-                    }
-                ]
-            },
-            "width": 266,
-            "height": 74,
-            "selected": false,
-            "positionAbsolute": {
-                "x": 2800,
-                "y": 2000
-            },
-            "dragging": false
-        },
-        {
-            "id": "node_1769427837186_763",
-            "type": "color",
-            "position": {
-                "x": 2000,
-                "y": 1817
-            },
-            "data": {
-                "label": "ADD TEXT",
-                "color": "var(--bg2)"
-            },
-            "style": {
-                "width": 1400,
-                "height": 600
-            },
-            "width": 1400,
-            "height": 600,
-            "selected": false,
-            "positionAbsolute": {
-                "x": 2200,
-                "y": 1800
-            },
-            "dragging": false,
-            "resizing": false
         }
     ],
     "edges": [
@@ -2160,18 +1979,6 @@
                 "isFlow": false
             },
             "id": "reactflow__edge-node_1769192723454_987source-2-0-node_1769192732198_25target-2-0"
-        },
-        {
-            "source": "node_1769427822645_305",
-            "sourceHandle": "source-0",
-            "target": "node_1769427829917_208",
-            "targetHandle": "target-0",
-            "type": "custom",
-            "animated": true,
-            "data": {
-                "isFlow": true
-            },
-            "id": "reactflow__edge-node_1769427822645_305source-0-node_1769427829917_208target-0"
         }
     ]
 }
