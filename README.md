@@ -1,16 +1,63 @@
-# React + Vite
+ReadMe created by Gemini 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# IVCO Pattern Design Tool
 
-Currently, two official plugins are available:
+Dies ist ein interaktives Werkzeug zur Visualisierung und Erstellung von Design-Patterns, basierend auf **React** und **React Flow**. Es dient dazu, komplexe Pattern-Systeme intuitiv zu gestalten und zu dokumentieren.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Die Anwendung
 
-## React Compiler
+Das Tool ist in drei Hauptbereiche unterteilt:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Explore View (Whiteboard):** Das Herzstück der Anwendung. Hier können Patterns aus der Bibliothek per Drag-and-Drop platziert, verschoben und miteinander verknüpft werden.
+- **Define View (Editor):** Ein dedizierter Editor zum Erstellen und Bearbeiten von Pattern-Templates. Hier werden Metadaten, Beschreibungen und Tags festgelegt.
+- **Materialize View:** Eine ergänzende Ansicht zur Dokumentation oder Evaluierung der erstellten Systeme (basiert auf Markdown).
 
-## Expanding the ESLint configuration
+### Besondere Features
+- **LOD (Level of Detail):** Knoten passen ihren Detailgrad automatisch an den Zoom-Faktor an oder können manuell umgeschaltet werden (Titel -> Balanced -> Full).
+- **Autosave:** Jede Änderung am Layout wird sofort im Hintergrund gespeichert.
+- **Intelligente Verbindungen:** Flow-Edges visualisieren Datenströme, während Standard-Edges strukturelle Beziehungen zeigen.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🏗️ Architektur
+
+Die Anwendung folgt einer modularen Architektur:
+
+- **Frontend:** Erstellt mit **React 18** und **Vite**. Die Graph-Logik wird durch **React Flow** realisiert.
+- **Data Service:** Die Datei `src/dataService.js` dient als Abstraktionsschicht. Sie entscheidet, ob Daten von einem Server geladen werden oder statisch aus dem Bundle kommen.
+- **State Management:** Lokaler Status wird über React Hooks (`useState`, `useCallback`, `useMemo`) verwaltet, während die Persistenz entweder über eine API oder lokale JSON-Imports erfolgt.
+
+---
+
+## 🖇️ Git-System & Betriebsmodi
+
+Das Projekt ist so strukturiert, dass es sowohl als lokales Redaktions-Tool als auch als statische Online-Demo fungieren kann. Dies wird über zwei primäre Git-Branches gesteuert:
+
+### 1. Normal Mode (Branch: `main`)
+Dieser Modus wird für die aktive Arbeit und Erstellung von Inhalten genutzt.
+- **Persistence:** Nutzt einen lokalen **Node.js Express Server** (`server/server.js`), der Daten direkt im Dateisystem ablegt.
+- **Workflow:** 
+    - Start des Frontends: `npm run dev`
+    - Start des Backends: `node server/server.js`
+- **Datei-Ablage:** Patterns werden als einzelne `.json` Dateien in `src/assets/PatternsJson/` gespeichert.
+
+### 2. Exhibition Mode (Branch: `exhibition-mode`)
+Dieser Modus ist für die Veröffentlichung (z.B. via GitHub Pages) optimiert.
+- **Persistence:** Funktioniert komplett **serverlos**. In diesem Branch ist der `dataService` so konfiguriert, dass er alle JSON-Dateien via Vite `import.meta.glob` direkt in das JavaScript-Bundle kompiliert.
+- **Schreibschutz:** Speicher- und Löschoperationen sind deaktiviert, was die Anwendung sicher für öffentliche Terminals oder Online-Demos macht.
+- **Deployment:** Änderungen aus `main` werden in `exhibition-mode` gemerget, dort gebaut und dann auf den `gh-pages` Branch hochgeladen.
+
+---
+
+## 🛠️ Installation & Start
+
+1. **Repository klonen**
+2. **Abhängigkeiten installieren:**
+   ```bash
+   npm install
+   cd server && npm install
+   ```
+3. **Anwendung im Normal Mode starten:**
+   - Terminal 1: `npm run dev`
+   - Terminal 2: `node server/server.js`
+4. **Browser öffnen:** `http://localhost:5173`
